@@ -7,6 +7,16 @@
     tools:context=".OrderActivity"
     android:orientation="vertical">
 
+    <!--    <TextView-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="360dp"-->
+    <!--        android:layout_gravity="center"-->
+    <!--        android:textSize="20sp"-->
+    <!--        android:textStyle="bold"-->
+    <!--        android:text="주문완료"/>-->
+
+
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -64,6 +74,11 @@
                     />
 
 
+                <!--                <ListView-->
+                <!--                    android:id="@+id/listview"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginTop="20dp" />-->
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView_order"
@@ -146,6 +161,7 @@
                             android:layout_weight="1" />
 
                         <TextView
+                            android:id="@+id/order_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="홍길동"
@@ -174,6 +190,7 @@
                             android:layout_weight="1" />
 
                         <TextView
+                            android:id="@+id/order_phone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
@@ -197,6 +214,7 @@
                             android:textStyle="bold"/>
 
                         <TextView
+                            android:id="@+id/order_address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"

@@ -33,6 +33,7 @@ public class OrderActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference;
+    DatabaseReference databaseReference2;
     DatabaseReference databaseReferenceProduct;
 
     private RecyclerView recyclerView;
@@ -43,6 +44,12 @@ public class OrderActivity extends AppCompatActivity {
     Product product = null;
 
     private TextView overTotalAmount;
+
+    private TextView orderName;
+    private TextView orderPhone;
+    private TextView orderAddress;
+
+
 
     int total = 0;
 
@@ -66,8 +73,35 @@ public class OrderActivity extends AppCompatActivity {
                 ;
         overTotalAmount = (TextView)findViewById(R.id.order_totalPrice);
 
+        orderName = (TextView)findViewById(R.id.order_name);
+        orderPhone = (TextView)findViewById(R.id.order_phone);
+        orderAddress = (TextView)findViewById(R.id.order_address);
+
+        databaseReference2 = FirebaseDatabase.getInstance().getReference("UserAccount");
+
         databaseReference = FirebaseDatabase.getInstance().getReference("CurrentUser");
         databaseReferenceProduct = FirebaseDatabase.getInstance().getReference("Product");
+
+
+        // 회원 정보 가져오기
+        databaseReference2.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // 파이어베이스 데이터베이스의 데이터를 받아오는 곳
+
+                UserAccount userAccount = dataSnapshot.getValue(UserAccount.class); //  만들어 뒀던 Product 객체에 데이터를 담는다.
+                orderName.setText(userAccount.getUsername());
+                orderPhone.setText(userAccount.getPhone());
+                orderAddress.setText(userAccount.getAddress());
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // 디비를 가져오던 중 에러 발생 시
+                Log.e("OrderActivity", String.valueOf(databaseError.toException())); // 에러문 출력
+            }
+        });
 
         databaseReference.child(firebaseUser.getUid()).child("AddToCart").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
