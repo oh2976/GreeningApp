@@ -35,10 +35,18 @@
             android:id="@+id/btnGoToCart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/btn_bg_detailed"
+            android:text="장바구니"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDonation"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textStyle="bold"
             android:background="@drawable/btn_bg_detailed"
-            android:text="장바구니" />
-
+            android:text="기부 프로젝트" />
     </LinearLayout>
 
 

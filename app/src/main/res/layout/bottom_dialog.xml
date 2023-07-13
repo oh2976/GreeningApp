@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="기부 씨드"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+
+        <EditText
+            android:id="@+id/wannaDonatepoint"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="반드시 200 씨드 이상, 10 배수로 입력해야 합니다."
+        android:layout_gravity="left"
+        android:layout_marginLeft="35dp"
+        android:textColor="#EA4335"
+        android:textSize="12sp"
+        android:layout_marginBottom="16dp"
+        android:textStyle="bold"/>
+
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/wannaDonate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/btn_bg_detailed"
+        android:text="기부하기"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+</LinearLayout>
