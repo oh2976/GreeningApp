@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,11 +24,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 public class OrderActivity extends AppCompatActivity {
+
+    long mNow;
+    Date mDate;
+    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 
 
     FirebaseDatabase firebaseDatabase;
@@ -49,7 +56,10 @@ public class OrderActivity extends AppCompatActivity {
     private TextView orderPhone;
     private TextView orderAddress;
 
-
+    private String strOrderName;
+    private String strOrderPhone;
+    private String strOrderAddress;
+    private int userSPoint;
 
     int total = 0;
 
@@ -60,17 +70,20 @@ public class OrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
+        // AddToCart에 있는 데이터베이스를 넣을 상품 리사이클러뷰
         recyclerView = findViewById(R.id.recyclerView_order); //아디 연결
         recyclerView.setHasFixedSize(true); //리사이클러뷰 기존 성능 강화
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        arrayList = new ArrayList<>(); // Product 객체를 담을 어레이리스트(어댑터 쪽으로 날릴 거임)
+        // Product 객체를 담을 어레이리스트(어댑터 쪽으로 날릴 거임)
+        arrayList = new ArrayList<>();
 
+        // 파이어베이스 연동을 위한 변수 만들어주기
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser()
-                ;
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
         overTotalAmount = (TextView)findViewById(R.id.order_totalPrice);
 
         orderName = (TextView)findViewById(R.id.order_name);
@@ -82,6 +95,7 @@ public class OrderActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("CurrentUser");
         databaseReferenceProduct = FirebaseDatabase.getInstance().getReference("Product");
 
+        String myOrderId = databaseReference.child("MyOrder").push().getKey();
 
         // 회원 정보 가져오기
         databaseReference2.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -93,6 +107,14 @@ public class OrderActivity extends AppCompatActivity {
                 orderName.setText(userAccount.getUsername());
                 orderPhone.setText(userAccount.getPhone());
                 orderAddress.setText(userAccount.getAddress());
+
+                // MyOrder 데이터베이스에 회원 정보 저장을 위해서 변수에 따로 저장
+                strOrderName = userAccount.getUsername();
+                strOrderPhone = userAccount.getPhone();
+                strOrderAddress = userAccount.getAddress();
+
+                // 결제 시 회원 테이블에 있는 sPoint 변경을 위해서 기존 sPoint를 변수에 저장
+                userSPoint = userAccount.getSpoint();
             }
 
 
@@ -136,19 +158,15 @@ public class OrderActivity extends AppCompatActivity {
 
         String orderId = databaseReference.push().getKey();
 
+        // 툴바 생성
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
 
-
-
         List<Cart> list = (ArrayList<Cart>) getIntent().getSerializableExtra("itemList");
 
-
-
         btnPayment = (Button) findViewById(R.id.btnPayment);
-
 
         btnPayment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,55 +183,68 @@ public class OrderActivity extends AppCompatActivity {
                         cartMap.put("totalPrice", model.getTotalPrice());
                         cartMap.put("productId", model.getpId());
                         cartMap.put("overTotalPrice", total);
-                        Log.d("OrderActivity1", total+"");
+                        cartMap.put("userName", strOrderName);
+                        cartMap.put("phone", strOrderPhone);
+                        cartMap.put("address", strOrderAddress);
+                        cartMap.put("orderId", myOrderId);
+                        cartMap.put("orderDate", getTime());
+                        cartMap.put("orderImg", model.getProductImg());
 
+                        // 결제 된 재고만큼 기존 재고에서 변경한 값을 변수에 저장
                         int totalStock = model.getProductStock() - Integer.valueOf(model.getTotalQuantity());
+                        // 기존 회원 sPoint에 있는 값에 결제 후 추가될 씨드 더하여 변수에 저장
+                        double changePoint = userSPoint + total * 0.01;
 
-                        databaseReference.child(firebaseUser.getUid()).child("MyOrder").child(model.getDataId()).setValue(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        // 결제 버튼을 누르면 데이터베이스에 MyOrder 테이블 생성 코드
+                        // 데이터베이스 경로 변경됨.
+                        databaseReference.child(firebaseUser.getUid()).child("MyOrder").child(myOrderId).child(model.getDataId()).setValue(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 Toast.makeText(OrderActivity.this, "주문완료", Toast.LENGTH_SHORT).show();
                                 int b = list.size();
                                 while (b > 0){
-//                                   Log.d("OrderActivity2", databaseReference.child(firebaseUser.getUid()).child("AddToCart").child(list.get(b-1).getDataId())+"");
-
                                     int pId = model.getpId();
 
-//                                    int totalStock = 0;
-//                                    databaseReferenceProduct.child(model.getDataId()).child("stock");
-
+                                    // 상품 테이블에 있는 재고 변동 코드
                                     databaseReferenceProduct.child(String.valueOf(pId)).child("stock").setValue(totalStock).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
-                                            Toast.makeText(OrderActivity.this, "재고 변동 완료", Toast.LENGTH_SHORT).show();
+//                                            Toast.makeText(OrderActivity.this, "재고 변동 완료", Toast.LENGTH_SHORT).show();
                                         }
                                     });
 
-
-//                                    Log.d("OrderActivity2", databaseReference.child(firebaseUser.getUid()).child("MyOrder").child(model.getDataId()).child(productId)+"");
-
+                                    // 주문 완료, 재고 변동 후 AddToCart에 있는 상품 삭제
                                     databaseReference.child(firebaseUser.getUid()).child("AddToCart").child(list.get(b-1).getDataId())
                                             .removeValue()
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                    Toast.makeText(OrderActivity.this, "해당 장바구니 데이터 삭제, " + totalStock , Toast.LENGTH_SHORT).show();
-
-
+//                                                    Toast.makeText(OrderActivity.this, "해당 장바구니 데이터 삭제, " + totalStock , Toast.LENGTH_SHORT).show();
                                                 }
                                             });
                                     b--;
 
                                 }
 
+                                // 결제 후 결제 금액의 1% 만큼의 씨드 sPoint 추가하는 코드
+                                // ExampleApp이랑 데이터베이스 경로가 다름
+                                databaseReference2.child(firebaseUser.getUid()).child("spoint").setValue(changePoint).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+//                                        Toast.makeText(OrderActivity.this, "쇼핑 포인트 지급 완료", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
 
                             }
                         });
 
+                        // 주문 완료 페이지에서 현재 주문에 대한 데이터베이스를 가져오기 위해 id를 OrderCompleteActivity에 넘겨줌
+                        Intent intent = new Intent(OrderActivity.this, OrderCompleteActivity.class);
+                        intent.putExtra("orderId", orderId);
+                        intent.putExtra("myOrderId", myOrderId);
 
-
-
-
+                        startActivity(intent);
 
                     }
 
@@ -223,5 +254,11 @@ public class OrderActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private String getTime(){
+        mNow = System.currentTimeMillis();
+        mDate = new Date(mNow);
+        return mFormat.format(mDate);
     }
 }
