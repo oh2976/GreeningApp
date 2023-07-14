@@ -80,10 +80,12 @@ public class RegisterActivity extends AppCompatActivity {
                             account.setPhone(strPhone);
                             account.setPostcode(strPostcode);
                             account.setAddress(strAddress);
+                            account.setRegdate(getTime());
                             account.setUpoint(0);
                             account.setSpoint(0);
 
                             //setValue : database에 insert(삽입) 행위
+                            // 회원 정보 데이터베이스에 저장
                             mDatabaseRef.child(firebaseUser.getUid()).setValue(account);
 
                             Toast.makeText(RegisterActivity.this, "회원가입에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
