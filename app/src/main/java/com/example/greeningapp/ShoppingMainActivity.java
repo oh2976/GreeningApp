@@ -32,6 +32,7 @@ public class ShoppingMainActivity extends AppCompatActivity {
 
     private Button btnCart;
     private Button btnDonation;
+    private Button btnMypage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +87,17 @@ public class ShoppingMainActivity extends AppCompatActivity {
         btnDonation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(ShoppingMainActivity.this, DonationMainActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        btnMypage = (Button) findViewById(R.id.btnMypage);
+        btnMypage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShoppingMainActivity.this, MyPageActivity.class);
                 startActivity(intent);
 
             }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "258971240222",
+    "project_id": "greeningapp-7f110",
+    "storage_bucket": "greeningapp-7f110.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:258971240222:android:93b7f7ec9a2e4bad0f2b0f",
+        "android_client_info": {
+          "package_name": "com.example.greeningapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "258971240222-1udnaog3goq384ruurolakal7lcb14rh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVQQmj_NQd2aCT7VcrudsI-JuGt91e9rI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "258971240222-1udnaog3goq384ruurolakal7lcb14rh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

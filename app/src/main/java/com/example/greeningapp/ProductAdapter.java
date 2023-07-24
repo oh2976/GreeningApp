@@ -43,9 +43,9 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.Product
         Glide.with(holder.itemView)
                 .load(arrayList.get(position).getPimg())
                 .into(holder.imageView);
-        holder.textName.setText(arrayList.get(position).getPname());
-        holder.textPrice.setText(String.valueOf(arrayList.get(position).getPprice()));
-        holder.textStock.setText(String.valueOf(arrayList.get(position).getStock()));
+        holder.textName.setText("상품명 :" + arrayList.get(position).getPname());
+        holder.textPrice.setText("가격 :" + String.valueOf(arrayList.get(position).getPprice()));
+        holder.textStock.setText("재고수량 : " + String.valueOf(arrayList.get(position).getStock()));
 
 
 

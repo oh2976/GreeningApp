@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="10dp"
+    app:contentPadding="15dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="155dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/round_corner">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/pro"
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/cirimage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/baseline_person_24"
+                app:civ_circle_background_color="@android:color/holo_green_dark"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="12dp"
+                android:layout_toRightOf="@+id/cirimage"
+                android:text="user01"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </TextView>
+
+            <RatingBar
+                android:id="@+id/userrating"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/username"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="16dp"
+                android:max="5"
+                android:numStars="5"
+                android:progressTint="@android:color/holo_orange_light"
+                android:rating="4.5"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cirimage"
+                app:layout_constraintTop_toBottomOf="@+id/username"
+                app:layout_constraintVertical_bias="1.0">
+
+            </RatingBar>
+
+            <TextView
+                android:id="@+id/reviewdate"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_toRightOf="@+id/username"
+                android:text="2023.03.23"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="76dp"
+            android:layout_below="@+id/pro">
+            <ImageView
+                android:id="@+id/inputimg"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:src="@drawable/photoimg"
+                android:layout_below="@+id/cirimage">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/reviewdes"
+                android:layout_width="140dp"
+                android:layout_height="20dp"
+                android:layout_below="@+id/userrating"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="12dp"
+                android:layout_toRightOf="@+id/inputimg"
+                android:text="후기~"
+                android:textSize="15sp">
+
+            </TextView>
+
+
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
