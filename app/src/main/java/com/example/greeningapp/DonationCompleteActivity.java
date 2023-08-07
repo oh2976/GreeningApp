@@ -41,7 +41,7 @@ public class DonationCompleteActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("UserAccount");
+        databaseReference = FirebaseDatabase.getInstance().getReference("User");
 
         completeuPoint = findViewById(R.id.completeU_point);
         completeDoName = findViewById(R.id.completeDoName);
@@ -53,8 +53,8 @@ public class DonationCompleteActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                UserAccount userAccount = dataSnapshot.getValue(UserAccount.class); //  만들어 뒀던 Product 객체에 데이터를 담는다.
-                completeuPoint.setText(userAccount.getSpoint() + " 씨드");
+                User user = dataSnapshot.getValue(User.class); //  만들어 뒀던 Product 객체에 데이터를 담는다.
+                completeuPoint.setText(user.getSpoint() + " 씨드");
 
             }
 

@@ -110,6 +110,7 @@ public class MainActivity extends FragmentActivity {
             }
         });
         adapter = new MainProductAdapter(arrayList, this);
+//        adapter = new ProductAdapter(arrayList, this);
         recyclerView.setAdapter(adapter);  //리사이클뷰에 어댑터연결
 
 
@@ -129,6 +130,7 @@ public class MainActivity extends FragmentActivity {
                 mIndicator.animatePageSelected(position % num_page);
             }
         });
+
         //슬라이드2
 //        mPager01.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
 //            @Override
@@ -154,32 +156,32 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
-        mainbtnCart = (Button) findViewById(R.id.mainbtnGoToCart);
-        mainbtnCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CartActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        mainbtnDonation = (Button) findViewById(R.id.mainbtnDonation);
-        mainbtnDonation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DonationMainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        mainbtnMyPage = (Button) findViewById(R.id.mainbtnMyPage);
-        mainbtnMyPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MyPageActivity.class);
-                startActivity(intent);
-            }
-        });
+//        mainbtnCart = (Button) findViewById(R.id.mainbtnGoToCart);
+//        mainbtnCart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, CartActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        mainbtnDonation = (Button) findViewById(R.id.mainbtnDonation);
+//        mainbtnDonation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, DonationMainActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        mainbtnMyPage = (Button) findViewById(R.id.mainbtnMyPage);
+//        mainbtnMyPage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, MyPageActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 }

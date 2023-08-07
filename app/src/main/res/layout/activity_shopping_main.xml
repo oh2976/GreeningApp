@@ -56,6 +56,15 @@
             android:textStyle="bold"
             android:background="@drawable/btn_bg_detailed"
             android:text="마이페이지" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnQuizMain"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:background="@drawable/btn_bg_detailed"
+            android:text="퀴즈" />
     </LinearLayout>
 
 

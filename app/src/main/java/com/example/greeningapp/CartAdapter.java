@@ -37,7 +37,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     int totalPrice = 0;
 
 
-
     public CartAdapter(Context context, List<Cart> cartList) {
         this.context = context;
         this.cartList = cartList;
@@ -65,8 +64,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.quantity.setText(cartList.get(position).getTotalQuantity());
         holder.totalPrice.setText(String.valueOf(cartList.get(position).getTotalPrice()));
 
-
-
         holder.deleteItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,16 +73,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()){
+                                if (task.isSuccessful()) {
                                     cartList.remove(cartList.get(position));
                                     notifyDataSetChanged();
+                                    ((CartActivity) context).recreate();
                                     Toast.makeText(context, "item Delete", Toast.LENGTH_SHORT).show();
-                                }else {
-                                    Toast.makeText(context, "Error"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(context, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-
             }
         });
     }
@@ -100,9 +97,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     public class CartViewHolder extends RecyclerView.ViewHolder {
 
-        TextView  name, price, quantity, totalPrice, cartTotalPrice;
+        TextView name, price, quantity, totalPrice, cartTotalPrice;
 
         ImageView deleteItem, productImg;
+
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
 

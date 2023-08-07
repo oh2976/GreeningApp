@@ -35,7 +35,7 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_my_page);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("UserAccount");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("User");
 
         Tv_my_name = findViewById(R.id.my_name);
         myPageSeed = (TextView) findViewById(R.id.myPageSeed);

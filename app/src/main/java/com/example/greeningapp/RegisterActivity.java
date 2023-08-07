@@ -42,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("UserAccount");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("User");
 
         mEtEmail = findViewById(R.id.et_email);
         mEtPwd = findViewById(R.id.et_pwd);
@@ -71,22 +71,23 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
                             FirebaseUser firebaseUser = mFirebaseAuth.getCurrentUser();
-                            UserAccount account = new UserAccount();
-                            account.setIdToken(firebaseUser.getUid());
-                            account.setEmailId(firebaseUser.getEmail());
-                            account.setPassword(strPwd);
+                            User user = new User();
+                            user.setIdToken(firebaseUser.getUid());
+                            user.setEmailId(firebaseUser.getEmail());
+                            user.setPassword(strPwd);
 
-                            account.setUsername(strName);
-                            account.setPhone(strPhone);
-                            account.setPostcode(strPostcode);
-                            account.setAddress(strAddress);
-                            account.setRegdate(getTime());
-                            account.setUpoint(0);
-                            account.setSpoint(0);
+                            user.setUsername(strName);
+                            user.setPhone(strPhone);
+                            user.setPostcode(strPostcode);
+                            user.setAddress(strAddress);
+                            user.setRegdate(getTime());
+                            user.setUpoint(0);
+                            user.setSpoint(0);
+                            user.setDoquiz("No");
 
                             //setValue : database에 insert(삽입) 행위
                             // 회원 정보 데이터베이스에 저장
-                            mDatabaseRef.child(firebaseUser.getUid()).setValue(account);
+                            mDatabaseRef.child(firebaseUser.getUid()).setValue(user);
 
                             Toast.makeText(RegisterActivity.this, "회원가입에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
                         } else {

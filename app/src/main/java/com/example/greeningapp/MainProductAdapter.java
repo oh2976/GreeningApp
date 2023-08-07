@@ -1,6 +1,8 @@
 package com.example.greeningapp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,7 @@ public class MainProductAdapter extends RecyclerView.Adapter<MainProductAdapter.
     private ArrayList<Product> arrayList;
     private Context context;
 
-    public MainProductAdapter(ArrayList<Product> arrayList, MainActivity mainActivity) {
+    public MainProductAdapter(ArrayList<Product> arrayList, Context context) {
         this.arrayList = arrayList;
         this.context = context;
     }
@@ -32,18 +34,28 @@ public class MainProductAdapter extends RecyclerView.Adapter<MainProductAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MainProductAdapter.CustomViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MainProductAdapter.CustomViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Glide.with(holder.itemView)
                 .load(arrayList.get(position).getPimg())
                 .into(holder.iv_pimg);
         holder.pname.setText(arrayList.get(position).getPname());
         holder.tv_pprice.setText(String.valueOf(arrayList.get(position).getPprice()));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProductDetailActivity.class);
+                intent.putExtra("detail", arrayList.get(position));
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         //삼합연산자
-        return (arrayList !=null ? arrayList.size() :0);
+//        return (arrayList !=null ? arrayList.size() :0);
+        return Math.min(arrayList.size(), 4);
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {

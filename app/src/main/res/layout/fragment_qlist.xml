@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_click_change"
+            android:layout_margin="8dp"
+            android:text="리스트1"
+            android:textColor="@drawable/textcolor_clicked"
+            android:id="@+id/qlist1"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_click_change"
+            android:layout_margin="8dp"
+            android:text="리스트2"
+            android:textColor="@drawable/textcolor_clicked"
+            android:id="@+id/qlist2"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_click_change"
+            android:layout_margin="8dp"
+            android:text="리스트3"
+            android:textColor="@drawable/textcolor_clicked"
+            android:id="@+id/qlist3"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_click_change"
+            android:layout_margin="8dp"
+            android:text="리스트4"
+            android:textColor="@drawable/textcolor_clicked"
+            android:id="@+id/qlist4"/>
+
+
+
+
+    </LinearLayout>
+
+</FrameLayout>

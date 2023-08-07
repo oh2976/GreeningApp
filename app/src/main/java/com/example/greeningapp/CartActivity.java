@@ -86,7 +86,6 @@ public class CartActivity extends AppCompatActivity {
                         total += cart.getTotalPrice();
                         Log.d("CartActivity", total+"");
                         overTotalAmount.setText("결제할 금액: " + String.valueOf(total));
-
                     }
 
                 }

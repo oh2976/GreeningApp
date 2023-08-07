@@ -90,7 +90,7 @@ public class OrderActivity extends AppCompatActivity {
         orderPhone = (TextView)findViewById(R.id.order_phone);
         orderAddress = (TextView)findViewById(R.id.order_address);
 
-        databaseReference2 = FirebaseDatabase.getInstance().getReference("UserAccount");
+        databaseReference2 = FirebaseDatabase.getInstance().getReference("User");
 
         databaseReference = FirebaseDatabase.getInstance().getReference("CurrentUser");
         databaseReferenceProduct = FirebaseDatabase.getInstance().getReference("Product");
@@ -103,18 +103,18 @@ public class OrderActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // 파이어베이스 데이터베이스의 데이터를 받아오는 곳
 
-                UserAccount userAccount = dataSnapshot.getValue(UserAccount.class); //  만들어 뒀던 Product 객체에 데이터를 담는다.
-                orderName.setText(userAccount.getUsername());
-                orderPhone.setText(userAccount.getPhone());
-                orderAddress.setText(userAccount.getAddress());
+                User user = dataSnapshot.getValue(User.class); //  만들어 뒀던 Product 객체에 데이터를 담는다.
+                orderName.setText(user.getUsername());
+                orderPhone.setText(user.getPhone());
+                orderAddress.setText(user.getAddress());
 
                 // MyOrder 데이터베이스에 회원 정보 저장을 위해서 변수에 따로 저장
-                strOrderName = userAccount.getUsername();
-                strOrderPhone = userAccount.getPhone();
-                strOrderAddress = userAccount.getAddress();
+                strOrderName = user.getUsername();
+                strOrderPhone = user.getPhone();
+                strOrderAddress = user.getAddress();
 
                 // 결제 시 회원 테이블에 있는 sPoint 변경을 위해서 기존 sPoint를 변수에 저장
-                userSPoint = userAccount.getSpoint();
+                userSPoint = user.getSpoint();
             }
 
 
@@ -141,6 +141,7 @@ public class OrderActivity extends AppCompatActivity {
                     total += cart.getTotalPrice();
                     Log.d("OrderActivity", total+"");
                     overTotalAmount.setText(String.valueOf(total));
+
 
                 }
                 adapter.notifyDataSetChanged(); // 리스트 저장 및 새로고침

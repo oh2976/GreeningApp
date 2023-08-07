@@ -33,6 +33,7 @@ public class ShoppingMainActivity extends AppCompatActivity {
     private Button btnCart;
     private Button btnDonation;
     private Button btnMypage;
+    private Button btnQuizMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +101,15 @@ public class ShoppingMainActivity extends AppCompatActivity {
                 Intent intent = new Intent(ShoppingMainActivity.this, MyPageActivity.class);
                 startActivity(intent);
 
+            }
+        });
+
+        btnQuizMain = (Button) findViewById(R.id.btnQuizMain);
+        btnQuizMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShoppingMainActivity.this, QuizActivity.class);
+                startActivity(intent);
             }
         });
     }
