@@ -66,6 +66,29 @@ public class DonationAdapter extends RecyclerView.Adapter<DonationAdapter.Donati
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
+//        try {
+//            Date startDate = dateFormat.parse(startDateString);
+//            Date endDate = dateFormat.parse(endDateString);
+//
+//            Date currentDate = new Date();
+//
+//            if (!currentDate.before(startDate) && !currentDate.after(endDate)) {
+//                holder.itemView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent intent = new Intent(context, DonationDetailActivity.class);
+//                        intent.putExtra("donationDetail", donationList.get(position));
+//                        context.startActivity(intent);
+//                    }
+//                });
+//            } else {
+//                // 기부 가능 기간이 아닌 경우 처리 (예: Toast 메시지 출력)
+//                Log.d("DonationAdapter", "기부 가능 기간이 아닙니다.");
+//            }
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+
         try {
             Date startDate = dateFormat.parse(startDateString);
             Date endDate = dateFormat.parse(endDateString);
@@ -84,10 +107,16 @@ public class DonationAdapter extends RecyclerView.Adapter<DonationAdapter.Donati
             } else {
                 // 기부 가능 기간이 아닌 경우 처리 (예: Toast 메시지 출력)
                 Log.d("DonationAdapter", "기부 가능 기간이 아닙니다.");
+                holder.itemView.setAlpha(0.5f);
+                holder.itemView.setClickable(false);
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+
+
+
 
 
 //

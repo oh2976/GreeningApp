@@ -83,7 +83,7 @@ public class DonationDetailActivity extends AppCompatActivity {
 
         dodetailImg = findViewById(R.id.dodetailed_img);
         dodetailName = findViewById(R.id.dodetailed_name);
-        dodetailLongImg = findViewById(R.id.dodetailed_img);
+        dodetailLongImg = findViewById(R.id.dodetail_longimg);
         dodetailStart = findViewById(R.id.dodetail_start);
         dodetailEnd = findViewById(R.id.dodetail_end);
         dodetailuPoint = findViewById(R.id.detailU_point);
