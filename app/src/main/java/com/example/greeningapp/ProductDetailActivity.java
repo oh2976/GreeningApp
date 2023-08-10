@@ -43,7 +43,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     ImageView detailedImg;
     ImageView detailedLongImg;
     TextView price, description, stock, name;
-    Button addToCart;
+    Button addToCart, buyNow;
     ImageView addItem, removeItem;
 
     Product product = null;
@@ -188,21 +188,31 @@ public class ProductDetailActivity extends AppCompatActivity {
                     }
                 });
 
-
-
-
-//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void unused) {
-//                        Toast.makeText(DetailActivity.this, "Add To A Cart", Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(DetailActivity.this, CartActivity.class);
-//                        startActivity(intent);
-//                        finish();
-//                    }
-//                });
-
             }
         });
+
+        buyNow = (Button) findViewById(R.id.buyNow);
+        buyNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductDetailActivity.this, BuyNowActivity.class);
+
+
+
+                Bundle bundle = new Bundle();
+                bundle.putString("productName", product.getPname());
+                bundle.putString("productPrice", price.getText().toString());
+                bundle.putString("totalQuantity", quantity.getText().toString());
+                bundle.putInt("totalPrice", totalPrice * totalQuantity);
+                bundle.putInt("pId", product.getPid());
+                bundle.putString("productImg", product.getPimg());
+                bundle.putInt("productStock", product.getStock());
+
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
         addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
