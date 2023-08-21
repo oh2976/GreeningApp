@@ -101,7 +101,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         if (product != null) {
             Glide.with(getApplicationContext()).load(product.getPimg()).into(detailedImg);
 //            description.setText(product.getDescription());
-            price.setText(String.valueOf(product.getPprice()) + "원");
+            price.setText(String.valueOf(product.getPprice()));
             stock.setText("재고: " + String.valueOf(product.getStock()));
             name.setText(product.getPname());
             Glide.with(getApplicationContext()).load(product.getPdetailimg()).into(detailedLongImg);
@@ -238,7 +238,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         switch (item.getItemId ()) {
             case android.R.id.home:    //툴바 뒤로가기버튼 눌렸을 때 동작
                 // ProductListActivity로 전환
-                Intent intent = new Intent(ProductDetailActivity.this, ShoppingMainActivity.class);
+                Intent intent = new Intent(ProductDetailActivity.this, CategoryActivity.class);
                 startActivity(intent);
                 finish ();
                 return true;

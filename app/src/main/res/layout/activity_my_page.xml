@@ -113,11 +113,10 @@
 
                             <ImageButton
                                 android:id="@+id/pn_move"
-                                android:background="@drawable/baseline_arrow_forward_ios_24"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                />
+                                android:background="@drawable/baseline_arrow_forward_ios_24" />
 
 
                         </LinearLayout>

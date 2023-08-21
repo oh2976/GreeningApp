@@ -23,6 +23,9 @@ public class LoginActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseRef; // 실시간 데이터베이스
     private EditText mEtEmail, mEtPwd; // 로그인 입력필드
 
+    String strEmail;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,13 +37,21 @@ public class LoginActivity extends AppCompatActivity {
         mEtEmail = findViewById(R.id.et_email);
         mEtPwd = findViewById(R.id.et_pwd);
 
+        Intent receivedIntent = getIntent();
+        if (receivedIntent != null && receivedIntent.hasExtra("userEmail")) {
+            strEmail = receivedIntent.getStringExtra("userEmail");
+            mEtEmail.setText(strEmail);
+        }
+
+
+
         Button btn_login = findViewById(R.id.btn_login);
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 로그인 요청
 
-                String strEmail = mEtEmail.getText().toString();
+                strEmail = mEtEmail.getText().toString();
                 String strPwd = mEtPwd.getText().toString();
 
                 mFirebaseAuth.signInWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {

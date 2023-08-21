@@ -4,6 +4,7 @@ package com.example.greeningapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -91,6 +92,10 @@ public class RegisterActivity extends AppCompatActivity {
                             //setValue : database에 insert(삽입) 행위
                             // 회원 정보 데이터베이스에 저장
                             mDatabaseRef.child(firebaseUser.getUid()).setValue(user);
+
+                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                            intent.putExtra("userEmail", firebaseUser.getEmail());
+                            startActivity(intent);
 
                             Toast.makeText(RegisterActivity.this, "회원가입에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
                         } else {

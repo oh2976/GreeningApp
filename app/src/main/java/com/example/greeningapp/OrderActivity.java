@@ -154,7 +154,7 @@ public class OrderActivity extends AppCompatActivity {
             }
         });
 
-        adapter = new CartAdapter(this, arrayList);
+        adapter = new OrderAdapter(this, arrayList);
         recyclerView.setAdapter(adapter); //리사이클러뷰에 어댑터 연결
 
         String orderId = databaseReference.push().getKey();
