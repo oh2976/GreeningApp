@@ -15,4 +15,11 @@
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
     <color name="colorDivider">#ECECEC</color>
+
+    <color name="green_Color">#1B8E20</color>
+    <color name="main_color">#B4D9A9</color>
+    <color name="sub1">#B4D9A9</color>
+    <color name="sub2">#94B58B</color>
+    <color name="sub4">#C6EDC2</color>
+    <color name="sub5">#EBF7F0</color>
 </resources>

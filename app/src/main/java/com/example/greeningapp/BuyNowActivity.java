@@ -131,7 +131,6 @@ public class BuyNowActivity extends AppCompatActivity {
             productStock = bundle.getInt("productStock");
 
             Log.d("BuyNow", productName + productPrice + totalQuantity + productImg + totalPrice + pId + productStock);
-
         }
 
         Glide.with(getApplicationContext()).load(productImg).into(buynow_pimg);

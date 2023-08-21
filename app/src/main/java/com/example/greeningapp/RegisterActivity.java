@@ -85,6 +85,9 @@ public class RegisterActivity extends AppCompatActivity {
                             user.setSpoint(0);
                             user.setDoquiz("No");
 
+                            user.getAttendance();
+
+
                             //setValue : database에 insert(삽입) 행위
                             // 회원 정보 데이터베이스에 저장
                             mDatabaseRef.child(firebaseUser.getUid()).setValue(user);

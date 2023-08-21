@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,8 +46,10 @@ public class MainActivity extends FragmentActivity {
     private DatabaseReference databaseReference;
     private Button goToShoppingMain;
 
-    // 임시 하단바 버튼
-    private Button mainbtnCart, mainbtnDonation, mainbtnMyPage;
+//    // 임시 하단바 버튼
+//    private Button mainbtnCart, mainbtnDonation, mainbtnMyPage;
+
+    private ImageButton navMain, navCategory, navDonation, navMypage;
 
     //슬라이드1 화면
     @Override
@@ -151,37 +154,56 @@ public class MainActivity extends FragmentActivity {
         goToShoppingMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ShoppingMainActivity.class);
+//                Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
+//                startActivity(intent);
+
+                Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
                 startActivity(intent);
             }
         });
 
-//        mainbtnCart = (Button) findViewById(R.id.mainbtnGoToCart);
-//        mainbtnCart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, CartActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        mainbtnDonation = (Button) findViewById(R.id.mainbtnDonation);
-//        mainbtnDonation.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, DonationMainActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        mainbtnMyPage = (Button) findViewById(R.id.mainbtnMyPage);
-//        mainbtnMyPage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, MyPageActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        // 하단바 아이콘 초기화
+        navMain = findViewById(R.id.navMain);
+        navCategory = findViewById(R.id.navCategory);
+        navDonation = findViewById(R.id.navDonation);
+        navMypage = findViewById(R.id.navMypage);
+
+        // 각 아이콘 클릭 이벤트 처리
+        navMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 홈 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        navCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 카테고리 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        navDonation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 기부 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(MainActivity.this, DonationMainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        navMypage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 마이페이지 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(MainActivity.this, MyPageActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }

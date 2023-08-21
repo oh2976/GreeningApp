@@ -98,7 +98,7 @@ public class ShoppingMainActivity extends AppCompatActivity {
         btnMypage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ShoppingMainActivity.this, MyPageActivity.class);
+                Intent intent = new Intent(ShoppingMainActivity.this, AttendanceActivity.class);
                 startActivity(intent);
 
             }

@@ -17,6 +17,8 @@ public class User {
 
     private int upoint;
 
+    private String attendance;
+
 
     private String doquiz;
 
@@ -113,5 +115,11 @@ public class User {
         this.doquiz = doquiz;
     }
 
+    public String getAttendance() {
+        return attendance;
+    }
 
+    public void setAttendance(String attendance) {
+        this.attendance = attendance;
+    }
 }

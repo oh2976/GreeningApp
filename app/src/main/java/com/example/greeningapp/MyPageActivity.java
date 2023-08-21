@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,11 +30,18 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
     private TextView Tv_my_name, myPageSeed;
     private FirebaseAuth mFirebaseAuth; // 파이어베이스 인증 처리
     private DatabaseReference mDatabaseRef;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_page);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_24);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("User");
@@ -63,22 +72,14 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
             });
         }
 
-        //액션바 숨기기
-        ActionBar bar = getSupportActionBar();
-//        bar.hide();
-
-        ImageButton backBtn = findViewById(R.id.back_ic);
-        backBtn.setOnClickListener(new View.OnClickListener() {
+        ImageButton pointBtn = findViewById(R.id.pn_move);
+        pointBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(MyPageActivity.this, PointHistoryActivity.class);
+                startActivity(intent);
             }
         });
-
-
-
-        ImageButton pointBtn = findViewById(R.id.pn_move);
-        pointBtn.setOnClickListener(this);
 
         ImageButton checkInBtn = findViewById(R.id.cc_move);
         checkInBtn.setOnClickListener(this);
@@ -89,14 +90,8 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         ImageButton ChangeBtn = findViewById(R.id.change_move);
         ChangeBtn.setOnClickListener(this);
 
-        ImageButton passwordChangeBtn = findViewById(R.id.pwcg_move);
-        passwordChangeBtn.setOnClickListener(this);
-
         ImageButton orderBtn = findViewById(R.id.jmny_move);
         orderBtn.setOnClickListener(this);
-
-        ImageButton termsBtn = findViewById(R.id.use_move);
-        termsBtn.setOnClickListener(this);
 
         ImageButton withdrawalBtn = findViewById(R.id.tt_move);
         withdrawalBtn.setOnClickListener(this);
@@ -116,37 +111,26 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
 
         int id = v.getId();
 
-
-
         //씨드 X
         if (id == R.id.pn_move) {
-//            intent = new Intent(MyPageActivity.this, PointHistoryActivity.class);
-//            startActivity(intent);
-            //체크내역 X
+            intent = new Intent(MyPageActivity.this, PointHistoryActivity.class);
+            startActivity(intent);
         } else if (id == R.id.cc_move) {
-//            intent = new Intent(MyPageActivity.this, CheckInActivity.class);
-//            startActivity(intent);
-            //기부 내역 X
+            intent = new Intent(MyPageActivity.this, AttendanceActivity.class);
+            startActivity(intent);
         } else if (id == R.id.gv_move) {
-//            intent = new Intent(MyPageActivity.this, DonationCertificateActivity.class);
-//            startActivity(intent);
+            intent = new Intent(MyPageActivity.this, DonationCertificateActivity.class);
+            startActivity(intent);
         } else if (id == R.id.change_move) {
-//            intent = new Intent(MyPageActivity.this, ChangeActivity.class);
-//            startActivity(intent);
-        } else if (id == R.id.pwcg_move) {
-//            intent = new Intent(MyPageActivity.this, PwdChangeActivity.class);
-//            startActivity(intent);
+            intent = new Intent(MyPageActivity.this, ChangeActivity.class);
+            startActivity(intent);
         } else if (id == R.id.jmny_move) {
             intent = new Intent(MyPageActivity.this, ReviewWriteActivity.class);
             startActivity(intent);
-
-            //이용 약관 보류
-        } else if (id == R.id.use_move) {
-//            intent = new Intent(MyPageActivity.this, TermsOfUseActivity.class);
-//            startActivity(intent);
         } else if (id == R.id.tt_move) {
-//            intent = new Intent(MyPageActivity.this, WithdrawalActivity.class);
-//            startActivity(intent);
+            intent = new Intent(MyPageActivity.this, WithdrawalActivity.class);
+            startActivity(intent);
+            //이용 약관 보류
         }
     }
 
@@ -177,5 +161,14 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         finish();
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) { //뒤로가기
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
 }
