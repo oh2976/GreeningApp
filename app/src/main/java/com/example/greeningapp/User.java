@@ -19,8 +19,12 @@ public class User {
 
     private String attendance;
 
+    private String regdate;
 
     private String doquiz;
+
+    public User() {
+    }
 
     public String getUsername() {
         return username;
@@ -78,10 +82,9 @@ public class User {
         this.regdate = regdate;
     }
 
-    private String regdate;
 
-    public User() {
-    }
+
+
 
     public String getIdToken() {
         return idToken;

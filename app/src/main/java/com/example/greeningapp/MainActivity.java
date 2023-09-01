@@ -154,11 +154,11 @@ public class MainActivity extends FragmentActivity {
         goToShoppingMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
-//                startActivity(intent);
-
                 Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
                 startActivity(intent);
+
+//                Intent intent = new Intent(MainActivity.this, ShoppingMainActivity.class);
+//                startActivity(intent);
             }
         });
 

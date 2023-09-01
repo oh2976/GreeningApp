@@ -1,6 +1,6 @@
 package com.example.greeningapp;
-
-public class UserAccount {
+//
+//public class UserAccount {
 //    private String idToken; //Firbase Uid(고유 토큰 정보)
 //    private String emailId; // 이메일 아이디
 //    private String password; // 비밀번호
@@ -112,7 +112,7 @@ public class UserAccount {
 //    public void setDoquiz(String doquiz) {
 //        this.doquiz = doquiz;
 //    }
-
-
-}
+//
+//
+//}
 

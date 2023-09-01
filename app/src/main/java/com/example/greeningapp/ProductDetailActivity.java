@@ -145,6 +145,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
 
+
+
         adapter = new ProductDetailReviewAdapter(arrayList, this);
         recyclerView.setAdapter(adapter);
 

@@ -35,6 +35,15 @@
             />
     </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -155,6 +164,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
         android:gravity="bottom">
 
         <androidx.appcompat.widget.AppCompatButton
@@ -164,8 +174,14 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginTop="16dp"
             android:background="@color/mainColor"
             android:text="저장하기" />
 
+
     </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>
