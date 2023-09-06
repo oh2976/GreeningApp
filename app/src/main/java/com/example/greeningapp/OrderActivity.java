@@ -56,9 +56,13 @@ public class OrderActivity extends AppCompatActivity {
     private TextView orderPhone;
     private TextView orderAddress;
 
+    private TextView orderPostcode;
+
     private String strOrderName;
     private String strOrderPhone;
     private String strOrderAddress;
+
+    private String strOrderPostcode;
     private int userSPoint;
 
     int total = 0;
@@ -89,6 +93,7 @@ public class OrderActivity extends AppCompatActivity {
         orderName = (TextView)findViewById(R.id.order_name);
         orderPhone = (TextView)findViewById(R.id.order_phone);
         orderAddress = (TextView)findViewById(R.id.order_address);
+        orderPostcode = (TextView) findViewById(R.id.order_postcode);
 
         databaseReference2 = FirebaseDatabase.getInstance().getReference("User");
 
@@ -107,11 +112,13 @@ public class OrderActivity extends AppCompatActivity {
                 orderName.setText(user.getUsername());
                 orderPhone.setText(user.getPhone());
                 orderAddress.setText(user.getAddress());
+                orderPostcode.setText(user.getPostcode());
 
                 // MyOrder 데이터베이스에 회원 정보 저장을 위해서 변수에 따로 저장
                 strOrderName = user.getUsername();
                 strOrderPhone = user.getPhone();
                 strOrderAddress = user.getAddress();
+                strOrderPostcode = user.getPostcode();
 
                 // 결제 시 회원 테이블에 있는 sPoint 변경을 위해서 기존 sPoint를 변수에 저장
                 userSPoint = user.getSpoint();
@@ -187,6 +194,7 @@ public class OrderActivity extends AppCompatActivity {
                         cartMap.put("userName", strOrderName);
                         cartMap.put("phone", strOrderPhone);
                         cartMap.put("address", strOrderAddress);
+                        cartMap.put("postcode", strOrderPostcode);
                         cartMap.put("orderId", myOrderId);
                         cartMap.put("orderDate", getTime());
                         cartMap.put("orderImg", model.getProductImg());

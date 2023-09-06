@@ -27,7 +27,7 @@ public class OrderCompleteActivity extends AppCompatActivity {
 
     private String orderId, myOrderId;
 
-    private TextView cmpOrderId, cmpOrderDate, cmp_totalPrice, cmp_name, cmp_phone, cmp_address;
+    private TextView cmpOrderId, cmpOrderDate, cmp_totalPrice, cmp_name, cmp_phone, cmp_address, cmp_postcode;
 
     private Button btnGoMain;
     private FirebaseAuth firebaseAuth;
@@ -66,6 +66,7 @@ public class OrderCompleteActivity extends AppCompatActivity {
         cmp_name = findViewById(R.id.cmp_name);
         cmp_phone = findViewById(R.id.cmp_phone);
         cmp_address = findViewById(R.id.cmp_address);
+        cmp_postcode = (TextView) findViewById(R.id.cmp_postcode);
 
         myOrderList = new ArrayList<>();
 
@@ -86,6 +87,7 @@ public class OrderCompleteActivity extends AppCompatActivity {
                         cmp_name.setText(myOrder.getUserName());
                         cmp_phone.setText(myOrder.getPhone());
                         cmp_address.setText(myOrder.getAddress());
+                        cmp_postcode.setText(myOrder.getPostcode());
                     }
 
                 }
@@ -102,7 +104,7 @@ public class OrderCompleteActivity extends AppCompatActivity {
         btnGoMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(OrderCompleteActivity.this, ShoppingMainActivity.class);
+                Intent intent = new Intent(OrderCompleteActivity.this, CategoryActivity.class);
                 startActivity(intent);
             }
         });

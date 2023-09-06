@@ -28,9 +28,9 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="2dp"
             android:layout_centerInParent="true"
-            android:background="#D9D9D9" />
+            android:background="@color/back" />
 
         <ImageView
             android:layout_width="200dp"
@@ -49,7 +49,7 @@
             android:textAlignment="center"
             android:textColor="@color/subColor"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,27 +59,28 @@
             android:textAlignment="center"
             android:textColor="@color/subColor"
             android:textSize="20sp"
-            android:textStyle="bold" />
+             />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="2dp"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="8dp"
-            android:background="#D9D9D9" />
+            android:layout_marginRight="16dp"
+            android:background="@color/back" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_margin="16dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="기부명"
+                android:textColor="@color/textColorGray"
+                android:text="기부 프로젝트명"
                 android:textSize="16sp" />
 
             <View
@@ -100,12 +101,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/textColorGray"
                 android:text="기부일자"
                 android:textSize="16sp" />
 
@@ -127,12 +130,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_margin="16dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/textColorGray"
                 android:text="기부씨드"
                 android:textSize="16sp" />
 
@@ -145,6 +149,7 @@
                 android:id="@+id/completeDoPoint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 android:layout_gravity="right"
                 android:text="기부씨드"
                 android:textSize="16sp"
@@ -160,7 +165,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/btn_bg_detailed"
         android:text="홈으로 돌아가기"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"

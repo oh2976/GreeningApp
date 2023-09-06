@@ -1,5 +1,4 @@
 package com.example.greeningapp;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,7 @@ public class SearchAdapter extends FirebaseRecyclerAdapter<Product,SearchAdapter
     @Override
     protected void onBindViewHolder(@NonNull myviewholder holder, int position, @NonNull Product product) {
         holder.pname.setText(getItem(position).getPname());
-//        holder.psay.setText(getItem(position).getPsay());
+        holder.psay.setText(getItem(position).getPsay());
         holder.pprice.setText(String.valueOf(getItem(position).getPprice()));
         Glide.with(holder.pimg.getContext()).load(getItem(position).getPimg()).into(holder.pimg);
     }

@@ -1,4 +1,5 @@
 package com.example.greeningapp;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -110,7 +111,7 @@ public class SearchActivity extends AppCompatActivity {
     private void processsearch(String s) {
         FirebaseRecyclerOptions<Product> options =
                 new FirebaseRecyclerOptions.Builder<Product>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Product").orderByChild("pname").startAt(s).endAt(s + "\uf8ff"), Product.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Product").orderByChild("psearch").startAt(s).endAt(s + "\uf8ff"), Product.class)
                         .build();
 
         adapter = new SearchAdapter(options);

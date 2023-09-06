@@ -141,9 +141,9 @@
             android:id="@+id/doDonate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_bg_detailed"
+            android:background="@color/mainColor"
             android:text="기부하기"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
     </LinearLayout>

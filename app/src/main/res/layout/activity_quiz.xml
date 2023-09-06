@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".QuizActivity">
 
@@ -23,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Quiz"
+            android:text="오늘의 퀴즈"
             android:textColor="#000000"
             android:textSize="20sp"></TextView>
 
@@ -47,7 +48,8 @@
             <FrameLayout
                 android:id="@+id/fragmentFrame1"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="200dp"
+                android:background="@drawable/round_box"
                 android:layout_margin="24dp" />
 
 
@@ -64,23 +66,25 @@
     </ScrollView>
 
     <LinearLayout
-        android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
+        android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        >
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_bg_detailed"
             android:id="@+id/btnDoQuiz"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:text="퀴즈 풀기"/>
+            android:background="@drawable/circle_btn"
+            android:text="퀴즈 풀기"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

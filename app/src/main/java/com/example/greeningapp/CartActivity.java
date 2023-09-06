@@ -53,6 +53,8 @@ public class CartActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
 
+
+
         recyclerView = findViewById(R.id.recyclerview_cart);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
@@ -85,7 +87,7 @@ public class CartActivity extends AppCompatActivity {
 
                         total += cart.getTotalPrice();
                         Log.d("CartActivity", total+"");
-                        overTotalAmount.setText("결제할 금액: " + String.valueOf(total));
+                        overTotalAmount.setText(String.valueOf(total));
                     }
 
                 }

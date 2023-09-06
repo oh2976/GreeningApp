@@ -18,6 +18,8 @@ public class MyOrder  implements Serializable {
     private  String orderImg;
     private  String dataId;
 
+    private String postcode;
+
     public MyOrder() {
 
     }
@@ -37,6 +39,15 @@ public class MyOrder  implements Serializable {
     public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
+
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
 
     public int getOverTotalPrice() {
         return overTotalPrice;

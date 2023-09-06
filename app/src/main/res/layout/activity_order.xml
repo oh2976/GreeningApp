@@ -7,14 +7,6 @@
     tools:context=".OrderActivity"
     android:orientation="vertical">
 
-    <!--    <TextView-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="360dp"-->
-    <!--        android:layout_gravity="center"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:textStyle="bold"-->
-    <!--        android:text="주문완료"/>-->
 
 
 
@@ -43,13 +35,14 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="5dp"
+        android:layout_height="2dp"
         android:layout_centerInParent="true"
-        android:background="#F5F5F5"/>
+        android:background="@color/back"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="vertical"
         >
 
@@ -57,6 +50,7 @@
             android:id="@+id/bio_scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:layout_weight="1">
 
             <LinearLayout
@@ -71,21 +65,13 @@
                     android:text="주문상품"
                     android:textSize="20sp"
                     android:textStyle="bold"
+                    android:layout_margin="8dp"
                     />
-
-
-                <!--                <ListView-->
-                <!--                    android:id="@+id/listview"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginTop="20dp" />-->
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView_order"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
-
-
 
 
                 <LinearLayout
@@ -98,6 +84,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:textStyle="bold"
                         android:text="총 결제 금액"
                         android:textSize="20sp"
                         />
@@ -120,9 +107,9 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="5dp"
+                    android:layout_height="3dp"
                     android:layout_centerInParent="true"
-                    android:background="#F5F5F5"/>
+                    android:background="@color/back"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -134,7 +121,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="배송지"
+                        android:text="주문자 및 배송지 정보"
                         android:textSize="20sp"
                         android:textStyle="bold"
 
@@ -214,11 +201,24 @@
                             android:textStyle="bold"/>
 
                         <TextView
-                            android:id="@+id/order_address"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/order_postcode"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="서울특별시"
+                            android:background="@drawable/square_box"
+                            android:padding="8dp"
+                            android:text="우편번호"
+                            android:textSize="16sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/order_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/square_box"
+                            android:padding="8dp"
+                            android:text="상세 주소"
                             android:textSize="16sp"
                             android:textStyle="bold"/>
                     </LinearLayout>
@@ -227,9 +227,9 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="5dp"
+                    android:layout_height="3dp"
                     android:layout_centerInParent="true"
-                    android:background="#F5F5F5"/>
+                    android:background="@color/back"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -237,12 +237,14 @@
                     android:orientation="vertical"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="결제 수단"
                         android:textStyle="bold"
                         android:textSize="20sp"/>
+
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
@@ -252,7 +254,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:background="@drawable/btn_bg_detailed"
+            android:layout_margin="8dp"
+            android:background="@drawable/custom_btn"
             android:text="결제하기" />
 
     </LinearLayout>

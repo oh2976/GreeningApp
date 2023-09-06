@@ -11,6 +11,25 @@ public class Product implements Serializable {
     private int stock;
     private int category;
 
+    private String psay;
+    private String psearch;
+
+    public String getPsay() {
+        return psay;
+    }
+
+    public void setPsay(String psay) {
+        this.psay = psay;
+    }
+
+    public String getPsearch() {
+        return psearch;
+    }
+
+    public void setPsearch(String psearch) {
+        this.psearch = psearch;
+    }
+
     public Product(){
     }
 

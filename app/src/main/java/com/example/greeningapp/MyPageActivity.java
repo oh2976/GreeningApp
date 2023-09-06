@@ -84,6 +84,9 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         ImageButton checkInBtn = findViewById(R.id.cc_move);
         checkInBtn.setOnClickListener(this);
 
+        ImageButton quizBtn = findViewById(R.id.qz_move);
+        quizBtn.setOnClickListener(this);
+
         ImageButton donationBtn = findViewById(R.id.gv_move);
         donationBtn.setOnClickListener(this);
 
@@ -117,6 +120,9 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
             startActivity(intent);
         } else if (id == R.id.cc_move) {
             intent = new Intent(MyPageActivity.this, AttendanceActivity.class);
+            startActivity(intent);
+        }else if (id == R.id.qz_move) {
+            intent = new Intent(MyPageActivity.this, QuizActivity.class);
             startActivity(intent);
         } else if (id == R.id.gv_move) {
             intent = new Intent(MyPageActivity.this, DonationCertificateActivity.class);

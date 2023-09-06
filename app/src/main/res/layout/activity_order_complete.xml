@@ -32,13 +32,14 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="5dp"
+        android:layout_height="2dp"
         android:layout_centerInParent="true"
         android:background="#D9D9D9"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="vertical"
         >
 
@@ -64,6 +65,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20sp"
+                        android:layout_marginTop="8dp"
                         android:textStyle="bold"
                         android:text="No.주문번호"/>
 
@@ -112,6 +114,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:textStyle="bold"
                         android:text="총 결제 금액"
                         android:textSize="20sp"
                         />
@@ -136,7 +139,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
                     android:layout_centerInParent="true"
-                    android:background="#D9D9D9"/>
+                    android:background="@color/back"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -228,11 +231,22 @@
                             android:textStyle="bold"/>
 
                         <TextView
-                            android:id="@+id/cmp_address"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/cmp_postcode"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="서울특별시"
+                            android:padding="8dp"
+                            android:text="우편번호"
+                            android:textSize="16sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/cmp_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:padding="8dp"
+                            android:text="상세 주소"
                             android:textSize="16sp"
                             android:textStyle="bold"/>
                     </LinearLayout>
@@ -243,7 +257,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
                     android:layout_centerInParent="true"
-                    android:background="#D9D9D9"/>
+                    android:background="@color/back"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
