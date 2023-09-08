@@ -6,9 +6,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -110,5 +112,20 @@ public class CartActivity extends AppCompatActivity {
             }
 
         });
+
     }
+//    @SuppressLint("NonConstantResourceId")
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId ()) {
+//            case android.R.id.home:    //툴바 뒤로가기버튼 눌렸을 때 동작
+//                // ProductListActivity로 전환
+//                Intent intent = new Intent(CartActivity.this, ProductDetailActivity.class);
+//                startActivity(intent);
+//                finish ();
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 }

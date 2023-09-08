@@ -182,6 +182,8 @@ public class OrderActivity extends AppCompatActivity {
 
                 if (list != null && list.size() > 0) {
                     for (Cart model : list) {
+                        
+                        String eachOrderedId = model.getDataId();
 
                         final HashMap<String, Object> cartMap = new HashMap<>();
 
@@ -198,6 +200,8 @@ public class OrderActivity extends AppCompatActivity {
                         cartMap.put("orderId", myOrderId);
                         cartMap.put("orderDate", getTime());
                         cartMap.put("orderImg", model.getProductImg());
+                        cartMap.put("eachOrderedId", eachOrderedId);
+
 
                         // 결제 된 재고만큼 기존 재고에서 변경한 값을 변수에 저장
                         int totalStock = model.getProductStock() - Integer.valueOf(model.getTotalQuantity());
@@ -206,7 +210,7 @@ public class OrderActivity extends AppCompatActivity {
 
                         // 결제 버튼을 누르면 데이터베이스에 MyOrder 테이블 생성 코드
                         // 데이터베이스 경로 변경됨.
-                        databaseReference.child(firebaseUser.getUid()).child("MyOrder").child(myOrderId).child(model.getDataId()).setValue(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        databaseReference.child(firebaseUser.getUid()).child("MyOrder").child(myOrderId).child(eachOrderedId).setValue(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 Toast.makeText(OrderActivity.this, "주문완료", Toast.LENGTH_SHORT).show();
