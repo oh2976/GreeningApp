@@ -189,7 +189,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                         finish();
                     }
                 });
-
             }
         });
 
@@ -198,8 +197,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProductDetailActivity.this, BuyNowActivity.class);
-
-
 
                 Bundle bundle = new Bundle();
                 bundle.putString("productName", product.getPname());
@@ -224,6 +221,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                 }
             }
         });
+
         removeItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

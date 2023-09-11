@@ -104,7 +104,7 @@ public class CartActivity extends AppCompatActivity {
         buyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CartActivity.this, "버튼 누름", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(CartActivity.this, "버튼 누름", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(CartActivity.this, OrderActivity.class);
                 intent.putExtra("itemList", (Serializable) cartList);

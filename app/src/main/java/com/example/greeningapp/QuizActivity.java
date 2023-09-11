@@ -81,7 +81,7 @@ public class QuizActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(QuizActivity.this, "버튼을 눌렀습니다." + quizResult, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(QuizActivity.this, "버튼을 눌렀습니다." + quizResult, Toast.LENGTH_SHORT).show();
 
                 if("No".equals(quizResult)){
                     FragmentManager fm2 = getSupportFragmentManager();

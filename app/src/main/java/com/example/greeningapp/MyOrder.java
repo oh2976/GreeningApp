@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class MyOrder  implements Serializable {
     private String address;
     private String orderId;
+    private String eachOrderedId;
     private int overTotalPrice;
     private String phone;
     private int productId;
@@ -38,6 +39,14 @@ public class MyOrder  implements Serializable {
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
+    }
+
+    public String getEachOrderedId() {
+        return eachOrderedId;
+    }
+
+    public void setEachOrderedId(String eachOrderedId) {
+        this.eachOrderedId = eachOrderedId;
     }
 
     public String getPostcode() {

@@ -218,7 +218,7 @@ public class DonationDetailActivity extends AppCompatActivity {
                                     databaseReference4.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(donateMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
-                                            Toast.makeText(DonationDetailActivity.this, "point table create", Toast.LENGTH_SHORT).show();
+//                                            Toast.makeText(DonationDetailActivity.this, "point table create", Toast.LENGTH_SHORT).show();
                                             dialog.show();
                                         }
                                     });
@@ -255,7 +255,7 @@ public class DonationDetailActivity extends AppCompatActivity {
                     dialog.dismiss();
 
                     // 기부 하고 싶은 씨드 정보 토스트
-                    Toast.makeText(DonationDetailActivity.this, wannaDonatepoint.getText(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(DonationDetailActivity.this, wannaDonatepoint.getText(), Toast.LENGTH_SHORT).show();
                     Log.d("DonationDetailActivity",databaseReference2.child(firebaseUser.getUid()).child("spoint").toString());
                 }
 
@@ -273,7 +273,7 @@ public class DonationDetailActivity extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(DonationDetailActivity.this, "임시 Point 테이블 삭제 완료", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(DonationDetailActivity.this, "임시 Point 테이블 삭제 완료", Toast.LENGTH_SHORT).show();
                             }
                         });
             }
@@ -298,7 +298,7 @@ public class DonationDetailActivity extends AppCompatActivity {
                         databaseReference.child(firebaseUser.getUid()).setValue(donateMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(DonationDetailActivity.this, "point table create", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(DonationDetailActivity.this, "point table create", Toast.LENGTH_SHORT).show();
                                 dialog.show();
                             }
                         });

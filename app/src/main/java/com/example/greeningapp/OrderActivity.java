@@ -213,7 +213,7 @@ public class OrderActivity extends AppCompatActivity {
                         databaseReference.child(firebaseUser.getUid()).child("MyOrder").child(myOrderId).child(eachOrderedId).setValue(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(OrderActivity.this, "주문완료", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(OrderActivity.this, "주문완료", Toast.LENGTH_SHORT).show();
                                 int b = list.size();
                                 while (b > 0){
                                     int pId = model.getpId();

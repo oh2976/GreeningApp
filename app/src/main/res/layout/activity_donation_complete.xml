@@ -167,6 +167,7 @@
         android:text="홈으로 돌아가기"
         android:textColor="@color/white"
         android:textStyle="bold"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
         app:layout_constraintVertical_bias="1.0"
