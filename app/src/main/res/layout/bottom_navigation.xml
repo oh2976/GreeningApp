@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/bottomNavigation"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
+    android:layout_height="56dp"
     android:layout_gravity="bottom"
     android:orientation="horizontal"
-    android:background="@color/sub1">
+    android:background="@color/white">
 
     <ImageButton
         android:id="@+id/navMain"
@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/baseline_home_24" />
+        android:src="@drawable/home_logo_size" />
 
     <ImageButton
         android:id="@+id/navCategory"
@@ -22,7 +22,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/baseline_shopping_cart_24" />
+        android:src="@drawable/shopping_logo_size" />
 
     <ImageButton
         android:id="@+id/navDonation"
@@ -30,7 +30,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/baseline_volunteer_activism_24" />
+        android:src="@drawable/donation_logo_size" />
 
     <ImageButton
         android:id="@+id/navMypage"
@@ -38,6 +38,6 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/baseline_account_circle_24" />
+        android:src="@drawable/user_logo_size" />
 
 </LinearLayout>

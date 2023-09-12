@@ -12,7 +12,7 @@
         android:text="정답입니다!"
         android:layout_gravity="center"
         android:textColor="@color/white"
-        android:textSize="30sp"
+        android:textSize="24sp"
         android:textStyle="bold"/>
 
 </FrameLayout>

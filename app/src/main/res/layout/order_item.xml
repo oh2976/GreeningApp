@@ -28,6 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="상품명"
+                android:textSize="16sp"
                 android:layout_margin="5dp"/>
 
             <LinearLayout
@@ -40,6 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="가격"
+                    android:textSize="16sp"
                     android:layout_margin="5dp"/>
 
                 <View
@@ -52,6 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0개"
+                    android:textSize="16sp"
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="15dp"
 

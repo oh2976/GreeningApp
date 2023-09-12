@@ -10,7 +10,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -30,7 +33,6 @@
                     android:scaleType="centerCrop" />
 
 
-
                 <TextView
                     android:id="@+id/CERTdetailed_name"
                     android:layout_width="wrap_content"
@@ -48,13 +50,13 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="10dp"
                     android:text="프로젝트 기간"
-                    android:textSize="15sp" />
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="2dp">
+                    android:layout_marginTop="2dp"
+                    android:orientation="horizontal">
                     1
 
                     <TextView
@@ -63,13 +65,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:layout_marginStart="16dp"
-
+                        android:textSize="16sp"
                         android:gravity="right"
-                        android:text="기부 프로젝트 시작 기간"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/donation_name"
-                        app:layout_constraintVertical_bias="0.0" />
+                        android:text="기부 프로젝트 시작 기간" />
 
                     <TextView
                         android:id="@+id/hyper"
@@ -78,9 +76,7 @@
                         android:layout_gravity="right"
                         android:gravity="right"
                         android:text=" ~ "
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/donation_start"
-                        app:layout_constraintTop_toBottomOf="@+id/donation_name" />
+                        android:textSize="16sp"/>
 
                     <TextView
                         android:id="@+id/CERTdetail_end"
@@ -89,15 +85,9 @@
                         android:layout_gravity="right"
                         android:gravity="right"
                         android:text="기부 프로젝트 끝나는 기간"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-
-                        app:layout_constraintStart_toEndOf="@+id/hyper"
-                        app:layout_constraintTop_toBottomOf="@+id/donation_name" />
+                        android:textSize="16sp"/>
 
                 </LinearLayout>
-
 
 
                 <ImageView

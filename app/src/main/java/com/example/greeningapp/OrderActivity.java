@@ -199,6 +199,7 @@ public class OrderActivity extends AppCompatActivity {
                         cartMap.put("postcode", strOrderPostcode);
                         cartMap.put("orderId", myOrderId);
                         cartMap.put("orderDate", getTime());
+                        cartMap.put("doReview", "No");
                         cartMap.put("orderImg", model.getProductImg());
                         cartMap.put("eachOrderedId", eachOrderedId);
 

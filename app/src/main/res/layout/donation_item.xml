@@ -34,7 +34,7 @@
                 android:layout_gravity="left"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:text="기부 프로젝트 명"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -50,6 +50,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:textSize="16sp"
                 android:gravity="right"
                 android:text="기부 프로젝트 시작 기간"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -64,6 +65,7 @@
                 android:layout_gravity="right"
                 android:gravity="right"
                 android:text=" ~ "
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/donation_start"
                 app:layout_constraintTop_toBottomOf="@+id/donation_name" />
@@ -75,10 +77,10 @@
                 android:layout_gravity="right"
                 android:gravity="right"
                 android:text="기부 프로젝트 끝나는 기간"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-
                 app:layout_constraintStart_toEndOf="@+id/hyper"
                 app:layout_constraintTop_toBottomOf="@+id/donation_name" />
 

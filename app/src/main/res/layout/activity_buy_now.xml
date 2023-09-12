@@ -10,15 +10,13 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginLeft="1dp"
         android:background="@color/toolbar"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:theme="?attr/actionBarTheme">
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,13 +31,14 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="5dp"
+        android:layout_height="2dp"
         android:layout_centerInParent="true"
-        android:background="#F5F5F5"/>
+        android:background="@color/back"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="vertical"
         >
 
@@ -61,6 +60,7 @@
                     android:text="주문상품"
                     android:textSize="20sp"
                     android:textStyle="bold"
+                    android:layout_margin="8dp"
                     />
 
                 <LinearLayout
@@ -90,7 +90,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Product Name"
+                                android:text="상품명"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -113,7 +113,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Product Price"
+                                android:text="상품 가격"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -137,7 +137,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Total Price"
+                                android:text="총 가격"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -160,7 +160,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Total Quantity"
+                                android:text="총 개수"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -190,6 +190,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="총 결제 금액"
+                        android:textStyle="bold"
                         android:textSize="20sp"
                         />
 
@@ -211,9 +212,9 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="5dp"
+                    android:layout_height="3dp"
                     android:layout_centerInParent="true"
-                    android:background="#F5F5F5"/>
+                    android:background="@color/back"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -225,10 +226,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="배송지"
+                        android:text="주문자 및 배송지 정보"
                         android:textSize="20sp"
                         android:textStyle="bold"
-
                         android:layout_marginBottom="8dp"
                         />
 
@@ -305,11 +305,24 @@
                             android:textStyle="bold"/>
 
                         <TextView
-                            android:id="@+id/buynow_address"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/buynow_postcode"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="서울특별시"
+                            android:background="@drawable/square_box"
+                            android:padding="8dp"
+                            android:text="우편번호"
+                            android:textSize="16sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/buynow_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/square_box"
+                            android:padding="8dp"
+                            android:text="상세 주소"
                             android:textSize="16sp"
                             android:textStyle="bold"/>
                     </LinearLayout>
@@ -318,9 +331,9 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="5dp"
+                    android:layout_height="3dp"
                     android:layout_centerInParent="true"
-                    android:background="#F5F5F5"/>
+                    android:background="@color/back"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -328,12 +341,14 @@
                     android:orientation="vertical"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="결제 수단"
                         android:textStyle="bold"
                         android:textSize="20sp"/>
+
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
@@ -343,8 +358,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="16sp"
             android:background="@drawable/btn_bg_detailed"
-            android:text="결제하기" />
+            android:layout_margin="8dp"
+            android:text="결제하기"/>
 
     </LinearLayout>
 

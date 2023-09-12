@@ -17,6 +17,7 @@
             android:background="@drawable/btn_click_change"
             android:layout_margin="8dp"
             android:text="리스트1"
+            android:textSize="16sp"
             android:textColor="@drawable/textcolor_clicked"
             android:id="@+id/qlist1"/>
 
@@ -26,6 +27,7 @@
             android:background="@drawable/btn_click_change"
             android:layout_margin="8dp"
             android:text="리스트2"
+            android:textSize="16sp"
             android:textColor="@drawable/textcolor_clicked"
             android:id="@+id/qlist2"/>
 
@@ -35,6 +37,7 @@
             android:background="@drawable/btn_click_change"
             android:layout_margin="8dp"
             android:text="리스트3"
+            android:textSize="16sp"
             android:textColor="@drawable/textcolor_clicked"
             android:id="@+id/qlist3"/>
 
@@ -43,6 +46,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/btn_click_change"
             android:layout_margin="8dp"
+            android:textSize="16sp"
             android:text="리스트4"
             android:textColor="@drawable/textcolor_clicked"
             android:id="@+id/qlist4"/>

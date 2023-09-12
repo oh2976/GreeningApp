@@ -49,10 +49,12 @@ public class BuyNowActivity extends AppCompatActivity {
     private TextView orderName;
     private TextView orderPhone;
     private TextView orderAddress;
+    private  TextView orderPostcode;
 
     private String strOrderName;
     private String strOrderPhone;
     private String strOrderAddress;
+    private String strOrderPostcode;
     private int userSPoint;
 
     private String productName, productPrice, totalQuantity, productImg;
@@ -86,6 +88,7 @@ public class BuyNowActivity extends AppCompatActivity {
         orderName = findViewById(R.id.buynow_name);
         orderPhone = findViewById(R.id.buynow_phone);
         orderAddress = findViewById(R.id.buynow_address);
+        orderPostcode = (TextView) findViewById(R.id.buynow_postcode);
         databaseReference2 = FirebaseDatabase.getInstance().getReference("User");
 
         databaseReference = FirebaseDatabase.getInstance().getReference("CurrentUser");
@@ -107,6 +110,7 @@ public class BuyNowActivity extends AppCompatActivity {
                 strOrderName = user.getUsername();
                 strOrderPhone = user.getPhone();
                 strOrderAddress = user.getAddress();
+                strOrderPostcode = user.getPostcode();
 
                 userSPoint = user.getSpoint();
 
@@ -172,9 +176,12 @@ public class BuyNowActivity extends AppCompatActivity {
                 cartMap.put("userName", strOrderName);
                 cartMap.put("phone", strOrderPhone);
                 cartMap.put("address", strOrderAddress);
+                cartMap.put("postcode", strOrderPostcode);
                 cartMap.put("orderId", myOrderId);
                 cartMap.put("orderDate", getTime());
                 cartMap.put("orderImg", productImg);
+                cartMap.put("eachOrderedId", orderId);
+                cartMap.put("doReview", "No");
                 Log.d("OrderActivity1", total+"");
 
                 int totalStock = productStock - Integer.valueOf(totalQuantity);
