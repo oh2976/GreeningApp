@@ -7,13 +7,11 @@
     android:orientation="vertical">
 
     <TextView
-        android:text="1"
+        android:id="@+id/slide02_main1"
         android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:textSize="50sp"
+        android:layout_height="150dp"
         android:gravity="center"
-        android:textColor="#000000"
-        android:background="#70BC7C"
+        android:background="@drawable/small1"
         />
 
 </LinearLayout>

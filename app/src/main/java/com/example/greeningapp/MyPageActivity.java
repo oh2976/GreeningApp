@@ -131,7 +131,7 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
             intent = new Intent(MyPageActivity.this, ChangeActivity.class);
             startActivity(intent);
         } else if (id == R.id.jmny_move) {
-            intent = new Intent(MyPageActivity.this, ReviewWriteActivity.class);
+            intent = new Intent(MyPageActivity.this, OrderHistoryActivity.class);
             startActivity(intent);
         } else if (id == R.id.tt_move) {
             intent = new Intent(MyPageActivity.this, WithdrawalActivity.class);

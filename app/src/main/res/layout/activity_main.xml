@@ -5,35 +5,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/main_logo_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:layout_height="70dp"
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/logo_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="8dp"
-            app:srcCompat="@drawable/greening_main_logo"
-            tools:layout_editor_absoluteX="16dp" />
-
-        <TextView
-            android:id="@+id/logo_name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="22dp"
-            android:layout_margin="10dp"
-            android:text="Green+ing"
-            android:textColor="#5BA646"
-            android:textSize="27sp"
-            app:layout_constraintStart_toEndOf="@+id/logoimage"
-            tools:layout_editor_absoluteY="24dp" />
-    </LinearLayout>
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/logo_image"
+                android:layout_width="110dp"
+                android:layout_height="60dp"
+                android:background="@drawable/greening_main_logo"
+                tools:layout_editor_absoluteX="16dp" />
+
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -44,6 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
@@ -63,8 +63,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="335dp"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp">
+                            >
 
                             <androidx.viewpager2.widget.ViewPager2
                                 android:id="@+id/viewpager"
@@ -88,9 +87,9 @@
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="140dp"
-                            android:layout_marginLeft="12dp"
+
                             android:layout_marginTop="20dp"
-                            android:layout_marginRight="12dp">
+                            >
 
                             <androidx.viewpager2.widget.ViewPager2
                                 android:id="@+id/viewpager01"
@@ -106,7 +105,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="42dp"
                                 android:layout_gravity="bottom"
-                                android:layout_marginBottom="10dp"/>
+                                android:layout_marginBottom="8dp"/>
                         </FrameLayout>
 
                     </LinearLayout>
@@ -121,7 +120,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="쇼핑 상품"
-                            android:textSize="18sp"
+                            android:textSize="20sp"
                             android:textColor="@color/black"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -134,9 +133,9 @@
                             android:id="@+id/recyclerView_main"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
                             android:nestedScrollingEnabled="false"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -154,16 +153,17 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="40dp"
-                        android:background="@drawable/custom_btn_white"
+                        android:background="@drawable/main_btn"
                         android:gravity="center|center_vertical"
                         android:text="목록 더보기"
                         android:textColor="@color/black"
-                        android:textSize="19sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
 
             </androidx.core.widget.NestedScrollView>
+
         </LinearLayout>
     </ScrollView>
 

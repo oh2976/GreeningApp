@@ -1,6 +1,7 @@
 package com.example.greeningapp;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class MyOrder  implements Serializable {
     private String address;
@@ -15,11 +16,14 @@ public class MyOrder  implements Serializable {
     private String totalQuantity;
     private String userName;
     private String orderDate;
+    private String doReview;
 
     private  String orderImg;
     private  String dataId;
 
     private String postcode;
+
+    private ArrayList<MyOrder> childModelArrayList;
 
     public MyOrder() {
 
@@ -144,5 +148,21 @@ public class MyOrder  implements Serializable {
 
     public void setDataId(String dataId) {
         this.dataId = dataId;
+    }
+
+    public String getDoReview() {
+        return doReview;
+    }
+
+    public void setDoReview(String doReview) {
+        this.doReview = doReview;
+    }
+
+    public ArrayList<MyOrder> getChildModelArrayList() {
+        return childModelArrayList;
+    }
+
+    public void setChildModelArrayList(ArrayList<MyOrder> childModelArrayList) {
+        this.childModelArrayList = childModelArrayList;
     }
 }
