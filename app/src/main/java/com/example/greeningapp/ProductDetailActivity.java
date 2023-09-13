@@ -102,7 +102,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             Glide.with(getApplicationContext()).load(product.getPimg()).into(detailedImg);
 //            description.setText(product.getDescription());
             price.setText(String.valueOf(product.getPprice()));
-            stock.setText("재고: " + String.valueOf(product.getStock()));
+            stock.setText("( 재고: " + String.valueOf(product.getStock()) + " )");
             name.setText(product.getPname());
             Glide.with(getApplicationContext()).load(product.getPdetailimg()).into(detailedLongImg);
 
@@ -189,6 +189,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         finish();
                     }
                 });
+
             }
         });
 
@@ -197,6 +198,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProductDetailActivity.this, BuyNowActivity.class);
+
+
 
                 Bundle bundle = new Bundle();
                 bundle.putString("productName", product.getPname());
@@ -221,7 +224,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                 }
             }
         });
-
         removeItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -12,12 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!--  상단바  -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/back"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,33 +24,64 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:text="출석체크"
-                android:textColor="#000000"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:layout_gravity="center" />
         </androidx.appcompat.widget.Toolbar>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="#EFEFEF">
 
-        <FrameLayout
-            android:id="@+id/calendarContainer"
+        <TextView
+            android:id="@+id/tv_attend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            android:text="매일 출첵하고\n씨드 적립 받으세요!"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-            <CalendarView
-                android:id="@+id/calendarView"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_calendar"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_attend">
+
+            <FrameLayout
+                android:id="@+id/calendarContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/constraintLayout2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <CalendarView
+                    android:id="@+id/calendarView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/tv_attendance_completed"
@@ -65,38 +94,44 @@
                 android:visibility="invisible"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/calendarContainer"
+                app:layout_constraintStart_toStartOf="@+id/calendarContainer"
+                app:layout_constraintEnd_toEndOf="@+id/calendarContainer"
+                app:layout_constraintBottom_toBottomOf="@+id/calendarContainer"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_attendcheck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="출석체크 하기"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:background="@drawable/custom_btn"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/calendarContainer" />
 
-        </FrameLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="홈으로 이동하기"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:background="@drawable/custom_btn_register"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/btn_attendcheck"
+                app:layout_constraintStart_toStartOf="@+id/btn_attendcheck"
+                app:layout_constraintTop_toBottomOf="@+id/btn_attendcheck"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"/>
 
-        <Button
-            android:id="@+id/btn_attendcheck"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custom_btn"
-            android:text="출석체크"
-            android:textStyle="bold"
-            android:visibility="visible"
-            android:layout_marginTop="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/calendarContainer"
-            app:layout_constraintTop_toBottomOf="@+id/calendarContainer" />
-
-        <Button
-            android:id="@+id/btn_home"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custom_btn"
-            android:text="홈으로 이동하기"
-            android:textStyle="bold"
-            android:visibility="visible"
-            android:layout_marginTop="30dp"
-            app:layout_constraintEnd_toEndOf="@+id/btn_attendcheck"
-            app:layout_constraintStart_toStartOf="@+id/btn_attendcheck"
-            app:layout_constraintTop_toBottomOf="@+id/btn_attendcheck" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
