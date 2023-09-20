@@ -53,8 +53,7 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
+    @Override    protected void onStart() {
         super.onStart();
         //어뎁터 갱신 시작
         adapter.startListening();

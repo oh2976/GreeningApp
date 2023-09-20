@@ -212,6 +212,7 @@ public class DonationDetailActivity extends AppCompatActivity {
                                     donateMap.put("donationName", donationName);
                                     donateMap.put("donationPoint", Integer.parseInt(wannaDonatepoint.getText().toString()));
                                     donateMap.put("donationDate", getTime());
+                                    donateMap.put("type", "usepoint");
                                     userAccountName = user.getUsername();
 
                                     // 기부한 정보 저장
@@ -230,6 +231,7 @@ public class DonationDetailActivity extends AppCompatActivity {
                                     bundle.putString("donationName", donationName);
                                     bundle.putInt("donationPoint", Integer.parseInt(wannaDonatepoint.getText().toString()));
                                     bundle.putString("donationDate", getTime());
+
 
                                     intent.putExtras(bundle);
                                     startActivity(intent);

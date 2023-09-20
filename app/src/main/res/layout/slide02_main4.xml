@@ -6,14 +6,14 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <TextView
-        android:text="4"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:textSize="50sp"
-        android:gravity="center"
-        android:textColor="#000000"
-        android:background="#67D576"
-        />
+<!--    <TextView-->
+<!--        android:text="4"-->
+<!--        android:layout_width="400dp"-->
+<!--        android:layout_height="400dp"-->
+<!--        android:textSize="50sp"-->
+<!--        android:gravity="center"-->
+<!--        android:textColor="#000000"-->
+<!--        android:background="#67D576"-->
+<!--        />-->
 
 </LinearLayout>

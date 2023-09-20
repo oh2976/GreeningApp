@@ -42,7 +42,8 @@
                     android:id="@+id/Cate_one"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"></LinearLayout>
+                    android:orientation="vertical">
+                </LinearLayout>
 
                 <!-- 두 번째 탭 -->
                 <LinearLayout
@@ -50,9 +51,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
-                    <!-- 두 번째 탭 내용을 구성하는 뷰들을 여기에 추가 -->
-
                 </LinearLayout>
 
                 <!-- 세 번째 탭 -->
@@ -61,9 +59,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
-                    <!-- 세 번째 탭 내용을 구성하는 뷰들을 여기에 추가 -->
-
                 </LinearLayout>
 
                 <!-- 네 번째 탭 -->
@@ -72,9 +67,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
-                    <!-- 네 번째 탭 내용을 구성하는 뷰들을 여기에 추가 -->
-
                 </LinearLayout>
 
             </FrameLayout>

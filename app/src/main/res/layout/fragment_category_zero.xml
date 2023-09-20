@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="#DEFFB7"
+    android:background="@color/white"
     tools:context=".CategoryZeroFragment">
 
     <androidx.recyclerview.widget.RecyclerView

@@ -41,7 +41,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 .load(arrayList.get(position).getPimg())
                 .into(holder.p_pic);
         holder.p_name.setText(arrayList.get(position).getPname());
-//        holder.p_say.setText(arrayList.get(position).getPsay()); -> 오류
+        holder.p_say.setText(arrayList.get(position).getPsay());
         holder.p_price.setText(String.valueOf(arrayList.get(position).getPprice()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

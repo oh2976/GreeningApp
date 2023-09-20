@@ -87,7 +87,7 @@ public class DonationCompleteActivity extends AppCompatActivity {
         goToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DonationCompleteActivity.this, CategoryActivity.class);
+                Intent intent = new Intent(DonationCompleteActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
