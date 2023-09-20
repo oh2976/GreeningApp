@@ -86,7 +86,8 @@ public class RegisterActivity extends AppCompatActivity {
                             user.setSpoint(0);
                             user.setDoquiz("No");
 
-                            user.getAttendance();
+                            // 9/20 삭제 코드
+//                            user.setAttendance("");
 
 
                             //setValue : database에 insert(삽입) 행위
