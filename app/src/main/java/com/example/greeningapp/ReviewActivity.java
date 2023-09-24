@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -23,21 +24,19 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
 public class ReviewActivity extends AppCompatActivity {
 
     //전체리뷰
-
     private RecyclerView fullreviewrecyclerView;
-//    private RecyclerView.Adapter adapter;
-    private ReviewAdapter reviewAdapter;
+    private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<Review> arrayList;
+    private ArrayList<Review> dataList;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private ImageButton back_review;
 
-    private int pid;
-
+    //하단바 버튼
+    private ImageButton navMain, navCategory, navDonation, navMypage;
 
 
     @Override
@@ -46,13 +45,12 @@ public class ReviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_review);
 
 
-        //버튼클릭 -> 리뷰 쓰기 페이지로 이동
-        Button button = findViewById(R.id.button);    //터치x
+        back_review = findViewById(R.id.back_review);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        back_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ReviewActivity.this, ReviewWriteActivity.class);         //터치 x
+                Intent intent = new Intent(ReviewActivity.this, OrderHistoryActivity.class);
                 startActivity(intent);
             }
         });
@@ -62,42 +60,31 @@ public class ReviewActivity extends AppCompatActivity {
         fullreviewrecyclerView.setHasFixedSize(true); //리사이클뷰 성능강화
         layoutManager = new LinearLayoutManager(this);
         fullreviewrecyclerView.setLayoutManager(layoutManager);
-        arrayList = new ArrayList<>(); //Product객체를 담을 ArrayList(어댑터쪽으로)
+        dataList = new ArrayList<>(); //Product객체를 담을 ArrayList(어댑터쪽으로)
 
         database = FirebaseDatabase.getInstance(); //파이어베이스 연동
-
         databaseReference = database.getReference("Review");//db데이터연결
 
-        // 상품 상세 페이지에서 인텐트를 통해서 전달한 상품Id 가져오기
-        Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("pid")) {
-            pid = intent.getIntExtra("pid", 0);
-        }
-
-        // pid가 일치하는 상품 리뷰만 가져오기
-        Query reviewQuery = database.getReference("Review").orderByChild("pid").equalTo(pid);
-
-        reviewQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                arrayList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    // 데이터베이스에서 리뷰 객체 가져오기
-                    Review review = snapshot.getValue(Review.class);
-                    arrayList.add(review);
+                //파이어베이스 데이터베이스의 데이터를 받아오는곳
+                dataList.clear(); //기준 배열리스트가 존재하지않게 초기화(데이터가 쌓이기때문)
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) { //반복문으로 데이터리스트 추출
+                    Review review = snapshot.getValue(Review.class);  //만들어뒀던 review객체에 데이터를 담는다( 리뷰작성시 )
+                    dataList.add(review); //담은 데이터들을 배열리스트에 넣고 리사이클뷰로 보낼준비
                 }
-                reviewAdapter.notifyDataSetChanged();    // 어댑터에 데이터 변경 알림
+                adapter.notifyDataSetChanged(); //리스트저장 및 새로고침
+                //db가져오던중 에러발생시
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // 데이터 조회 중 에러 발생 시
-                Log.e("ReviewActivity", databaseError.getMessage());
+                Log.e("ReviewActivity", String.valueOf(databaseError.toException())); //에러문출력
             }
         });
-
-        reviewAdapter = new ReviewAdapter(arrayList, this);
-        fullreviewrecyclerView.setAdapter(reviewAdapter);  //리사이클뷰에 어댑터연결
+        adapter = new ReviewAdapter(dataList, this);
+        fullreviewrecyclerView.setAdapter(adapter);  //리사이클뷰에 어댑터연결
 
         // 파이어베이스 데이터베이스 참조 설정 (레이팅바 총점)
         FirebaseDatabase mRef = FirebaseDatabase.getInstance();
@@ -111,7 +98,7 @@ public class ReviewActivity extends AppCompatActivity {
                 int ratingCount = 0;
 
                 for (DataSnapshot ratingSnapshot : dataSnapshot.getChildren()) {
-                    float rating = ratingSnapshot.child("rscore").getValue(Float.class);
+                    float rating = ratingSnapshot.child("Rating").getValue(Float.class);
                     totalRating += rating;
                     ratingCount++;
                 }
@@ -137,12 +124,48 @@ public class ReviewActivity extends AppCompatActivity {
             }
         });
 
+        // 하단바 아이콘 초기화
+        navMain = findViewById(R.id.navMain_review);
+        navCategory = findViewById(R.id.navCategory_review);
+        navDonation = findViewById(R.id.navDonation_review);
+        navMypage = findViewById(R.id.navMypage_review);
 
+        // 각 아이콘 클릭 이벤트 처리
+        navMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 홈 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(ReviewActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
+        navCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 카테고리 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(ReviewActivity.this, CategoryActivity.class);
+                startActivity(intent);
+            }
+        });
 
+        navDonation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 기부 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(ReviewActivity.this, DonationMainActivity.class);
+                startActivity(intent);
+            }
+        });
 
+        navMypage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 마이페이지 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(ReviewActivity.this, MyPageActivity.class);
+                startActivity(intent);
+            }
+        });
     }
-
-
 
 }

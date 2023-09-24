@@ -34,7 +34,7 @@ public class MainActivity extends FragmentActivity {
     private FragmentStateAdapter pagerAdapter;
     private FragmentStateAdapter pagerAdapter01;
     private final int num_page = 4;    //viewpager2에 2개의 페이지가 표시됨.
-    private final int num_page01 = 4;
+    private final int num_page01 = 3;
     private CircleIndicator3 mIndicator;
     private CircleIndicator3 mIndicator01;
     //상품목록
@@ -135,20 +135,20 @@ public class MainActivity extends FragmentActivity {
         });
 
         //슬라이드2
-//        mPager01.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-//                if (positionOffsetPixels == 0) {
-//                    mPager01.setCurrentItem(position);
-//                }
-//            }
-//            @Override
-//            public void onPageSelected(int position) {
-//                super.onPageSelected(position);
-//                mIndicator01.animatePageSelected(position % num_page01);
-//            }
-//        });
+        mPager01.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                if (positionOffsetPixels == 0) {
+                    mPager01.setCurrentItem(position);
+                }
+            }
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                mIndicator01.animatePageSelected(position % num_page01);
+            }
+        });
 
         goToShoppingMain = (Button) findViewById(R.id.goToShoppingMain);
         goToShoppingMain.setOnClickListener(new View.OnClickListener() {

@@ -4,15 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/main_logo_name"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -26,9 +25,9 @@
 
             <ImageView
                 android:id="@+id/logo_image"
-                android:layout_width="60dp"
+                android:layout_width="110dp"
                 android:layout_height="60dp"
-                android:background="@drawable/greening_main_logo"
+                android:background="@drawable/greening_logo"
                 tools:layout_editor_absoluteX="16dp" />
 
         </LinearLayout>
@@ -40,7 +39,7 @@
         android:layout_weight="1">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -69,6 +68,7 @@
                                 android:id="@+id/viewpager"
                                 android:layout_width="match_parent"
                                 android:layout_height="415dp"
+                                android:layout_margin="8dp"
                                 android:layout_marginBottom="10dp"
                                 android:clipChildren="true"
                                 android:clipToPadding="false"
@@ -78,6 +78,7 @@
                                 android:id="@+id/indicator"
                                 android:layout_width="match_parent"
                                 android:layout_height="48dp"
+                                android:layout_margin="8dp"
                                 android:layout_marginBottom="10dp"
                                 android:layout_gravity="bottom" />
 
@@ -87,7 +88,6 @@
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="140dp"
-
                             android:layout_marginTop="20dp"
                             >
 
@@ -95,64 +95,109 @@
                                 android:id="@+id/viewpager01"
                                 android:layout_width="match_parent"
                                 android:layout_height="140dp"
+                                android:layout_margin="8dp"
+                                android:layout_marginBottom="10dp"
                                 android:clipChildren="false"
                                 android:clipToPadding="false"
-                                android:scaleType="fitXY"
-                                android:layout_marginBottom="10dp"/>
+                                android:scaleType="fitXY" />
 
                             <me.relex.circleindicator.CircleIndicator3
                                 android:id="@+id/indicator01"
                                 android:layout_width="match_parent"
                                 android:layout_height="42dp"
+                                android:layout_margin="8dp"
                                 android:layout_gravity="bottom"
                                 android:layout_marginBottom="8dp"/>
                         </FrameLayout>
 
                     </LinearLayout>
-
-                    <!--쇼핑상품부분-->
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <!--////////////////////////////-->
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="450dp"
+                        android:layout_margin="8dp"
+                        android:orientation="vertical"
+                        android:background="@drawable/main_b">
 
-                        <TextView
-                            android:id="@+id/textView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="쇼핑 상품"
-                            android:textSize="20sp"
-                            android:textColor="@color/black"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.044"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.022" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerView_main"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:nestedScrollingEnabled="false"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView"
-                            app:layout_constraintVertical_bias="0.0" />
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:layout_marginTop="50dp">
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                            <TextView
+                                android:id="@+id/textView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="쇼핑 상품"
+                                android:textSize="20sp"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.044"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.022" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/main_border"
+                            android:layout_marginTop="45dp">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerView_main"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="8dp"
+                                android:nestedScrollingEnabled="false"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/textView"
+                                app:layout_constraintVertical_bias="0.0" />
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+
+                    <!--                    쇼핑상품부분-->
+                    <!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="wrap_content">-->
+
+                    <!--                        <LinearLayout-->
+                    <!--                            android:layout_width="match_parent"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:background="@color/white">-->
+
+                    <!--                            <androidx.recyclerview.widget.RecyclerView-->
+                    <!--                                android:id="@+id/recyclerView_main"-->
+                    <!--                                android:layout_width="match_parent"-->
+                    <!--                                android:layout_height="match_parent"-->
+                    <!--                                android:layout_margin="8dp"-->
+                    <!--                                android:nestedScrollingEnabled="false"-->
+                    <!--                                app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                                app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--                                app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                                app:layout_constraintTop_toBottomOf="@+id/textView"-->
+                    <!--                                app:layout_constraintVertical_bias="0.0" />-->
+                    <!--                        </LinearLayout>-->
+
+                    <!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/goToShoppingMain"
                         android:layout_width="360dp"
-                        android:layout_height="42dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="40dp"
+                        android:layout_marginBottom="20dp"
                         android:background="@drawable/main_btn"
                         android:gravity="center|center_vertical"
                         android:text="목록 더보기"

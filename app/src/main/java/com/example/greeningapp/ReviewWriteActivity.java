@@ -40,6 +40,7 @@ public class ReviewWriteActivity extends AppCompatActivity {
     private static final int Gallery_Code=1;
 
     FirebaseDatabase mDatabase;
+    DatabaseReference dtf; //잠시추가 0924
     DatabaseReference mRef;
 
     private FirebaseAuth firebaseAuth;
@@ -62,7 +63,6 @@ public class ReviewWriteActivity extends AppCompatActivity {
     private String orderId,myOrderId, eachOrderedId;
 
     TextView mDate;  //날짜
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,7 +164,11 @@ public class ReviewWriteActivity extends AppCompatActivity {
                     reviewwriteMap.put("Rating", rating);
                     reviewwriteMap.put("Review_date", reviewDate);
 
-                    mRef.push().setValue(reviewwriteMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                    int pidInt = product.getProductId(); // 정수 값을 가져온후
+                    String pid = String.valueOf(pidInt);  //문자열로 변환하여 저장
+
+                    mRef.push().child(pid).setValue(reviewwriteMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
@@ -184,7 +188,6 @@ public class ReviewWriteActivity extends AppCompatActivity {
                     });
 
 
-
                     AlertDialog.Builder builder = new AlertDialog.Builder(ReviewWriteActivity.this);
 
                     builder.setTitle("작성 완료").setMessage("감사합니다!");
@@ -201,7 +204,7 @@ public class ReviewWriteActivity extends AppCompatActivity {
                     builder.setNegativeButton("시드 확인", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
-//                            Intent intent = new Intent(Review_write.this, ReviewHistoryActivity.class);
+//                            Intent intent = new Intent(ReviewWriteActivity.this, ReviewHistoryActivity.class);
 //                            startActivity(intent);
                         }
                     });

@@ -1,7 +1,10 @@
 package com.example.greeningapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +38,11 @@ public class OrderHistoryActivity extends AppCompatActivity {
 
     private RecyclerView.LayoutManager parentLayoutManager;
 
+    private ImageButton back_orderhistory;
+
+    //하단바 버튼
+    private ImageButton navMain, navCategory, navDonation, navMypage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,16 +58,16 @@ public class OrderHistoryActivity extends AppCompatActivity {
         parentRecyclerView.setLayoutManager(parentLayoutManager);
 
 
-//        //버튼클릭
-//        Button back_history = findViewById(R.id.back_history);    //터치x
-//
-//        back_history.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(OrderHistoryActivity.this, OrderCompleteActivity.class);         //터치 x
-//                startActivity(intent);
-//            }
-//        });
+        //주문내역 뒤로가기버튼
+        back_orderhistory = findViewById(R.id.back_orderhistory);
+
+        back_orderhistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OrderHistoryActivity.this, OrderCompleteActivity.class);
+                startActivity(intent);
+            }
+        });
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -89,6 +97,49 @@ public class OrderHistoryActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("OrderHistoryActivity", String.valueOf(databaseError.toException()));
+            }
+        });
+
+        // 하단바 아이콘 초기화
+        navMain = findViewById(R.id.navMain_odhistory);
+        navCategory = findViewById(R.id.navCategory_odhistory);
+        navDonation = findViewById(R.id.navDonation_odhistory);
+        navMypage = findViewById(R.id.navMypage_odhistory);
+
+        // 각 아이콘 클릭 이벤트 처리
+        navMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 홈 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(OrderHistoryActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        navCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 카테고리 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(OrderHistoryActivity.this, CategoryActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        navDonation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 기부 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(OrderHistoryActivity.this, DonationMainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        navMypage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 마이페이지 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(OrderHistoryActivity.this, MyPageActivity.class);
+                startActivity(intent);
             }
         });
 

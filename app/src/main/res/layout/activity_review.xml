@@ -5,42 +5,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ReviewActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="66dp"
+        android:orientation="horizontal" >
 
-        <ImageView
-            android:id="@+id/prev"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
-            android:onClick="prevButton"
+        <ImageButton
+            android:id="@+id/back_review"
+            android:background="@drawable/baseline_arrow_back_24"
+            android:contentDescription="뒤로가기"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="?attr/actionModeCloseDrawable"
-            tools:layout_editor_absoluteX="16dp" />
+            android:layout_margin="16dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerInside"/>
 
         <TextView
-            android:id="@+id/review"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="110dp"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@+id/prev"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginRight="72dp"
+            android:gravity="center"
             android:text="리뷰"
-            android:textSize="23sp" />
-    </androidx.appcompat.widget.Toolbar>
+            android:textSize="20sp"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -75,7 +76,7 @@
                         android:id="@+id/ratingNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_margin="8dp"
                         android:text=" /5 "
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textSize="16sp" />
@@ -86,65 +87,88 @@
             </LinearLayout>
 
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="550dp">
 
                 <TextView
                     android:id="@+id/fullreviewname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_margin="4dp"
                     android:text="전체 리뷰"
-                    android:textSize="17dp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/fullrecyclerView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.044"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.022" />
 
-                <TextView
-                    android:id="@+id/bestnew"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:text="베스트순 | 최신순"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.137" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/fullrecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="40dp"
                     android:layout_marginEnd="10dp"
                     android:nestedScrollingEnabled="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fullreviewname"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="1.0" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/btn_bg_detailed"
-                android:text="Button"
-                tools:layout_editor_absoluteX="154dp"
-                tools:layout_editor_absoluteY="443dp" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:background="@color/white">
+
+        <ImageButton
+            android:id="@+id/navMain_review"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/home_logo_size"
+            android:background="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/navCategory_review"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/shopping_logo_size"
+            android:background="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/navDonation_review"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/donation_logo_size"
+            android:background="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/navMypage_review"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/user_logo_size"
+            android:background="@android:color/transparent"/>
+
+    </LinearLayout>
 </LinearLayout>

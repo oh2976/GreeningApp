@@ -11,8 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         app:cardCornerRadius="5dp"
-        app:cardElevation="5dp"
         app:cardUseCompatPadding="true">
+        <!--        app:cardElevation="2dp" //그림자-->
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,7 +27,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                tools:srcCompat="@drawable/greening_main_logo_size" />
+                tools:srcCompat="@drawable/menu01img" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -56,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:layout_marginEnd="16dp"
+                    android:layout_marginLeft="8dp"
                     android:text="이름"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
