@@ -1,6 +1,7 @@
 package com.example.greeningapp;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -43,6 +44,15 @@ public class ChangeActivity extends AppCompatActivity {
 
         backButton = findViewById(R.id.back_ic);
 
+        Button resetPwButton = findViewById(R.id.btnPassword);
+        resetPwButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setUpdatePasswordBtn();
+            }
+        });
+
+
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,20 +71,6 @@ public class ChangeActivity extends AppCompatActivity {
         mEtEmail = findViewById(R.id.et_email);
         mEtPhone = findViewById(R.id.et_phone);
         mBtnSave = findViewById(R.id.save_btn);
-
-        mEtEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(ChangeActivity.this, "이메일을 변경할 수 없습니다.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        mEtPhone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(ChangeActivity.this, "전화번호를 변경할 수 없습니다.", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         // 사용자 정보 가져오기
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
@@ -130,10 +126,22 @@ public class ChangeActivity extends AppCompatActivity {
             userRef.child("postcode").setValue(postcode);
             userRef.child("address").setValue(address);
 
-            Toast.makeText(ChangeActivity.this, "회원 정보가 수정되었습니다.", Toast.LENGTH_SHORT).show();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("회원정보 수정완료");
+            builder.setMessage("회원정보가 성공적으로 수정되었습니다");
+
+            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent intent = new Intent(ChangeActivity.this, MyPageActivity.class);
+                    startActivity(intent);
+                }
+            });
+            builder.show();
         }
     }
-    private void setUpdatePasswordBtn() { // 비밀번호 재설정 버튼 이벤트
+    private void setUpdatePasswordBtn() {
 
         // 팝업 다이얼로그
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -156,6 +164,7 @@ public class ChangeActivity extends AppCompatActivity {
 
         builder.show();
     }
+
 
     // 비밀번호 재설정 이메일 보내기
     private void sendEmailForPasswordUpdate() {

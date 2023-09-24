@@ -38,11 +38,6 @@ public class SearchActivity extends AppCompatActivity {
         recview = findViewById(R.id.searchRecyclerView);
         recview.setLayoutManager(new LinearLayoutManager(this));
 
-        //뒤로가기시 리사이클러뷰 에러 나는 것 수정
-
-//        RecycleError layoutManager = new RecycleError(this);
-//        recview.setLayoutManager(layoutManager);
-
         FirebaseRecyclerOptions<Product> options =
                 new FirebaseRecyclerOptions.Builder<Product>()
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("Product").orderByChild("pname"), Product.class)
@@ -53,7 +48,8 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-    @Override    protected void onStart() {
+    @Override
+    protected void onStart() {
         super.onStart();
         //어뎁터 갱신 시작
         adapter.startListening();
