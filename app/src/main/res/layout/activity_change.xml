@@ -148,7 +148,7 @@
                         android:id="@+id/btnPassword"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:background="@color/sub5"
+                        android:background="@drawable/round_box"
                         android:onClick="setUpdatePasswordBtn"
                         android:text="비밀번호 재설정"
                         android:textColor="#000000"/>
@@ -171,8 +171,9 @@
             android:id="@+id/save_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:textColor="@color/white"
-            android:background="@color/mainColor"
+            android:background="@drawable/custom_btn"
             android:text="저장하기" />
 
 

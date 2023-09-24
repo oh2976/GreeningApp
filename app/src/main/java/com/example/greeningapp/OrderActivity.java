@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +70,8 @@ public class OrderActivity extends AppCompatActivity {
 
     Button btnPayment;
 
+    private ImageButton navMain, navCategory, navDonation, navMypage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +102,8 @@ public class OrderActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference("CurrentUser");
         databaseReferenceProduct = FirebaseDatabase.getInstance().getReference("Product");
+
+        String pointID = databaseReference.push().getKey();
 
         String myOrderId = databaseReference.child("MyOrder").push().getKey();
 
@@ -246,6 +251,31 @@ public class OrderActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
 //                                        Toast.makeText(OrderActivity.this, "쇼핑 포인트 지급 완료", Toast.LENGTH_SHORT).show();
+                                        databaseReference2.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                User user = snapshot.getValue(User.class);
+                                                final HashMap<String, Object> pointMap = new HashMap<>();
+                                                pointMap.put("pointname", "구매 확정 적립");
+                                                pointMap.put("pointdate", getTime());
+                                                pointMap.put("type", "savepoint");
+                                                pointMap.put("point", total * 0.01);
+                                                pointMap.put("username", user.getUsername());
+
+                                                databaseReference.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        Toast.makeText(OrderActivity.this, "상품 구매 포인트 내역 저장" , Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+
                                     }
                                 });
 
@@ -265,6 +295,48 @@ public class OrderActivity extends AppCompatActivity {
 
                 }
 
+            }
+        });
+
+        navMain = findViewById(R.id.navMain_order);
+        navCategory = findViewById(R.id.navCategory_order);
+        navDonation = findViewById(R.id.navDonation_order);
+        navMypage = findViewById(R.id.navMypage_order);
+
+        // 각 아이콘 클릭 이벤트 처리
+        navMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 홈 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(OrderActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        navCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 카테고리 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(OrderActivity.this, CategoryActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        navDonation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 기부 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(OrderActivity.this, DonationMainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        navMypage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 마이페이지 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(OrderActivity.this, MyPageActivity.class);
+                startActivity(intent);
             }
         });
 

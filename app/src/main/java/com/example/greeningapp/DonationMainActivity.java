@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +35,8 @@ public class DonationMainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
 
     TextView donationPoint;
+
+    private ImageButton navMain, navCategory, navDonation, navMypage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +98,49 @@ public class DonationMainActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+
+        navMain = findViewById(R.id.navMain_doMain);
+        navCategory = findViewById(R.id.navCategory_doMain);
+        navDonation = findViewById(R.id.navDonation_doMain);
+        navMypage = findViewById(R.id.navMypage_doMain);
+
+        // 각 아이콘 클릭 이벤트 처리
+        navMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 홈 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(DonationMainActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        navCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 카테고리 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(DonationMainActivity.this, CategoryActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        navDonation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 기부 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(DonationMainActivity.this, DonationMainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        navMypage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 마이페이지 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(DonationMainActivity.this, MyPageActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,6 +67,8 @@ public class DonationDetailActivity extends AppCompatActivity {
     private String donationName = "";
 
     private String userAccountName = "";
+
+    private ImageButton navMain, navCategory, navDonation, navMypage;
 
 
     @Override
@@ -208,10 +211,10 @@ public class DonationDetailActivity extends AppCompatActivity {
                                     User user = dataSnapshot.getValue(User.class); //  만들어 뒀던 Product 객체에 데이터를 담는다.
                                     final HashMap<String, Object> donateMap = new HashMap<>();
                                     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                                    donateMap.put("userName", user.getUsername());
-                                    donateMap.put("donationName", donationName);
-                                    donateMap.put("donationPoint", Integer.parseInt(wannaDonatepoint.getText().toString()));
-                                    donateMap.put("donationDate", getTime());
+                                    donateMap.put("username", user.getUsername());
+                                    donateMap.put("pointname", donationName);
+                                    donateMap.put("point", Integer.parseInt(wannaDonatepoint.getText().toString()));
+                                    donateMap.put("pointdate", getTime());
                                     donateMap.put("type", "usepoint");
                                     userAccountName = user.getUsername();
 
@@ -318,6 +321,48 @@ public class DonationDetailActivity extends AppCompatActivity {
         });
 
         dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+
+        navMain = findViewById(R.id.navMain_doDetail);
+        navCategory = findViewById(R.id.navCategory_doDetail);
+        navDonation = findViewById(R.id.navDonation_doDetail);
+        navMypage = findViewById(R.id.navMypage_doDetail);
+
+        // 각 아이콘 클릭 이벤트 처리
+        navMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 홈 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(DonationDetailActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        navCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 카테고리 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(DonationDetailActivity.this, CategoryActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        navDonation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 기부 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(DonationDetailActivity.this, DonationMainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        navMypage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 마이페이지 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(DonationDetailActivity.this, MyPageActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

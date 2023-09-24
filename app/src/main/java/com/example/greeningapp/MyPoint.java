@@ -1,45 +1,54 @@
 package com.example.greeningapp;
 
 public class MyPoint {
-    private String userName;
-    private String donationName;
-    private int donationPoint;
-    private String donationDate;
+    private String username;
+    private String pointname;
+    private int point;
+    private String pointdate;
+    private String type;
 
     public MyPoint() {
 
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getDonationName() {
-        return donationName;
+    public String getPointname() {
+        return pointname;
     }
 
-    public void setDonationName(String donationName) {
-        this.donationName = donationName;
+    public void setPointname(String pointname) {
+        this.pointname = pointname;
     }
 
-    public int getDonationPoint() {
-        return donationPoint;
+    public int getPoint() {
+        return point;
     }
 
-    public void setDonationPoint(int donationPoint) {
-        this.donationPoint = donationPoint;
+    public void setPoint(int point) {
+        this.point = point;
     }
 
-    public String getDonationDate() {
-        return donationDate;
+    public String getPointdate() {
+        return pointdate;
     }
 
-    public void setDonationDate(String donationDate) {
-        this.donationDate = donationDate;
+    public void setPointdate(String pointdate) {
+        this.pointdate = pointdate;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
 

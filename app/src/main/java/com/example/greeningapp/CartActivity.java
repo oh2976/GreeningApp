@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,8 @@ public class CartActivity extends AppCompatActivity {
 
     int total = 0;
     Button buyBtn;
+
+    private ImageButton navMain, navCategory, navDonation, navMypage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +114,48 @@ public class CartActivity extends AppCompatActivity {
                 startActivity(intent);
             }
 
+        });
+
+        navMain = findViewById(R.id.navMain_cart);
+        navCategory = findViewById(R.id.navCategory_cart);
+        navDonation = findViewById(R.id.navDonation_cart);
+        navMypage = findViewById(R.id.navMypage_cart);
+
+        // 각 아이콘 클릭 이벤트 처리
+        navMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 홈 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(CartActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        navCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 카테고리 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(CartActivity.this, CategoryActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        navDonation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 기부 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(CartActivity.this, DonationMainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        navMypage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 마이페이지 아이콘 클릭 시 처리할 내용
+                Intent intent = new Intent(CartActivity.this, MyPageActivity.class);
+                startActivity(intent);
+            }
         });
 
     }

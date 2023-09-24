@@ -94,11 +94,58 @@
             android:background="@drawable/custom_btn"
             android:text="결제하기"
             android:textColor="@color/white"
-            android:textStyle="bold"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+
+        <LinearLayout
+            android:id="@+id/bottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_gravity="bottom"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageButton
+                android:id="@+id/navMain_cart"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/home_logo_size" />
+
+            <ImageButton
+                android:id="@+id/navCategory_cart"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/shopping_logo_size" />
+
+            <ImageButton
+                android:id="@+id/navDonation_cart"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/donation_logo_size" />
+
+            <ImageButton
+                android:id="@+id/navMypage_cart"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/user_logo_size" />
+
+        </LinearLayout>
+
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
