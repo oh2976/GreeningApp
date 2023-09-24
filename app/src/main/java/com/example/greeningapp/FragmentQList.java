@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 public class FragmentQList extends Fragment {
 
@@ -47,6 +48,7 @@ public class FragmentQList extends Fragment {
 
     private DatabaseReference databaseReference;
     private DatabaseReference databaseReferenceUser;
+    private DatabaseReference databaseReferenceCurrentUser;
     private FirebaseAuth firebaseAuth;
 
     private int quizid;
@@ -70,13 +72,10 @@ public class FragmentQList extends Fragment {
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Quiz");
         databaseReferenceUser = FirebaseDatabase.getInstance().getReference("User");
+        databaseReferenceCurrentUser = FirebaseDatabase.getInstance().getReference("CurrentUser");
 
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-
-
-
-
 
         quizid = 610001;
         databaseReference.child(String.valueOf(quizid)).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -109,6 +108,33 @@ public class FragmentQList extends Fragment {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             Log.d("FragmentQList", "spoint 적립 완료" + userpoint);
+
+                                            databaseReferenceUser.child(firebaseAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                                                    User user = datasnapshot.getValue(User.class);
+                                                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                                                    final HashMap<String, Object> pointMap = new HashMap<>();
+                                                    pointMap.put("pointname", "씨드 적립 - 오늘의 퀴즈");
+                                                    pointMap.put("pointDate", getTime());
+                                                    pointMap.put("type", "savepoint");
+                                                    pointMap.put("point", 10);
+                                                    pointMap.put("userName", user.getUsername());
+
+                                                    String pointID = databaseReferenceCurrentUser.child(firebaseUser.getUid()).child("MyPoint").push().getKey();
+                                                    databaseReferenceCurrentUser.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                                        }
+                                                    });
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
                                         }
                                     });
 
@@ -119,7 +145,6 @@ public class FragmentQList extends Fragment {
                                     transaction.replace(R.id.fragmentFrame1, fragmentFailure);
                                     transaction.commit();
                                 }
-
                                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                                 transaction.replace(R.id.fragmentFrame2, fragmentHome);
                                 transaction.commit();
@@ -147,6 +172,33 @@ public class FragmentQList extends Fragment {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             Log.d("FragmentQList", "spoint 적립 완료" + userpoint);
+
+                                            databaseReferenceUser.child(firebaseAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                                                    User user = datasnapshot.getValue(User.class);
+                                                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                                                    final HashMap<String, Object> pointMap = new HashMap<>();
+                                                    pointMap.put("pointName", "씨드 적립 - 오늘의 퀴즈");
+                                                    pointMap.put("pointDate", getTime());
+                                                    pointMap.put("type", "savepoint");
+                                                    pointMap.put("point", 10);
+                                                    pointMap.put("userName", user.getUsername());
+
+                                                    String pointID = databaseReferenceCurrentUser.child(firebaseUser.getUid()).child("MyPoint").push().getKey();
+                                                    databaseReferenceCurrentUser.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                                        }
+                                                    });
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
                                         }
                                     });
 
@@ -168,8 +220,6 @@ public class FragmentQList extends Fragment {
                                         Log.d("FragmentQList", "doquiz 키값 변경 완료" + user.getDoquiz());
                                     }
                                 });
-
-
                             }
                         });
 
@@ -186,6 +236,32 @@ public class FragmentQList extends Fragment {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             Log.d("FragmentQList", "spoint 적립 완료" + userpoint);
 
+                                            databaseReferenceUser.child(firebaseAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                                                    User user = datasnapshot.getValue(User.class);
+                                                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                                                    final HashMap<String, Object> pointMap = new HashMap<>();
+                                                    pointMap.put("pointName", "씨드 적립 - 오늘의 퀴즈");
+                                                    pointMap.put("pointDate", getTime());
+                                                    pointMap.put("type", "savepoint");
+                                                    pointMap.put("point", 10);
+                                                    pointMap.put("userName", user.getUsername());
+
+                                                    String pointID = databaseReferenceCurrentUser.child(firebaseUser.getUid()).child("MyPoint").push().getKey();
+                                                    databaseReferenceCurrentUser.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                                        }
+                                                    });
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
                                         }
                                     });
 
@@ -207,7 +283,6 @@ public class FragmentQList extends Fragment {
                                         Log.d("FragmentQList", "doquiz 키값 변경 완료" + user.getDoquiz());
                                     }
                                 });
-
                             }
                         });
 
@@ -224,6 +299,32 @@ public class FragmentQList extends Fragment {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             Log.d("FragmentQList", "spoint 적립 완료" + resultSpoint);
 
+                                            databaseReferenceUser.child(firebaseAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                                                    User user = datasnapshot.getValue(User.class);
+                                                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                                                    final HashMap<String, Object> pointMap = new HashMap<>();
+                                                    pointMap.put("pointName", "씨드 적립 - 오늘의 퀴즈");
+                                                    pointMap.put("pointDate", getTime());
+                                                    pointMap.put("type", "savepoint");
+                                                    pointMap.put("point", 10);
+                                                    pointMap.put("userName", user.getUsername());
+
+                                                    String pointID = databaseReferenceCurrentUser.child(firebaseUser.getUid()).child("MyPoint").push().getKey();
+                                                    databaseReferenceCurrentUser.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                                        }
+                                                    });
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
                                         }
                                     });
 
@@ -245,10 +346,8 @@ public class FragmentQList extends Fragment {
                                         Log.d("FragmentQList", "doquiz 키값 변경 완료" + user.getDoquiz());
                                     }
                                 });
-
                             }
                         });
-
                     }
 
                     @Override
@@ -256,8 +355,6 @@ public class FragmentQList extends Fragment {
 
                     }
                 });
-
-
             }
 
             @Override
@@ -265,9 +362,6 @@ public class FragmentQList extends Fragment {
 
             }
         });
-
-
-
         return view;
     }
 

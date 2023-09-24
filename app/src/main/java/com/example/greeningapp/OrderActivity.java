@@ -103,8 +103,6 @@ public class OrderActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("CurrentUser");
         databaseReferenceProduct = FirebaseDatabase.getInstance().getReference("Product");
 
-        String pointID = databaseReference.push().getKey();
-
         String myOrderId = databaseReference.child("MyOrder").push().getKey();
 
         // 회원 정보 가져오기
@@ -129,7 +127,6 @@ public class OrderActivity extends AppCompatActivity {
                 userSPoint = user.getSpoint();
             }
 
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // 디비를 가져오던 중 에러 발생 시
@@ -153,8 +150,6 @@ public class OrderActivity extends AppCompatActivity {
                     total += cart.getTotalPrice();
                     Log.d("OrderActivity", total+"");
                     overTotalAmount.setText(String.valueOf(total));
-
-
                 }
                 adapter.notifyDataSetChanged(); // 리스트 저장 및 새로고침
             }
@@ -178,7 +173,6 @@ public class OrderActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
 
         List<Cart> list = (ArrayList<Cart>) getIntent().getSerializableExtra("itemList");
-
         btnPayment = (Button) findViewById(R.id.btnPayment);
 
         btnPayment.setOnClickListener(new View.OnClickListener() {
@@ -187,7 +181,7 @@ public class OrderActivity extends AppCompatActivity {
 
                 if (list != null && list.size() > 0) {
                     for (Cart model : list) {
-                        
+
                         String eachOrderedId = model.getDataId();
 
                         final HashMap<String, Object> cartMap = new HashMap<>();
@@ -207,7 +201,6 @@ public class OrderActivity extends AppCompatActivity {
                         cartMap.put("doReview", "No");
                         cartMap.put("orderImg", model.getProductImg());
                         cartMap.put("eachOrderedId", eachOrderedId);
-
 
                         // 결제 된 재고만큼 기존 재고에서 변경한 값을 변수에 저장
                         int totalStock = model.getProductStock() - Integer.valueOf(model.getTotalQuantity());
@@ -256,11 +249,13 @@ public class OrderActivity extends AppCompatActivity {
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                 User user = snapshot.getValue(User.class);
                                                 final HashMap<String, Object> pointMap = new HashMap<>();
-                                                pointMap.put("pointname", "구매 확정 적립");
-                                                pointMap.put("pointdate", getTime());
+                                                pointMap.put("pointName", "씨드 적립 - 상품 구매");
+                                                pointMap.put("pointDate", getTime());
                                                 pointMap.put("type", "savepoint");
                                                 pointMap.put("point", total * 0.01);
-                                                pointMap.put("username", user.getUsername());
+                                                pointMap.put("userName", user.getUsername());
+
+                                                String pointID = databaseReference.child(firebaseUser.getUid()).child("MyPoint").push().getKey();
 
                                                 databaseReference.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
@@ -278,8 +273,6 @@ public class OrderActivity extends AppCompatActivity {
 
                                     }
                                 });
-
-
                             }
                         });
 

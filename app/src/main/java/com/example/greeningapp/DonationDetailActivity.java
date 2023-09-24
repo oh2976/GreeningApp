@@ -207,19 +207,18 @@ public class DonationDetailActivity extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                     // 기부한 정보를 저장하기 위해서 데이터베이스 값 가져오기
-
                                     User user = dataSnapshot.getValue(User.class); //  만들어 뒀던 Product 객체에 데이터를 담는다.
-                                    final HashMap<String, Object> donateMap = new HashMap<>();
+                                    final HashMap<String, Object> pointMap = new HashMap<>();
                                     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                                    donateMap.put("username", user.getUsername());
-                                    donateMap.put("pointname", donationName);
-                                    donateMap.put("point", Integer.parseInt(wannaDonatepoint.getText().toString()));
-                                    donateMap.put("pointdate", getTime());
-                                    donateMap.put("type", "usepoint");
+                                    pointMap.put("userName", user.getUsername());
+                                    pointMap.put("pointName", "씨드 기부 - " + donationName);
+                                    pointMap.put("point", Integer.parseInt(wannaDonatepoint.getText().toString()));
+                                    pointMap.put("pointDate", getTime());
+                                    pointMap.put("type", "usepoint");
                                     userAccountName = user.getUsername();
 
                                     // 기부한 정보 저장
-                                    databaseReference4.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(donateMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    databaseReference4.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
 //                                            Toast.makeText(DonationDetailActivity.this, "point table create", Toast.LENGTH_SHORT).show();
@@ -234,7 +233,6 @@ public class DonationDetailActivity extends AppCompatActivity {
                                     bundle.putString("donationName", donationName);
                                     bundle.putInt("donationPoint", Integer.parseInt(wannaDonatepoint.getText().toString()));
                                     bundle.putString("donationDate", getTime());
-
 
                                     intent.putExtras(bundle);
                                     startActivity(intent);
