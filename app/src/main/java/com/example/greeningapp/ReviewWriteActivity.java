@@ -118,7 +118,7 @@ public class ReviewWriteActivity extends AppCompatActivity {
         //날짜 표시
         mDate = findViewById(R.id.reviewDate);
 
-        String dateTimeFormat = "yyyy.MM.dd";
+        String dateTimeFormat = "yyyy-MM-dd";
         Date date = Calendar.getInstance().getTime();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateTimeFormat);
         String formattedDate = simpleDateFormat.format(date);
@@ -183,16 +183,16 @@ public class ReviewWriteActivity extends AppCompatActivity {
                     reviewwriteMap.put("pimg", product.getOrderImg());
                     reviewwriteMap.put("username", product.getUserName());
 
-                    reviewwriteMap.put("Review_image", reviewImage);
-                    reviewwriteMap.put("Write_review", fn);
-                    reviewwriteMap.put("Rating", rating);
-                    reviewwriteMap.put("Review_date", reviewDate);
+                    reviewwriteMap.put("rimage", reviewImage);
+                    reviewwriteMap.put("rcontent", fn);
+                    reviewwriteMap.put("rscore", rating);
+                    reviewwriteMap.put("rdatetime", reviewDate);
 
 
                     int pidInt = product.getProductId(); // 정수 값을 가져온후
                     String pid = String.valueOf(pidInt);  //문자열로 변환하여 저장
 
-                    mRef.push().child(pid).setValue(reviewwriteMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    mRef.push().setValue(reviewwriteMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {

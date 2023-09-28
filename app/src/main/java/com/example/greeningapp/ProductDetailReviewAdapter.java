@@ -35,11 +35,11 @@ public class ProductDetailReviewAdapter extends RecyclerView.Adapter<ProductDeta
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, @SuppressLint("reviewRecyclerView") int position) {
         // 뷰 홀더에 데이터 바인딩
         // 해당 포지션의 아이템 데이터를 가져와서 뷰에 표시함
-        Review review = reviewList.get(position);
+//        Review review = reviewList.get(position);
 
         // 리뷰 제목과 내용을 뷰에 설정
-        holder.titleTextView.setText("리뷰 제목 : " + review.getRtitle());
-        holder.contentTextView.setText("리뷰 내용 : " + review.getRcontent());
+//        holder.titleTextView.setText("리뷰 제목 : " + review.getRtitle());
+        holder.contentTextView.setText("리뷰 내용 : " + reviewList.get(position).getRcontent());
     }
 
     @Override
@@ -59,13 +59,13 @@ public class ProductDetailReviewAdapter extends RecyclerView.Adapter<ProductDeta
         public ReviewViewHolder(@NonNull View itemView) {
             super(itemView);
             // itemView의 각 요소를 뷰 홀더에 연결
-            titleTextView = itemView.findViewById(R.id.titleTextView);
+//            titleTextView = itemView.findViewById(R.id.titleTextView);
             contentTextView = itemView.findViewById(R.id.contentTextView);
         }
 
         public void bind(Review review) {
             // 리뷰 제목과 내용을 뷰에 설정
-            titleTextView.setText(review.getRtitle());
+//            titleTextView.setText(review.getRtitle());
             contentTextView.setText(review.getRcontent());
         }
     }

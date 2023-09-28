@@ -117,7 +117,7 @@
                         android:layout_height="450dp"
                         android:layout_margin="8dp"
                         android:orientation="vertical"
-                        android:background="@drawable/main_b">
+                        android:background="@drawable/main_c">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -211,7 +211,6 @@
 
         </LinearLayout>
     </ScrollView>
-
     <LinearLayout
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"

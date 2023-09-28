@@ -10,19 +10,14 @@ public class Review {
     private int pid;
     private String pname;
 
+    private String username;
+    private String pimg;
+    private String rimage;
+
+
     public Review() {
     }
 
-    public Review(int rid, String rtitle, String rcontent, float rscore, String rdatetime, String userid, int pid, String pname) {
-        this.rid = rid;
-        this.rtitle = rtitle;
-        this.rcontent = rcontent;
-        this.rscore = rscore;
-        this.rdatetime = rdatetime;
-        this.userid = userid;
-        this.pid = pid;
-        this.pname = pname;
-    }
 
     public int getRid() {
         return rid;
@@ -86,5 +81,29 @@ public class Review {
 
     public void setPname(String pname) {
         this.pname = pname;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPimg() {
+        return pimg;
+    }
+
+    public void setPimg(String pimg) {
+        this.pimg = pimg;
+    }
+
+    public String getRimage() {
+        return rimage;
+    }
+
+    public void setRimage(String rimage) {
+        this.rimage = rimage;
     }
 }

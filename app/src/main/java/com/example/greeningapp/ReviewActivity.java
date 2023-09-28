@@ -28,16 +28,20 @@ public class ReviewActivity extends AppCompatActivity {
 
     //전체리뷰
     private RecyclerView fullreviewrecyclerView;
-    private RecyclerView.Adapter adapter;
+    //    private RecyclerView.Adapter adapter;
+    private ReviewAdapter reviewAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Review> dataList;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+
     private ImageButton back_review;
+
+    private int pid;
+
 
     //하단바 버튼
     private ImageButton navMain, navCategory, navDonation, navMypage;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,6 @@ public class ReviewActivity extends AppCompatActivity {
 
 
         back_review = findViewById(R.id.back_review);
-
         back_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +68,18 @@ public class ReviewActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance(); //파이어베이스 연동
         databaseReference = database.getReference("Review");//db데이터연결
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("pid")) {
+            pid = intent.getIntExtra("pid", 0);
+            Log.d("pid",pid +"가져왔음");
+        }
+
+        // pid가 일치하는 상품 리뷰만 가져오기
+        Query reviewQuery = databaseReference.orderByChild("pid").equalTo(pid);
+
+        //databaseReference.addListenerForSingleValueEvent (원래코드인데 잠시 reviewQuery로 바꿔줌)
+        reviewQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -73,18 +87,18 @@ public class ReviewActivity extends AppCompatActivity {
                 dataList.clear(); //기준 배열리스트가 존재하지않게 초기화(데이터가 쌓이기때문)
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) { //반복문으로 데이터리스트 추출
                     Review review = snapshot.getValue(Review.class);  //만들어뒀던 review객체에 데이터를 담는다( 리뷰작성시 )
+                    Log.d("pid",review.getRcontent() +"가져왔음");
                     dataList.add(review); //담은 데이터들을 배열리스트에 넣고 리사이클뷰로 보낼준비
                 }
-                adapter.notifyDataSetChanged(); //리스트저장 및 새로고침
-                //db가져오던중 에러발생시
+                reviewAdapter.notifyDataSetChanged(); //리스트저장 및 새로고침
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("ReviewActivity", String.valueOf(databaseError.toException())); //에러문출력
             }
         });
-        adapter = new ReviewAdapter(dataList, this);
-        fullreviewrecyclerView.setAdapter(adapter);  //리사이클뷰에 어댑터연결
+        reviewAdapter = new ReviewAdapter(dataList, this);
+        fullreviewrecyclerView.setAdapter(reviewAdapter);  //리사이클뷰에 어댑터연결
 
         // 파이어베이스 데이터베이스 참조 설정 (레이팅바 총점)
         FirebaseDatabase mRef = FirebaseDatabase.getInstance();
@@ -98,7 +112,7 @@ public class ReviewActivity extends AppCompatActivity {
                 int ratingCount = 0;
 
                 for (DataSnapshot ratingSnapshot : dataSnapshot.getChildren()) {
-                    float rating = ratingSnapshot.child("Rating").getValue(Float.class);
+                    float rating = ratingSnapshot.child("rscore").getValue(Float.class);
                     totalRating += rating;
                     ratingCount++;
                 }
