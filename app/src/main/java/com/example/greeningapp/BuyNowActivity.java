@@ -31,8 +31,6 @@ import java.util.HashMap;
 
 public class BuyNowActivity extends AppCompatActivity {
 
-
-
     long mNow;
     Date mDate;
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
@@ -60,14 +58,7 @@ public class BuyNowActivity extends AppCompatActivity {
 
     private String productName, productPrice, totalQuantity, productImg;
     private int totalPrice, pId, productStock;
-
-    private ImageButton navMain, navCategory, navDonation, navMypage;
-
-
-
-
     int total = 0;
-
     Button btnPayment;
 
     @Override
@@ -98,9 +89,6 @@ public class BuyNowActivity extends AppCompatActivity {
         databaseReferenceProduct = FirebaseDatabase.getInstance().getReference("Product");
 
         String myOrderId = databaseReference.child("MyOrder").push().getKey();
-        String pointID = databaseReference.child("MyPoint").push().getKey();
-
-
 
         databaseReference2.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -203,19 +191,6 @@ public class BuyNowActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
 //                                            Toast.makeText(OrderActivity.this, "재고 변동 완료", Toast.LENGTH_SHORT).show();
-                                final HashMap<String, Object> pointMap = new HashMap<>();
-                                pointMap.put("pointname", "구매 확정 적립");
-                                pointMap.put("pointdate", getTime());
-                                pointMap.put("type", "savepoint");
-                                pointMap.put("point", total * 0.01);
-                                pointMap.put("username", strOrderName);
-
-                                databaseReference.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        Toast.makeText(BuyNowActivity.this, "바로 구매 포인트 내역 저장" , Toast.LENGTH_SHORT).show();
-                                    }
-                                });
                             }
                         });
 
@@ -226,6 +201,33 @@ public class BuyNowActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 Toast.makeText(BuyNowActivity.this, changePoint + "쇼핑 포인트 지급 완료", Toast.LENGTH_SHORT).show();
+
+                                databaseReference2.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        User user = snapshot.getValue(User.class);
+                                        final HashMap<String, Object> pointMap = new HashMap<>();
+                                        pointMap.put("pointName", "씨드 적립 - 상품 구매");
+                                        pointMap.put("pointDate", getTime());
+                                        pointMap.put("type", "savepoint");
+                                        pointMap.put("point", totalPrice * 0.01);
+                                        pointMap.put("userName", user.getUsername());
+
+                                        String pointID = databaseReference.child(firebaseUser.getUid()).child("MyPoint").push().getKey();
+
+                                        databaseReference.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                Toast.makeText(BuyNowActivity.this, "상품 구매 포인트 내역 저장" , Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
                             }
                         });
 
@@ -242,48 +244,6 @@ public class BuyNowActivity extends AppCompatActivity {
             }
 
 
-        });
-
-        navMain = findViewById(R.id.navMain_buyNow);
-        navCategory = findViewById(R.id.navCategory_buyNow);
-        navDonation = findViewById(R.id.navDonation_buyNow);
-        navMypage = findViewById(R.id.navMypage_buyNow);
-
-        // 각 아이콘 클릭 이벤트 처리
-        navMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 홈 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(BuyNowActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        navCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 카테고리 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(BuyNowActivity.this, CategoryActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        navDonation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 기부 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(BuyNowActivity.this, DonationMainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        navMypage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 마이페이지 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(BuyNowActivity.this, MyPageActivity.class);
-                startActivity(intent);
-            }
         });
     }
 

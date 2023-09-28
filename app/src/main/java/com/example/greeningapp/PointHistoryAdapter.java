@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,9 +46,15 @@ public class PointHistoryAdapter extends RecyclerView.Adapter<PointHistoryAdapte
     public void onBindViewHolder(@NonNull PointHistoryAdapter.PointHistoryViewHolder holder, @SuppressLint("recyclerview_pointHistory") int position) {
         MyPoint myPoint = pointHistoryList.get(position);
 
+        if (myPoint.getType().equals("savepoint")) {
+            holder.pointIcon.setImageResource(R.drawable.savep); // "savepoint"에 해당하는 이미지
+        } else if (myPoint.getType().equals("usepoint")) {
+            holder.pointIcon.setImageResource(R.drawable.usep); // "usepoint"에 해당하는 이미지
+        }
+
         holder.pointNameTextView.setText(myPoint.getPointName());
         holder.pointDateTextView.setText(myPoint.getPointDate());
-        holder.pointTextView.setText(String.valueOf(myPoint.getPoint()));
+        holder.pointTextView.setText(String.valueOf(myPoint.getPoint()) + "씨드");
     }
 
     @Override
@@ -62,6 +69,7 @@ public class PointHistoryAdapter extends RecyclerView.Adapter<PointHistoryAdapte
         private TextView pointNameTextView;
         private TextView pointDateTextView;
         private TextView pointTextView;
+        private ImageView pointIcon;
 
         public PointHistoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,6 +77,7 @@ public class PointHistoryAdapter extends RecyclerView.Adapter<PointHistoryAdapte
             pointNameTextView = itemView.findViewById(R.id.pointNameTextView);
             pointDateTextView = itemView.findViewById(R.id.pointDateTextView);
             pointTextView = itemView.findViewById(R.id.pointTextView);
+            pointIcon = itemView.findViewById(R.id.pointIcon);
         }
 
         public void bind(MyPoint myPoint) {

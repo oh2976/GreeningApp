@@ -179,6 +179,33 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                databaseReference2.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        User user = snapshot.getValue(User.class);
+                        final HashMap<String, Object> pointMap = new HashMap<>();
+                        pointMap.put("pointName", "씨드 적립 - 상품 구매");
+                        pointMap.put("pointDate", getTime());
+                        pointMap.put("type", "savepoint");
+                        pointMap.put("point", total * 0.01);
+                        pointMap.put("userName", user.getUsername());
+
+                        String pointID = databaseReference.child(firebaseUser.getUid()).child("MyPoint").push().getKey();
+
+                        databaseReference.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(OrderActivity.this, "상품 구매 포인트 내역 저장" , Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
                 if (list != null && list.size() > 0) {
                     for (Cart model : list) {
 
@@ -244,38 +271,10 @@ public class OrderActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
 //                                        Toast.makeText(OrderActivity.this, "쇼핑 포인트 지급 완료", Toast.LENGTH_SHORT).show();
-                                        databaseReference2.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                User user = snapshot.getValue(User.class);
-                                                final HashMap<String, Object> pointMap = new HashMap<>();
-                                                pointMap.put("pointName", "씨드 적립 - 상품 구매");
-                                                pointMap.put("pointDate", getTime());
-                                                pointMap.put("type", "savepoint");
-                                                pointMap.put("point", total * 0.01);
-                                                pointMap.put("userName", user.getUsername());
-
-                                                String pointID = databaseReference.child(firebaseUser.getUid()).child("MyPoint").push().getKey();
-
-                                                databaseReference.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
-                                                        Toast.makeText(OrderActivity.this, "상품 구매 포인트 내역 저장" , Toast.LENGTH_SHORT).show();
-                                                    }
-                                                });
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {
-
-                                            }
-                                        });
-
                                     }
                                 });
                             }
                         });
-
                         // 주문 완료 페이지에서 현재 주문에 대한 데이터베이스를 가져오기 위해 id를 OrderCompleteActivity에 넘겨줌
                         Intent intent = new Intent(OrderActivity.this, OrderCompleteActivity.class);
                         intent.putExtra("orderId", orderId);
