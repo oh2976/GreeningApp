@@ -11,7 +11,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="155dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/round_corner">
@@ -19,31 +19,30 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/pro"
             android:layout_width="match_parent"
-            android:layout_height="70dp">
+            android:layout_height="wrap_content">
 
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/cirimage"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/baseline_person_24"
-                app:civ_circle_background_color="@android:color/holo_green_dark"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-            </de.hdodenhof.circleimageview.CircleImageView>
+<!--            <de.hdodenhof.circleimageview.CircleImageView-->
+<!--                android:id="@+id/cirimage"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_marginStart="16dp"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:src="@drawable/baseline_person_24"-->
+<!--                app:civ_circle_background_color="@android:color/holo_green_dark"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent">-->
+<!--            </de.hdodenhof.circleimageview.CircleImageView>-->
 
             <TextView
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:layout_marginStart="80dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="12dp"
-                android:layout_toRightOf="@+id/cirimage"
+
                 android:text="user01"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -55,19 +54,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/username"
-                android:layout_marginStart="14dp"
                 android:layout_marginTop="2dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginBottom="16dp"
                 android:max="5"
                 android:numStars="5"
                 android:progressTint="@android:color/holo_orange_light"
                 android:rating="4.5"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cirimage"
+
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/username"
                 app:layout_constraintVertical_bias="1.0">
 
             </RatingBar>
+
+            <ImageView
+                android:id="@+id/reviewpimg"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userrating" />
+
+            <TextView
+                android:id="@+id/reviewpname"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toEndOf="@+id/reviewpimg"
+                app:layout_constraintTop_toBottomOf="@+id/userrating" />
 
             <TextView
                 android:id="@+id/reviewdate"
@@ -76,7 +95,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="4dp"
                 android:layout_toRightOf="@+id/username"
-                android:text="2023.03.23"
+                android:text="2023-03-23"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -102,11 +121,11 @@
                 android:layout_width="140dp"
                 android:layout_height="20dp"
                 android:layout_below="@+id/userrating"
-                android:layout_marginLeft="35dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginTop="12dp"
                 android:layout_toRightOf="@+id/inputimg"
                 android:text="후기~"
-                android:textSize="15sp">
+                android:textSize="16sp">
 
             </TextView>
 
