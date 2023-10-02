@@ -78,8 +78,8 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnDoQuiz"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@drawable/circle_btn"

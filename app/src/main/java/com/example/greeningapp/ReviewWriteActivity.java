@@ -228,8 +228,8 @@ public class ReviewWriteActivity extends AppCompatActivity {
                     builder.setNegativeButton("리뷰 확인", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
-//                            Intent intent = new Intent(Review_write.this, ReviewHistoryActivity.class);
-//                            startActivity(intent);
+                            Intent intent = new Intent(ReviewWriteActivity.this, ReviewHistoryActivity.class);
+                            startActivity(intent);
                         }
                     });
 
