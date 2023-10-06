@@ -1,118 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DonationMainActivity">
+    tools:context=".DonationMainActivity"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_donation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:text="기부 프로젝트"
+            android:textColor="#000000"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="기부 프로젝트"
-                android:textStyle="bold"
-                android:textSize="20sp" />
+        <TextView
+            android:id="@+id/donation_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:textSize="16sp"
+            android:text="씨드"
+            android:layout_marginRight="16dp"
+            android:textColor="#000000"/>
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+    </androidx.appcompat.widget.Toolbar>
 
-            <TextView
-                android:id="@+id/donation_point"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="씨드"
-                android:textSize="16sp" />
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_donate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"/>
 
-        </LinearLayout>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager_donate"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"/>
 
+    <!-- 하단 네비게이션 바 -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation_doantionMain"
+        style="@style/BottomNavigationViewNoRipple"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_gravity="bottom"
+        app:itemBackground="@android:color/white"
+        app:itemIconTint="@drawable/menu_selector_color"
+        app:itemTextColor="@drawable/menu_selector_color"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottommenu" />
 
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/bottomNavigation"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="64dp"-->
+    <!--        android:layout_gravity="bottom"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        android:background="@color/white">-->
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+    <!--        <ImageButton-->
+    <!--            android:id="@+id/navMain_doMain"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:src="@drawable/home_logo_size"-->
+    <!--            android:background="@android:color/transparent"/>-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginRight="8dp"
-                android:orientation="vertical">
+    <!--        <ImageButton-->
+    <!--            android:id="@+id/navCategory_doMain"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:src="@drawable/shopping_logo_size"-->
+    <!--            android:background="@android:color/transparent"/>-->
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/donationRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+    <!--        <ImageButton-->
+    <!--            android:id="@+id/navDonation_doMain"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:src="@drawable/donation_logo_size"-->
+    <!--            android:background="@android:color/transparent"/>-->
 
-            </LinearLayout>
+    <!--        <ImageButton-->
+    <!--            android:id="@+id/navMypage_doMain"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:src="@drawable/user_logo_size"-->
+    <!--            android:background="@android:color/transparent"/>-->
 
-        </ScrollView>
+    <!--    </LinearLayout>-->
 
-        <LinearLayout
-            android:id="@+id/bottomNavigation"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal"
-            android:background="@color/white">
-
-            <ImageButton
-                android:id="@+id/navMain_doMain"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/home_logo_size"
-                android:background="@android:color/transparent"/>
-
-            <ImageButton
-                android:id="@+id/navCategory_doMain"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/shopping_logo_size"
-                android:background="@android:color/transparent"/>
-
-            <ImageButton
-                android:id="@+id/navDonation_doMain"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/donation_logo_size"
-                android:background="@android:color/transparent"/>
-
-            <ImageButton
-                android:id="@+id/navMypage_doMain"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/user_logo_size"
-                android:background="@android:color/transparent"/>
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
