@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -61,6 +63,8 @@ public class BuyNowActivity extends AppCompatActivity {
     int total = 0;
     Button btnPayment;
 
+    private BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +80,7 @@ public class BuyNowActivity extends AppCompatActivity {
         buynow_pprice = (TextView) findViewById(R.id.buynow_pprice);
         buynow_totalprice = (TextView) findViewById(R.id.buynow_totalprice);
         buynow_totalquantity = (TextView) findViewById(R.id.buynow_totalquantity);
+
 
         overTotalAmount = findViewById(R.id.buynow_overtotalPrice);
 
@@ -101,6 +106,7 @@ public class BuyNowActivity extends AppCompatActivity {
                 orderName.setText(user.getUsername());
                 orderPhone.setText(user.getPhone());
                 orderAddress.setText(user.getAddress());
+                orderPostcode.setText(user.getPostcode());
                 strOrderName = user.getUsername();
                 strOrderPhone = user.getPhone();
                 strOrderAddress = user.getAddress();
@@ -137,6 +143,7 @@ public class BuyNowActivity extends AppCompatActivity {
         buynow_pprice.setText(productPrice);
         buynow_totalprice.setText(String.valueOf(totalPrice));
         buynow_totalquantity.setText(String.valueOf(totalQuantity));
+
 
         overTotalAmount.setText(String.valueOf(totalPrice));
 
@@ -185,7 +192,7 @@ public class BuyNowActivity extends AppCompatActivity {
                 databaseReference.child(firebaseUser.getUid()).child("MyOrder").child(myOrderId).child(orderId).setValue(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(BuyNowActivity.this, "주문완료", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(BuyNowActivity.this, "주문완료", Toast.LENGTH_SHORT).show();
 
                         databaseReferenceProduct.child(String.valueOf(pId)).child("stock").setValue(totalStock).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -200,7 +207,7 @@ public class BuyNowActivity extends AppCompatActivity {
                         databaseReference2.child(firebaseUser.getUid()).child("spoint").setValue(changePoint).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(BuyNowActivity.this, changePoint + "쇼핑 포인트 지급 완료", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(BuyNowActivity.this, changePoint + "쇼핑 포인트 지급 완료", Toast.LENGTH_SHORT).show();
 
                                 databaseReference2.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
@@ -218,7 +225,7 @@ public class BuyNowActivity extends AppCompatActivity {
                                         databaseReference.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-                                                Toast.makeText(BuyNowActivity.this, "상품 구매 포인트 내역 저장" , Toast.LENGTH_SHORT).show();
+//                                                Toast.makeText(BuyNowActivity.this, "상품 구매 포인트 내역 저장" , Toast.LENGTH_SHORT).show();
                                             }
                                         });
                                     }
@@ -244,6 +251,36 @@ public class BuyNowActivity extends AppCompatActivity {
             }
 
 
+        });
+
+        // 하단바 구현
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigation_buynow);
+        // 초기 선택 항목 설정
+        bottomNavigationView.setSelectedItemId(R.id.tab_shopping);
+
+        // BottomNavigationView의 아이템 클릭 리스너 설정
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.tab_home) {
+                    // Home 액티비티로 이동
+                    startActivity(new Intent(BuyNowActivity.this, MainActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_shopping) {
+                    // Category 액티비티로 이동
+                    startActivity(new Intent(BuyNowActivity.this, CategoryActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_donation) {
+                    // Donation 액티비티로 이동
+                    startActivity(new Intent(BuyNowActivity.this, DonationMainActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_mypage) {
+                    // My Page 액티비티로 이동
+                    startActivity(new Intent(BuyNowActivity.this, MyPageActivity.class));
+                    return true;
+                }
+                return false;
+            }
         });
     }
 

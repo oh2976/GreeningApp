@@ -2,12 +2,14 @@ package com.example.greeningapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -41,6 +44,8 @@ public class OrderCompleteActivity extends AppCompatActivity {
     private List<MyOrder> myOrderList;
 
     private ImageButton navMain, navCategory, navDonation, navMypage;
+
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,48 +117,41 @@ public class OrderCompleteActivity extends AppCompatActivity {
             }
         });
 
-        navMain = findViewById(R.id.navMain_orderComple);
-        navCategory = findViewById(R.id.navCategory_orderComple);
-        navDonation = findViewById(R.id.navDonation_orderComple);
-        navMypage = findViewById(R.id.navMypage_orderComple);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
 
-        // 각 아이콘 클릭 이벤트 처리
-        navMain.setOnClickListener(new View.OnClickListener() {
+        // 하단바 구현
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigation_ordercp);
+
+        // 초기 선택 항목 설정
+        bottomNavigationView.setSelectedItemId(R.id.tab_shopping);
+
+        // BottomNavigationView의 아이템 클릭 리스너 설정
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                // 홈 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(OrderCompleteActivity.this, MainActivity.class);
-                startActivity(intent);
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.tab_home) {
+                    // Home 액티비티로 이동
+                    startActivity(new Intent(OrderCompleteActivity.this, MainActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_shopping) {
+                    // Category 액티비티로 이동
+                    startActivity(new Intent(OrderCompleteActivity.this, CategoryActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_donation) {
+                    // Donation 액티비티로 이동
+                    startActivity(new Intent(OrderCompleteActivity.this, DonationMainActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_mypage) {
+                    // My Page 액티비티로 이동
+                    startActivity(new Intent(OrderCompleteActivity.this, MyPageActivity.class));
+                    return true;
+                }
+                return false;
             }
         });
-
-        navCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 카테고리 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(OrderCompleteActivity.this, CategoryActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        navDonation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 기부 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(OrderCompleteActivity.this, DonationMainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        navMypage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 마이페이지 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(OrderCompleteActivity.this, MyPageActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
 
     }

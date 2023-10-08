@@ -1,13 +1,16 @@
 package com.example.greeningapp;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,10 +40,10 @@ public class PointHistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_point_history);
 
         Toolbar toolbar = findViewById(R.id.toolbar_pointHistory);
-        setSupportActionBar(toolbar);    // 액티비티의 앱바로 지정
-        ActionBar actionBar = getSupportActionBar();    // 앱바 제어를 위해 툴바 액세스
-        actionBar.setTitle("");    // 툴바 제목 설정
-        actionBar.setDisplayHomeAsUpEnabled(true);    // 앱바에 뒤로가기 버튼 만들기
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);//기본 제목 삭제.
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -81,6 +84,20 @@ public class PointHistoryActivity extends AppCompatActivity {
                     Log.e("PointHistoryActivity", String.valueOf(databaseError.toException()));    // 에러문 출력
                 }
             });
+        }
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId ()) {
+            case android.R.id.home:
+                Intent intent = new Intent(PointHistoryActivity.this, MyPageActivity.class);
+                startActivity(intent);
+                finish ();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

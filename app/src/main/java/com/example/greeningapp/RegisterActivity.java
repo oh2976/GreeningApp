@@ -1,11 +1,14 @@
 package com.example.greeningapp;
 
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,12 +38,16 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mEtName, mEtPhone, mEtPostcode, mEtAddress;
     private Button mBtnRegister; // 회원가입 입력 버튼
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        Toolbar toolbar = findViewById(R.id.toolbar_register);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);//기본 제목 삭제.
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("User");
@@ -112,5 +119,19 @@ public class RegisterActivity extends AppCompatActivity {
         mNow = System.currentTimeMillis();
         mDate = new Date(mNow);
         return mFormat.format(mDate);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId ()) {
+            case android.R.id.home:
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish ();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -1,5 +1,4 @@
 package com.example.greeningapp;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -26,7 +25,7 @@ public class ProductDetailReviewAdapter extends RecyclerView.Adapter<ProductDeta
     @Override
     public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // 새로운 뷰 홀더 객체 생성
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_list_review, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.review_item, parent, false);
         ReviewViewHolder holder = new ReviewViewHolder(view);
         return holder;
     }
@@ -39,7 +38,7 @@ public class ProductDetailReviewAdapter extends RecyclerView.Adapter<ProductDeta
 
         // 리뷰 제목과 내용을 뷰에 설정
 //        holder.titleTextView.setText("리뷰 제목 : " + review.getRtitle());
-        holder.contentTextView.setText("리뷰 내용 : " + reviewList.get(position).getRcontent());
+        holder.contentTextView.setText(reviewList.get(position).getRcontent());
     }
 
     @Override

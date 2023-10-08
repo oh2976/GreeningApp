@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".RegisterActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +16,7 @@
 
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -24,6 +25,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:text="회원가입"
+                android:textColor="#000000"/>
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -38,8 +47,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            android:layout_marginTop="56dp">
+            android:layout_marginTop="56dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_register">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout3"
@@ -47,39 +57,25 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/tv_regis"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="회원 가입하기"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginRight="32dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/constraintLayout3"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-                <TextView
                     android:id="@+id/tv_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="이름"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="24dp"
                     android:layout_marginLeft="32dp"
                     android:layout_marginRight="32dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_regis"/>
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <EditText
                     android:id="@+id/et_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="이름을 입력해주세요"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="32dp"
                     android:layout_marginRight="32dp"
@@ -92,7 +88,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="이메일 주소"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:layout_marginTop="20dp"
                     android:layout_marginLeft="32dp"
@@ -107,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:hint="이메일을 입력해주세요"
                     android:inputType="textEmailAddress"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="32dp"
                     android:layout_marginRight="32dp"
@@ -120,7 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="비밀번호"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:layout_marginTop="20dp"
                     android:layout_marginLeft="32dp"
@@ -135,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:hint="비밀번호를 입력해주세요"
                     android:inputType="textPassword"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="32dp"
                     android:layout_marginRight="32dp"
@@ -148,7 +144,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="전화번호"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:layout_marginTop="20dp"
                     android:layout_marginLeft="32dp"
@@ -163,7 +159,7 @@
                     android:layout_height="wrap_content"
                     android:hint="전화번호를 입력해주세요"
                     android:inputType="phone"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="32dp"
                     android:layout_marginRight="32dp"
@@ -176,7 +172,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="우편번호"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:layout_marginTop="20dp"
                     android:layout_marginLeft="32dp"
@@ -189,7 +185,7 @@
                     android:id="@+id/et_postcode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="32dp"
                     android:layout_marginRight="32dp"
@@ -204,7 +200,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="상세 주소"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:layout_marginTop="20dp"
                     android:layout_marginLeft="32dp"
@@ -219,7 +215,7 @@
                     android:layout_height="wrap_content"
                     android:hint="집 주소를 입력해주세요"
                     android:inputType="text"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="32dp"
                     android:layout_marginRight="32dp"
@@ -232,12 +228,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginRight="32dp"
                     android:layout_marginBottom="100dp"
                     android:background="@drawable/custom_btn"
                     android:text="가입하기"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"

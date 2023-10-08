@@ -1,14 +1,16 @@
 package com.example.greeningapp;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -28,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 
     String strEmail;
 
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +43,15 @@ public class LoginActivity extends AppCompatActivity {
         mEtEmail = findViewById(R.id.et_email);
         mEtPwd = findViewById(R.id.et_pwd);
 
+        dialog = new Dialog(LoginActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_confirm);
+
         Intent receivedIntent = getIntent();
         if (receivedIntent != null && receivedIntent.hasExtra("userEmail")) {
             strEmail = receivedIntent.getStringExtra("userEmail");
             mEtEmail.setText(strEmail);
         }
-
-
 
         Button btn_login = findViewById(R.id.btn_login);
         btn_login.setOnClickListener(new View.OnClickListener() {
@@ -66,12 +71,11 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         } else{
-                            Toast.makeText(LoginActivity.this, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                            showDialog();
+
                         }
                     }
                 });
-
-
             }
         });
 
@@ -98,6 +102,21 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
 
+    public void showDialog() {
+        dialog.show();
+
+        TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
+        confirmTextView.setText("아이디 또는 비밀번호가 일치하지 않습니다.");
+
+        Button btnOk = dialog.findViewById(R.id.btn_ok);
+        btnOk.setText("확인");
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 }

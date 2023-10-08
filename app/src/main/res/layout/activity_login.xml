@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".LoginActivity">
 
 
@@ -23,11 +24,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="이메일을 입력하세요"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:inputType="textEmailAddress"
         android:layout_marginTop="70dp"
-        android:layout_marginLeft="56dp"
-        android:layout_marginRight="56dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo" />
@@ -37,27 +38,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="비밀번호를 입력하세요"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:inputType="textPassword"
         android:layout_marginTop="22dp"
-        android:layout_marginLeft="56dp"
-        android:layout_marginRight="56dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_email" />
-
-
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="로그인"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         android:textColor="@color/white"
         android:background="@drawable/custom_btn"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,24 +68,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="아직 그리닝 계정이 없으신가요?"
-        android:textSize="13sp"
+        android:textSize="12sp"
         android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="@+id/btn_login"
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
-<!--    <androidx.appcompat.widget.AppCompatButton-->
-<!--        android:id="@+id/btn_register"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="40dp"-->
-<!--        android:text="회원가입"-->
-<!--        android:textSize="14sp"-->
-<!--        android:background="@drawable/custom_btn_register"-->
-<!--        android:layout_marginTop="13dp"-->
-<!--        android:layout_marginStart="220dp"-->
-<!--        android:layout_marginEnd="115dp"-->
-<!--        app:layout_constraintStart_toEndOf="@+id/tv_regis"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/btn_login" />-->
+    <!--    <androidx.appcompat.widget.AppCompatButton-->
+    <!--        android:id="@+id/btn_register"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="40dp"-->
+    <!--        android:text="회원가입"-->
+    <!--        android:textSize="14sp"-->
+    <!--        android:background="@drawable/custom_btn_register"-->
+    <!--        android:layout_marginTop="13dp"-->
+    <!--        android:layout_marginStart="220dp"-->
+    <!--        android:layout_marginEnd="115dp"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/tv_regis"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/btn_login" />-->
 
     <TextView
         android:id="@+id/LoginTxtRegister"
@@ -94,7 +93,7 @@
         android:layout_height="wrap_content"
         android:text="회원가입"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="13sp"
+        android:textSize="12sp"
         android:layout_marginTop="24dp"
         android:layout_marginStart="8dp"
         app:layout_constraintStart_toEndOf="@+id/tv_regis"

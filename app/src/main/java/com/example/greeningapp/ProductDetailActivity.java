@@ -7,19 +7,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,6 +40,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     int totalQuantity = 1;
     int totalPrice = 0;
 
+    Dialog dialog;
+
     private int pid;
 
     ImageView detailedImg;
@@ -53,25 +57,28 @@ public class ProductDetailActivity extends AppCompatActivity {
     private FirebaseAuth auth;
 
     // 리뷰
-
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private Button moreReviewsButton;
-    private ProductDetailReviewAdapter adapter;
+    private ReviewAdapter adapter;
     private ArrayList<Review> arrayList;
 
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);    // 툴바 아이디 연결
-        setSupportActionBar(toolbar);    // 액티비티의 앱바로 지정
-        ActionBar actionBar = getSupportActionBar();    // 앱바 제어를 위해 툴바 액세스
-        actionBar.setTitle("");    // 툴바 제목 설정
-        actionBar.setDisplayHomeAsUpEnabled(true);    // 앱바에 뒤로가기 버튼 만들기
+        Toolbar toolbar = findViewById(R.id.toolbar_product_detail);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);//기본 제목 삭제.
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
+        dialog = new Dialog(ProductDetailActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_confirm2);
 
         database = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("CurrentUser");
@@ -92,11 +99,41 @@ public class ProductDetailActivity extends AppCompatActivity {
         removeItem = findViewById(R.id.remove_item);
         detailedLongImg = findViewById(R.id.detail_longimg);
 
-
         price = findViewById(R.id.detail_price);
         stock = findViewById(R.id.detail_stock);
 
         name = findViewById(R.id.detailed_name);
+
+        // 하단바 구현
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigation_productDetail);
+
+        // 초기 선택 항목 설정
+        bottomNavigationView.setSelectedItemId(R.id.tab_shopping);
+
+        // BottomNavigationView의 아이템 클릭 리스너 설정
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.tab_home) {
+                    // Home 액티비티로 이동
+                    startActivity(new Intent(ProductDetailActivity.this, MainActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_shopping) {
+                    // Category 액티비티로 이동
+                    startActivity(new Intent(ProductDetailActivity.this, CategoryActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_donation) {
+                    // Donation 액티비티로 이동
+                    startActivity(new Intent(ProductDetailActivity.this, DonationMainActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_mypage) {
+                    // My Page 액티비티로 이동
+                    startActivity(new Intent(ProductDetailActivity.this, MyPageActivity.class));
+                    return true;
+                }
+                return false;
+            }
+        });
 
         if (product != null) {
             Glide.with(getApplicationContext()).load(product.getPimg()).into(detailedImg);
@@ -109,7 +146,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             totalPrice= product.getPprice() * totalQuantity;
 
             pid = product.getPid();
-
         }
 
         // 더 많은 리뷰 보기 버튼 및 리사이클러뷰 초기화
@@ -147,7 +183,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 
 
-        adapter = new ProductDetailReviewAdapter(arrayList, this);
+        adapter = new ReviewAdapter(arrayList, this);
         recyclerView.setAdapter(adapter);
 
         // 더 많은 리뷰 보기 버튼 클릭 시
@@ -155,14 +191,11 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 리뷰 목록 액티비티로 전환
-                Toast.makeText(ProductDetailActivity.this, "리뷰 화면으로 이동", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(ProductDetailActivity.this, ReviewActivity.class);
                 intent.putExtra("pid", pid);
                 startActivity(intent);
             }
         });
-
-
 
         addToCart = findViewById(R.id.add_to_cart);
         addToCart.setOnClickListener(new View.OnClickListener() {
@@ -183,10 +216,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                 databaseReference.child(firebaseUser.getUid()).child("AddToCart").child(cartID).setValue(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(ProductDetailActivity.this, "Add To A Cart", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
-                        startActivity(intent);
-                        finish();
+                        showDialog();
                     }
                 });
 
@@ -238,8 +268,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId ()) {
-            case android.R.id.home:    //툴바 뒤로가기버튼 눌렸을 때 동작
-                // ProductListActivity로 전환
+            case android.R.id.home:
                 Intent intent = new Intent(ProductDetailActivity.this, CategoryActivity.class);
                 startActivity(intent);
                 finish ();
@@ -247,5 +276,32 @@ public class ProductDetailActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void showDialog() {
+        dialog.show();
+
+        TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
+        confirmTextView.setText("상품을 장바구니에 담았습니다.\n장바구니로 이동하시겠습니까?");
+
+        Button btnleft = dialog.findViewById(R.id.btn_left);
+        btnleft.setText("쇼핑 계속하기");
+        btnleft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        Button btnright = dialog.findViewById(R.id.btn_right);
+        btnright.setText("장바구니 이동");
+        btnright.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }

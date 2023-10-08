@@ -2,11 +2,13 @@ package com.example.greeningapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -70,6 +73,8 @@ public class DonationDetailActivity extends AppCompatActivity {
 
     private ImageButton navMain, navCategory, navDonation, navMypage;
 
+    private BottomNavigationView bottomNavigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +94,8 @@ public class DonationDetailActivity extends AppCompatActivity {
         dodetailLongImg = findViewById(R.id.dodetail_longimg);
         dodetailStart = findViewById(R.id.dodetail_start);
         dodetailEnd = findViewById(R.id.dodetail_end);
-        dodetailuPoint = findViewById(R.id.detailU_point);
         dodetatilallPoint = findViewById(R.id.dodetail_point);
+        dodetailuPoint = findViewById(R.id.detail_point);
 
         if(donation != null){
             Glide.with(getApplicationContext()).load(donation.getDonationimg()).into(dodetailImg);
@@ -233,6 +238,7 @@ public class DonationDetailActivity extends AppCompatActivity {
                                     bundle.putString("donationName", donationName);
                                     bundle.putInt("donationPoint", Integer.parseInt(wannaDonatepoint.getText().toString()));
                                     bundle.putString("donationDate", getTime());
+                                    bundle.putString("donationImg", donation.getDonationimg());
 
                                     intent.putExtras(bundle);
                                     startActivity(intent);
@@ -318,47 +324,41 @@ public class DonationDetailActivity extends AppCompatActivity {
             }
         });
 
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_donation);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
+
         dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
-        navMain = findViewById(R.id.navMain_doDetail);
-        navCategory = findViewById(R.id.navCategory_doDetail);
-        navDonation = findViewById(R.id.navDonation_doDetail);
-        navMypage = findViewById(R.id.navMypage_doDetail);
+        // 하단바 구현
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigation_dodetail);
 
-        // 각 아이콘 클릭 이벤트 처리
-        navMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 홈 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(DonationDetailActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+        // 초기 선택 항목 설정
+        bottomNavigationView.setSelectedItemId(R.id.tab_donation);
 
-        navCategory.setOnClickListener(new View.OnClickListener() {
+        // BottomNavigationView의 아이템 클릭 리스너 설정
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                // 카테고리 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(DonationDetailActivity.this, CategoryActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        navDonation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 기부 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(DonationDetailActivity.this, DonationMainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        navMypage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 마이페이지 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(DonationDetailActivity.this, MyPageActivity.class);
-                startActivity(intent);
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.tab_home) {
+                    // Home 액티비티로 이동
+                    startActivity(new Intent(DonationDetailActivity.this, MainActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_shopping) {
+                    // Category 액티비티로 이동
+                    startActivity(new Intent(DonationDetailActivity.this, CategoryActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_donation) {
+                    // Donation 액티비티로 이동
+                    startActivity(new Intent(DonationDetailActivity.this, DonationMainActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_mypage) {
+                    // My Page 액티비티로 이동
+                    startActivity(new Intent(DonationDetailActivity.this, MyPageActivity.class));
+                    return true;
+                }
+                return false;
             }
         });
 

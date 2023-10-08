@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".OrderActivity"
+    android:background="@color/white"
     android:orientation="vertical">
 
 
@@ -22,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:text="주문서 작성"
             android:textColor="@color/black">
         </TextView>
@@ -37,17 +38,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/white"
         android:orientation="vertical"
+        android:layout_weight="1"
         >
 
         <ScrollView
             android:id="@+id/bio_scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:layout_weight="1">
+>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="주문상품"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_margin="8dp"
                     />
@@ -74,15 +75,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="31dp"
                     android:orientation="horizontal"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp">
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="8dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:textStyle="bold"
                         android:text="총 결제 금액"
-                        android:textSize="20sp"
+                        android:textSize="16sp"
                         />
 
                     <View
@@ -95,7 +96,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="33,000"
-                        android:textSize="20sp"
+                        android:textSize="16sp"
                         android:layout_marginRight="8dp"
                         android:textStyle="bold"/>
 
@@ -103,7 +104,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="3dp"
+                    android:layout_height="2dp"
                     android:layout_centerInParent="true"
                     android:background="@color/back"/>
 
@@ -112,13 +113,14 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp">
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="8dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="주문자 및 배송지 정보"
-                        android:textSize="20sp"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp"
                         />
@@ -128,14 +130,14 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp">
+                        android:layout_marginBottom="16dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="이름"
-                            android:textSize="16sp"
-                            android:textStyle="bold"/>
+                            android:textSize="14sp"
+                            />
 
                         <View
                             android:layout_width="0dp"
@@ -147,24 +149,21 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="홍길동"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
                             android:layout_marginRight="8dp"
-                            android:textStyle="bold"/>
+                            />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp">
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="전화번호"
-                            android:textSize="16sp"
-                            android:textStyle="bold"/>
+                            android:textSize="14sp" />
 
                         <View
                             android:layout_width="0dp"
@@ -177,128 +176,74 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
                             android:text="010-0000-0000"
-                            android:textSize="16sp"
-                            android:textStyle="bold"/>
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp">
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="주소"
-                            android:textSize="16sp"
-                            android:textStyle="bold"/>
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/order_postcode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:background="@drawable/square_box"
-                            android:padding="8dp"
                             android:text="우편번호"
-                            android:textSize="16sp"
-                            android:textStyle="bold"/>
+                            android:gravity="right"
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/order_address"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:background="@drawable/square_box"
-                            android:padding="8dp"
+                            android:gravity="right"
                             android:text="상세 주소"
-                            android:textSize="16sp"
-                            android:textStyle="bold"/>
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="3dp"
-                    android:layout_centerInParent="true"
-                    android:background="@color/back"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="결제 수단"
-                        android:textStyle="bold"
-                        android:textSize="20sp"/>
-
-                </LinearLayout>
             </LinearLayout>
         </ScrollView>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnPayment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:layout_margin="8dp"
-            android:background="@drawable/custom_btn"
-            android:text="결제하기" />
-
-
-        <LinearLayout
-            android:id="@+id/bottomNavigation"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal"
-            android:background="@color/white">
-
-            <ImageButton
-                android:id="@+id/navMain_order"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/home_logo_size"
-                android:background="@android:color/transparent"/>
-
-            <ImageButton
-                android:id="@+id/navCategory_order"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/shopping_logo_size"
-                android:background="@android:color/transparent"/>
-
-            <ImageButton
-                android:id="@+id/navDonation_order"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/donation_logo_size"
-                android:background="@android:color/transparent"/>
-
-            <ImageButton
-                android:id="@+id/navMypage_order"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/user_logo_size"
-                android:background="@android:color/transparent"/>
-
-        </LinearLayout>
-
     </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnPayment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/custom_btn"
+        android:text="결제하기" />
+
+    <!-- 하단 네비게이션 바 -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation_order"
+        style="@style/BottomNavigationViewNoRipple"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_gravity="bottom"
+        app:itemBackground="@android:color/white"
+        app:itemIconTint="@drawable/menu_selector_color"
+        app:itemTextColor="@drawable/menu_selector_color"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottommenu" />
 
 
 

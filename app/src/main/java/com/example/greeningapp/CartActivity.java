@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -47,6 +48,8 @@ public class CartActivity extends AppCompatActivity {
     Button buyBtn;
 
     private ImageButton navMain, navCategory, navDonation, navMypage;
+
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,47 +119,38 @@ public class CartActivity extends AppCompatActivity {
 
         });
 
-        navMain = findViewById(R.id.navMain_cart);
-        navCategory = findViewById(R.id.navCategory_cart);
-        navDonation = findViewById(R.id.navDonation_cart);
-        navMypage = findViewById(R.id.navMypage_cart);
+        // 하단바 구현
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigation_cart);
 
-        // 각 아이콘 클릭 이벤트 처리
-        navMain.setOnClickListener(new View.OnClickListener() {
+        // 초기 선택 항목 설정
+        bottomNavigationView.setSelectedItemId(R.id.tab_shopping);
+
+        // BottomNavigationView의 아이템 클릭 리스너 설정
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                // 홈 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(CartActivity.this, MainActivity.class);
-                startActivity(intent);
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.tab_home) {
+                    // Home 액티비티로 이동
+                    startActivity(new Intent(CartActivity.this, MainActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_shopping) {
+                    // Category 액티비티로 이동
+                    startActivity(new Intent(CartActivity.this, CategoryActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_donation) {
+                    // Donation 액티비티로 이동
+                    startActivity(new Intent(CartActivity.this, DonationMainActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_mypage) {
+                    // My Page 액티비티로 이동
+                    startActivity(new Intent(CartActivity.this, MyPageActivity.class));
+                    return true;
+                }
+                return false;
             }
         });
 
-        navCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 카테고리 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(CartActivity.this, CategoryActivity.class);
-                startActivity(intent);
-            }
-        });
 
-        navDonation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 기부 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(CartActivity.this, DonationMainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        navMypage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 마이페이지 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(CartActivity.this, MyPageActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
 //    @SuppressLint("NonConstantResourceId")

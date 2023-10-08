@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProductDetailActivity"
+    android:background="@color/white"
     android:orientation="horizontal">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,14 +14,22 @@
 
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_product_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/back"
+            android:background="@color/white"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:text="상품 상세"
+                android:textColor="#000000"/>
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -33,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_product_detail"
                 android:layout_marginTop="56dp">
 
                 <LinearLayout
@@ -62,8 +71,8 @@
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
                             android:text="제품명"
-                            android:textSize="24sp"
-                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:textColor="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/detailed_img"
                             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -73,8 +82,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:text="가격"
-                            android:textSize="20sp"
+                            android:textSize="16sp"
                             android:textStyle="bold"
+                            android:textColor="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/detailed_name"
                             app:layout_constraintStart_toStartOf="@+id/detailed_name"/>
 
@@ -85,8 +95,7 @@
                             android:layout_marginTop="5dp"
                             android:text="( 재고 : 0 )"
                             android:textColor="#808080"
-                            android:textSize="16sp"
-                            android:textStyle="normal"
+                            android:textSize="14sp"
                             app:layout_constraintTop_toBottomOf="@+id/detail_price"
                             app:layout_constraintStart_toStartOf="@+id/detailed_name"/>
 
@@ -97,9 +106,8 @@
                             android:layout_gravity="center"
                             android:layout_marginTop="20dp"
                             android:text="수량선택 :"
-                            android:textColor="#808080"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="@+id/detailed_name"
                             app:layout_constraintTop_toBottomOf="@+id/detail_stock"/>
 
@@ -115,8 +123,8 @@
 
                             <ImageView
                                 android:id="@+id/remove_item"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:background="@drawable/custom_quanbox"
                                 app:layout_constraintStart_toStartOf="@+id/constraintLayout2"
                                 app:layout_constraintTop_toTopOf="@+id/constraintLayout2"
@@ -125,12 +133,11 @@
 
                             <TextView
                                 android:id="@+id/quantity"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:background="@color/white"
                                 android:text="1"
                                 android:textSize="16sp"
-                                android:textStyle="bold"
                                 android:gravity="center"
                                 app:layout_constraintTop_toTopOf="@+id/constraintLayout2"
                                 app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
@@ -138,8 +145,8 @@
 
                             <ImageView
                                 android:id="@+id/add_item"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:src="@drawable/baseline_add_24"
                                 android:background="@drawable/custom_quanbox"
                                 app:layout_constraintTop_toTopOf="@+id/constraintLayout2"
@@ -170,11 +177,11 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="리뷰"
+                                android:text="구매후기"
                                 android:textStyle="bold"
-                                android:textSize="24sp"
+                                android:textSize="16sp"
                                 android:layout_marginStart="12dp"
-                                android:layout_marginTop="10dp" />
+                                android:layout_marginTop="20dp" />
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
@@ -194,10 +201,10 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:text="더 많은 리뷰 보기"
-                                    android:textSize="16sp"
-                                    android:textColor="@color/white"
-                                    android:background="@drawable/custom_btn"
+                                    android:text="구매후기 전체보기"
+                                    android:textSize="14sp"
+                                    android:textColor="@color/black"
+                                    android:background="@drawable/custom_btn_white"
                                     android:layout_marginTop="10dp"
                                     android:layout_marginBottom="10dp"
                                     android:layout_marginLeft="16dp"
@@ -220,6 +227,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:background="@color/white"
                 >
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/add_to_cart"
@@ -228,12 +236,12 @@
                     android:background="@drawable/custom_btn_white"
                     android:text="장바구니에 담기"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:layout_weight="1"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"/>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/buyNow"
@@ -242,18 +250,29 @@
                     android:background="@drawable/custom_btn"
                     android:text="바로 구매"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:layout_weight="1"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"/>
             </LinearLayout>
 
+            <!-- 하단 네비게이션 바 -->
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigation_productDetail"
+                style="@style/BottomNavigationViewNoRipple"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_gravity="bottom"
+                app:itemBackground="@android:color/white"
+                app:itemIconTint="@drawable/menu_selector_color"
+                app:itemTextColor="@drawable/menu_selector_color"
+                app:labelVisibilityMode="labeled"
+                app:menu="@menu/bottommenu" />
+
         </LinearLayout>
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

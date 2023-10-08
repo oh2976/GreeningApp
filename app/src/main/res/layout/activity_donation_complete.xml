@@ -2,10 +2,40 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".DonationCompleteActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_donation"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:text="기부 프로젝트"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:id="@+id/complete_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:textSize="16sp"
+            android:text="씨드"
+            android:layout_marginRight="16dp"
+            android:textColor="#000000"/>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -15,16 +45,8 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_donation">
 
-        <TextView
-            android:id="@+id/completeU_point"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_margin="16dp"
-            android:text="씨드"
-            android:textSize="18sp" />
 
         <View
             android:layout_width="match_parent"
@@ -33,10 +55,10 @@
             android:background="@color/back" />
 
         <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:id="@+id/donation_img_complete"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             android:background="@drawable/greening_main_logo" />
 
         <TextView
@@ -48,8 +70,7 @@
             android:text="총 0씨드로"
             android:textAlignment="center"
             android:textColor="@color/subColor"
-            android:textSize="24sp"
-            />
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -58,8 +79,7 @@
             android:text="기부가 완료 되었습니다."
             android:textAlignment="center"
             android:textColor="@color/subColor"
-            android:textSize="24sp"
-             />
+            android:textSize="16sp" />
 
         <View
             android:layout_width="match_parent"
@@ -73,15 +93,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textColorGray"
                 android:text="기부 프로젝트명"
-                android:textSize="16sp" />
+                android:textColor="@color/textColorGray"
+                android:textSize="14sp" />
 
             <View
                 android:layout_width="0dp"
@@ -90,13 +112,12 @@
 
             <TextView
                 android:id="@+id/completeDoName"
-                android:layout_marginLeft="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:layout_marginLeft="16dp"
                 android:text="기부명"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -104,14 +125,15 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textColorGray"
                 android:text="기부일자"
-                android:textSize="16sp" />
+                android:textColor="@color/textColorGray"
+                android:textSize="14sp" />
 
             <View
                 android:layout_width="0dp"
@@ -124,22 +146,24 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:text="기부일자"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="14sp"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textColorGray"
                 android:text="기부씨드"
-                android:textSize="16sp" />
+                android:textColor="@color/textColorGray"
+                android:textSize="14sp" />
 
             <View
                 android:layout_width="0dp"
@@ -150,29 +174,43 @@
                 android:id="@+id/completeDoPoint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_gravity="right"
                 android:text="기부씨드"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="14sp"/>
 
         </LinearLayout>
 
     </LinearLayout>
 
+    <!-- 하단 네비게이션 바 -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/goToMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:background="@drawable/custom_btn"
         android:text="홈으로 돌아가기"
-        android:layout_margin="8dp"
         android:textColor="@color/white"
-        android:textStyle="bold"
         android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation_docomplete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation_docomplete"
+        style="@style/BottomNavigationViewNoRipple"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_gravity="bottom"
+        app:itemBackground="@android:color/white"
+        app:itemIconTint="@drawable/menu_selector_color"
+        app:itemTextColor="@drawable/menu_selector_color"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        app:layout_constraintVertical_bias="1.0"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottommenu" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

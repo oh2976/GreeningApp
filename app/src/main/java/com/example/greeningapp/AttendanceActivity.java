@@ -1,17 +1,21 @@
 package com.example.greeningapp;
-
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,20 +34,19 @@ import java.util.HashMap;
 
 public class AttendanceActivity extends AppCompatActivity {
     private CalendarView calendarView;
-    private TextView attendanceCompletedTextView;
+    Dialog dialog;
     private Button btn_attendcheck;
     private Button btn_home;
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth firebaseAuth;
-    DatabaseReference userRef; // Firebase Realtime Database 참조
+    DatabaseReference userRef;
     DatabaseReference databaseReference;
     DatabaseReference databaseReference2;
     long mNow;
     Date mDate;
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-    private String idToken; // 사용자 ID
+    private String idToken;
     private int userSPoint;
-    private String pointName = "출석체크 리워드";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +54,18 @@ public class AttendanceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_attendance);
 
         calendarView = findViewById(R.id.calendarView);
-        attendanceCompletedTextView = findViewById(R.id.tv_attendance_completed);
         btn_attendcheck = findViewById(R.id.btn_attendcheck);
         btn_home = findViewById(R.id.btn_home);
+
+        dialog = new Dialog(AttendanceActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_confirm);
+
+        Toolbar toolbar = findViewById(R.id.toolbar_attendance);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("User");
@@ -71,7 +83,7 @@ public class AttendanceActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // 디비를 가져오던 중 에러 발생 시
-                Log.e("AttendanceActivity", String.valueOf(databaseError.toException())); // 에러문 출력
+                Log.e("AttendanceActivity", String.valueOf(databaseError.toException()));
             }
         });
 
@@ -79,10 +91,9 @@ public class AttendanceActivity extends AppCompatActivity {
         btn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // MainActivity로 이동하는 Intent 생성 (임시로 ProductListActivity로 이동하도록 설정함)
                 Intent intent = new Intent(AttendanceActivity.this, MainActivity.class);
                 startActivity(intent);
-                finish(); // AttendanceActivity는 더 이상 필요하지 않으므로 종료함
+                finish();
             }
         });
 
@@ -106,13 +117,10 @@ public class AttendanceActivity extends AppCompatActivity {
                     Boolean attendanceCompleted = dataSnapshot.getValue(Boolean.class);
                     if (attendanceCompleted != null && attendanceCompleted) {
                         // 출석체크가 이미 완료된 경우
-                        attendanceCompletedTextView.setVisibility(View.VISIBLE);    // 출석체크 완료 텍스트뷰 보이게 설정
-                        btn_attendcheck.setEnabled(false);    // 출석체크 버튼 비활성화
-                        calendarView.setAlpha(0.3f);    // 캘린더뷰 반투명하게 설정
+                        showDialog();
                     } else {
                         // 출석체크가 완료되지 않은 경우
                         btn_attendcheck.setEnabled(true);    // 출석체크 버튼 활성화
-                        calendarView.setAlpha(1.0f);    // 캘린더뷰를 다시 불투명하게 설정
                     }
                 }
 
@@ -122,8 +130,6 @@ public class AttendanceActivity extends AppCompatActivity {
                 }
             });
         } else {
-            // 로그인 오류
-            Toast.makeText(this, "로그인 정보를 찾을 수 없습니다. 다시 로그인해주세요.", Toast.LENGTH_SHORT).show();
             finish();
         }
 
@@ -133,9 +139,6 @@ public class AttendanceActivity extends AppCompatActivity {
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 // 출석체크 버튼을 보이게 설정
                 btn_attendcheck.setEnabled(true);
-                // 캘린더뷰 보이게, 출석체크 완료 텍스트뷰 안 보이게 설정
-                calendarView.setVisibility(View.VISIBLE);
-                attendanceCompletedTextView.setVisibility(View.INVISIBLE);
 
                 // 선택된 날짜를 문자열로 변환하여 Firebase에서 해당 날짜의 출석체크 데이터 여부를 확인
                 String selectedDate = formatDate(year, month, dayOfMonth);
@@ -145,13 +148,10 @@ public class AttendanceActivity extends AppCompatActivity {
                         Boolean attendanceCompleted = dataSnapshot.getValue(Boolean.class);
                         if (attendanceCompleted != null && attendanceCompleted) {
                             // 출석체크가 이미 완료된 경우
-                            btn_attendcheck.setEnabled(false);    // 출석체크 버튼 비활성화
-                            calendarView.setAlpha(0.3f);    // 캘린더뷰 반투명하게 설정
-                            attendanceCompletedTextView.setVisibility(View.VISIBLE);    // 출석체크 완료 텍스트뷰 보이게 설정
+                            showDialog4();
                         } else {
                             // 출석체크가 완료되지 않은 경우
                             btn_attendcheck.setEnabled(true);    // 출석체크 버튼 활성화
-                            calendarView.setAlpha(1.0f);    // 캘린더뷰를 다시 불투명하게 설정
                         }
                     }
 
@@ -190,15 +190,12 @@ public class AttendanceActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             Boolean attendanceCompleted = dataSnapshot.getValue(Boolean.class);
                             if (attendanceCompleted != null && attendanceCompleted) {
-                                // 출석체크가 이미 완료된 경우 메시지와 뷰를 변경
-                                Toast.makeText(AttendanceActivity.this, "출석체크는 당일 날짜에만 가능합니다.", Toast.LENGTH_SHORT).show();    // 요상한 부분..
+                                showDialog2();
                             } else {
-                                // 출석체크가 완료되지 않은 경우 (출석체크 완료 처리하고 Toast메시지 출력)
+                                // 출석체크가 완료되지 않은 경우
                                 markAttendanceCompletedForDate(selectedDate);
-                                Toast.makeText(AttendanceActivity.this, "출석체크가 완료되었습니다!", Toast.LENGTH_SHORT).show();
-                                btn_attendcheck.setEnabled(false);    // 출석체크 버튼 비활성화
-                                calendarView.setAlpha(0.3f);    // 캘린더뷰 반투명하게 설정
-                                attendanceCompletedTextView.setVisibility(View.VISIBLE);    // 출석체크 완료 텍스트뷰 보이게 설정
+                                btn_attendcheck.setEnabled(false);
+                                showDialog3();
                             }
                         }
 
@@ -208,8 +205,7 @@ public class AttendanceActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    // 선택한 날짜가 현재 날짜와 일치하지 않을 때 메시지 표시
-                    Toast.makeText(AttendanceActivity.this, "출석체크는 당일 날짜에만 가능합니다.", Toast.LENGTH_SHORT).show();
+                    showDialog2();
                 }
             }
         });
@@ -232,7 +228,6 @@ public class AttendanceActivity extends AppCompatActivity {
         databaseReference.child(firebaseAuth.getUid()).child("spoint").setValue(changePoint).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(AttendanceActivity.this, "출석체크 포인트 지급 완료", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -253,7 +248,7 @@ public class AttendanceActivity extends AppCompatActivity {
                 databaseReference2.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(AttendanceActivity.this, "포인트 데이터 저장 완료", Toast.LENGTH_SHORT).show();
+
                     }
                 });
             }
@@ -268,5 +263,83 @@ public class AttendanceActivity extends AppCompatActivity {
         mNow = System.currentTimeMillis();
         mDate = new Date(mNow);
         return mFormat.format(mDate);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId ()) {
+            case android.R.id.home:
+                Intent intent = new Intent(AttendanceActivity.this, MyPageActivity.class);
+                startActivity(intent);
+                finish ();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void showDialog() {
+        dialog.show();
+
+        TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
+        confirmTextView.setText("오늘은 이미 출석체크에 참여하셨습니다 :)");
+
+        Button btnOk = dialog.findViewById(R.id.btn_ok);
+        btnOk.setText("확인");
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+    public void showDialog2() {
+        dialog.show();
+
+        TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
+        confirmTextView.setText("출석체크는 당일에만 참여 가능합니다.");
+
+        Button btnOk = dialog.findViewById(R.id.btn_ok);
+        btnOk.setText("확인");
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+    public void showDialog3() {
+        dialog.show();
+
+        TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
+        confirmTextView.setText("출석체크가 완료되었습니다 :)");
+
+        Button btnOk = dialog.findViewById(R.id.btn_ok);
+        btnOk.setText("확인");
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+    public void showDialog4() {
+        dialog.show();
+
+        TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
+        confirmTextView.setText("해당 날짜에 출석체크를 참여하셨습니다 :)");
+
+        Button btnOk = dialog.findViewById(R.id.btn_ok);
+        btnOk.setText("확인");
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 }

@@ -4,16 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".DonationDetailActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="기부 증명서"
+            android:textColor="#000000"
+            android:textSize="18sp"/>
+
+    </androidx.appcompat.widget.Toolbar>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:layout_marginTop="65dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -26,12 +47,12 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+
                 <ImageView
                     android:id="@+id/CERTdetailed_img"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:scaleType="centerCrop" />
-
 
                 <TextView
                     android:id="@+id/CERTdetailed_name"
@@ -39,9 +60,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="10dp"
+                    android:textStyle="bold"
                     android:text="프로젝트 이름 기부 결산 내역"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textSize="16sp" />
 
 
                 <TextView
@@ -50,14 +71,13 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="10dp"
                     android:text="프로젝트 기간"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:orientation="horizontal">
-                    1
 
                     <TextView
                         android:id="@+id/CERTdetail_start"
@@ -65,9 +85,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:layout_marginStart="16dp"
-                        android:textSize="16sp"
                         android:gravity="right"
-                        android:text="기부 프로젝트 시작 기간" />
+                        android:text="기부 프로젝트 시작 기간"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/hyper"
@@ -76,7 +96,7 @@
                         android:layout_gravity="right"
                         android:gravity="right"
                         android:text=" ~ "
-                        android:textSize="16sp"/>
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/CERTdetail_end"
@@ -85,7 +105,7 @@
                         android:layout_gravity="right"
                         android:gravity="right"
                         android:text="기부 프로젝트 끝나는 기간"
-                        android:textSize="16sp"/>
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -100,6 +120,21 @@
             </LinearLayout>
 
         </ScrollView>
+
+        <!-- 하단 네비게이션 바 -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigation_docertifi"
+            style="@style/BottomNavigationViewNoRipple"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_gravity="bottom"
+            app:itemBackground="@android:color/white"
+            app:itemIconTint="@drawable/menu_selector_color"
+            app:itemTextColor="@drawable/menu_selector_color"
+            app:labelVisibilityMode="labeled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:menu="@menu/bottommenu" />
+
 
     </LinearLayout>
 
