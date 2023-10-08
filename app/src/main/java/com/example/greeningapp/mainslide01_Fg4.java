@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.greeningapp.ShoppingMainActivity;
+
 public class mainslide01_Fg4 extends Fragment{
 
     private TextView slide01_main4;
@@ -25,8 +27,8 @@ public class mainslide01_Fg4 extends Fragment{
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getActivity(), CategoryActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getActivity(), CategoryActivity.class);
+//                startActivity(intent);
             }
         });
 

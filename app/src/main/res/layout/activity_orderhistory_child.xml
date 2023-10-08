@@ -4,20 +4,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="10dp">
+    android:background="@color/white"
+    app:cardElevation="2dp">
+    <!--    app:cardCornerRadius="8dp"-->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="6dp"
         >
 
         <ImageView
             android:id="@+id/orderhistory_img"
-            android:layout_width="115dp"
-            android:layout_height="108dp"
-            android:layout_margin="5dp"
+            android:layout_width="105dp"
+            android:layout_height="92dp"
             android:src="@drawable/greening_main_logo"/>
 
         <LinearLayout
@@ -34,24 +35,21 @@
                     android:id="@+id/pro_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
                     android:text="Product Name"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textSize="14sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="38dp"
                 android:gravity="end">
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/ordhreviewBtn"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:textSize="14sp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
                     android:background="@drawable/main_btn"
                     android:text="후기 작성"
-                    android:textColor="@color/sub2"
+                    android:textColor="#315627"
                     android:textStyle="bold">
                 </androidx.appcompat.widget.AppCompatButton>
             </LinearLayout>
@@ -66,16 +64,20 @@
                     android:layout_height="wrap_content"
                     android:text="Product price"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
                     android:text="/"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
                     android:text="수량:"
                     android:textSize="14sp"
                     />

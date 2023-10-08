@@ -1,5 +1,4 @@
 package com.example.greeningapp;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,11 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.example.greeningapp.Product;
+import com.example.greeningapp.DonationMainActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,11 +28,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends FragmentActivity {
 
     private ViewPager2 mPager;
     private ViewPager2 mPager01;   //01붙은거는 슬라이드2변수
+    //잠시 추가
+    private int currentPage = 0;
+    private final long DELAY_MS = 3000; // 광고를 자동으로 넘길 시간 간격 (3초)
+    private final long PERIOD_MS = 3000; // 타이머 주기 (3초)
 
     private FragmentStateAdapter pagerAdapter;
     private FragmentStateAdapter pagerAdapter01;
@@ -46,9 +55,7 @@ public class MainActivity extends FragmentActivity {
     private DatabaseReference databaseReference;
     private Button goToShoppingMain;
 
-//    // 임시 하단바 버튼
-//    private Button mainbtnCart, mainbtnDonation, mainbtnMyPage;
-
+    //하단바 버튼
     private ImageButton navMain, navCategory, navDonation, navMypage;
 
     //슬라이드1 화면
@@ -84,8 +91,27 @@ public class MainActivity extends FragmentActivity {
         mPager01.setCurrentItem(1000);           // 시작 지점
         mPager01.setOffscreenPageLimit(2);
 
+        // 광고 타이머 설정
+        final Handler handler = new Handler(Looper.getMainLooper());
+        final Runnable update = new Runnable() {
+            public void run() {
+                if (currentPage == pagerAdapter.getItemCount()) {
+                    currentPage = 0;
+                }
+                mPager.setCurrentItem(currentPage++);
+            }
+        };
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(update);
+            }
+        }, DELAY_MS, PERIOD_MS);
+
         //상품목록
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_main); //아디연결
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_main); //아이디연결
         recyclerView.setHasFixedSize(true); //리사이클뷰 성능강화
         layoutManager = new LinearLayoutManager(this);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);   //가로2개(추가)

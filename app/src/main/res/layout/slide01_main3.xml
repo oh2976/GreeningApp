@@ -11,7 +11,7 @@
         android:layout_width="400dp"
         android:layout_height="415dp"
         android:gravity="center"
-        android:background="@drawable/big3"
+        android:background="@drawable/big4"
         />
 
 </LinearLayout>

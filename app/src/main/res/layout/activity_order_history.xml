@@ -5,12 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".Order.OrderHistoryActivity"
+    tools:context=".OrderHistoryActivity"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="66dp"
+        android:layout_height="65dp"
         android:orientation="horizontal" >
 
         <ImageButton
@@ -42,11 +43,6 @@
         android:layout_centerInParent="true"
         android:background="#27231919"/>
 
-    <!--    <ScrollView-->
-    <!--        android:id="@+id/bio_scroll"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_weight="1">-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="600dp"
@@ -57,14 +53,19 @@
             android:id="@+id/Parent_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_margin="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.461"
             app:layout_constraintStart_toStartOf="parent"
             />
 
     </LinearLayout>
+
+    <!--    <ScrollView-->
+    <!--        android:id="@+id/bio_scroll"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_weight="1">-->
     <!--    </ScrollView>-->
     <LinearLayout
         android:id="@+id/bottomNavigation"
