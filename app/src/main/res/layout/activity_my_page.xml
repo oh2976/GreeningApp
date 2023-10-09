@@ -30,7 +30,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,7 +42,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginRight="16dp"
                 android:orientation="vertical">
 
@@ -97,8 +97,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="16dp"
                     android:orientation="vertical">
 
@@ -130,6 +130,13 @@
 
 
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:layout_centerInParent="true"
+                        android:background="#F5F5F5" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -151,13 +158,18 @@
 
                         <ImageButton
                             android:id="@+id/cc_move"
-                            android:background="@drawable/baseline_arrow_forward_ios_24"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"/>
-
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/baseline_arrow_forward_ios_24" />
 
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:layout_centerInParent="true"
+                        android:background="#F5F5F5" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -192,7 +204,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="5dp"
                         android:layout_centerInParent="true"
-                        android:background="#F5F5F5"/>
+                        android:background="#F5F5F5" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -215,13 +227,18 @@
 
                         <ImageButton
                             android:id="@+id/gv_move"
-                            android:background="@drawable/baseline_arrow_forward_ios_24"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp" />
-
-
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/baseline_arrow_forward_ios_24" />
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:layout_centerInParent="true"
+                        android:background="#F5F5F5" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -242,12 +259,18 @@
 
                         <ImageButton
                             android:id="@+id/change_move"
-                            android:background="@drawable/baseline_arrow_forward_ios_24"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp" />
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/baseline_arrow_forward_ios_24" />
 
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:layout_centerInParent="true"
+                        android:background="#F5F5F5" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -270,13 +293,19 @@
 
                         <ImageButton
                             android:id="@+id/jmny_move"
-                            android:background="@drawable/baseline_arrow_forward_ios_24"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp" />
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/baseline_arrow_forward_ios_24" />
 
 
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:layout_centerInParent="true"
+                        android:background="#F5F5F5" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -299,13 +328,19 @@
 
                         <ImageButton
                             android:id="@+id/rvlist_move"
-                            android:background="@drawable/baseline_arrow_forward_ios_24"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp" />
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/baseline_arrow_forward_ios_24" />
 
 
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:layout_centerInParent="true"
+                        android:background="#F5F5F5" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -328,11 +363,12 @@
 
                         <ImageButton
                             android:id="@+id/tt_move"
-                            android:background="@drawable/baseline_arrow_forward_ios_24"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp" />
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/baseline_arrow_forward_ios_24" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -354,17 +390,18 @@
 
                         <ImageButton
                             android:id="@+id/out_move"
-                            android:background="@drawable/baseline_arrow_forward_ios_24"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp" />
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/baseline_arrow_forward_ios_24" />
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="5dp"
                         android:layout_centerInParent="true"
-                        android:background="#F5F5F5"/>
+                        android:background="#F5F5F5" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -382,7 +419,19 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        style="@style/BottomNavigationViewNoRipple"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_gravity="bottom"
+        app:itemBackground="@android:color/white"
+        app:itemIconTint="@drawable/menu_selector_color"
+        app:itemTextColor="@drawable/menu_selector_color"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottommenu" />
+
 </LinearLayout>

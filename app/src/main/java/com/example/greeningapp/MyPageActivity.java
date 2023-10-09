@@ -3,10 +3,8 @@ package com.example.greeningapp;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +31,7 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
     private DatabaseReference mDatabaseRef;
     Toolbar toolbar;
 
+    private BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +40,7 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);//기본 제목 삭제.
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_24);
 
@@ -49,6 +49,36 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
 
         Tv_my_name = findViewById(R.id.my_name);
         myPageSeed = (TextView) findViewById(R.id.myPageSeed);
+
+        // 하단바 구현
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigation);
+        // 초기 선택 항목 설정
+        bottomNavigationView.setSelectedItemId(R.id.tab_mypage);
+
+        // BottomNavigationView의 아이템 클릭 리스너 설정
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.tab_home) {
+                    // Home 액티비티로 이동
+                    startActivity(new Intent(MyPageActivity.this, MainActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_shopping) {
+                    // Category 액티비티로 이동
+                    startActivity(new Intent(MyPageActivity.this, CategoryActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_donation) {
+                    // Donation 액티비티로 이동
+                    startActivity(new Intent(MyPageActivity.this, DonationMainActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_mypage) {
+                    // My Page 액티비티로 이동
+                    startActivity(new Intent(MyPageActivity.this, MyPageActivity.class));
+                    return true;
+                }
+                return false;
+            }
+        });
 
         // 사용자 정보 가져오기, 이름 표시
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
@@ -97,10 +127,6 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         ImageButton orderBtn = findViewById(R.id.jmny_move);
         orderBtn.setOnClickListener(this);
 
-        ImageButton reviewBtn = findViewById(R.id.rvlist_move);
-        reviewBtn.setOnClickListener(this);
-
-
         ImageButton withdrawalBtn = findViewById(R.id.tt_move);
         withdrawalBtn.setOnClickListener(this);
 
@@ -136,10 +162,7 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
             intent = new Intent(MyPageActivity.this, ChangeActivity.class);
             startActivity(intent);
         } else if (id == R.id.jmny_move) {
-            intent = new Intent(MyPageActivity.this, OrderHistoryActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.rvlist_move) {
-            intent = new Intent(MyPageActivity.this, ReviewHistoryActivity.class);
+            intent = new Intent(MyPageActivity.this, ReviewWriteActivity.class);
             startActivity(intent);
         } else if (id == R.id.tt_move) {
             intent = new Intent(MyPageActivity.this, WithdrawalActivity.class);
