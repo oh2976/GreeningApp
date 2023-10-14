@@ -3,57 +3,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
-    <LinearLayout
+    <RadioGroup
+        android:id="@+id/qlistRadioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center">
 
-        <androidx.appcompat.widget.AppCompatButton
+
+        <androidx.appcompat.widget.AppCompatRadioButton
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_click_change"
-            android:layout_margin="8dp"
+            android:layout_height="70dp"
+            android:paddingLeft="16dp"
             android:text="리스트1"
-            android:textSize="16sp"
+            android:theme="@style/CustomRadioButton"
+            android:layoutDirection="rtl"
+            android:background="@drawable/btn_click_change"
+            android:textSize="14sp"
             android:textColor="@drawable/textcolor_clicked"
+
             android:id="@+id/qlist1"/>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatRadioButton
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_click_change"
-            android:layout_margin="8dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="16dp"
+            android:theme="@style/CustomRadioButton"
             android:text="리스트2"
-            android:textSize="16sp"
+            android:layoutDirection="rtl"
+            android:background="@drawable/btn_click_change"
+            android:textSize="14sp"
             android:textColor="@drawable/textcolor_clicked"
             android:id="@+id/qlist2"/>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatRadioButton
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_click_change"
-            android:layout_margin="8dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="16dp"
             android:text="리스트3"
-            android:textSize="16sp"
+            android:layoutDirection="rtl"
+            android:theme="@style/CustomRadioButton"
+            android:background="@drawable/btn_click_change"
+            android:textSize="14sp"
             android:textColor="@drawable/textcolor_clicked"
             android:id="@+id/qlist3"/>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatRadioButton
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_click_change"
-            android:layout_margin="8dp"
-            android:textSize="16sp"
+            android:layout_height="70dp"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="16dp"
             android:text="리스트4"
+            android:layoutDirection="rtl"
+            android:theme="@style/CustomRadioButton"
+            android:background="@drawable/btn_click_change"
+            android:textSize="14sp"
             android:textColor="@drawable/textcolor_clicked"
             android:id="@+id/qlist4"/>
 
 
+    </RadioGroup>
 
-
-    </LinearLayout>
 
 </FrameLayout>

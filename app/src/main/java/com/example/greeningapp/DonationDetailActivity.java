@@ -31,6 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -76,10 +77,19 @@ public class DonationDetailActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donation_detail);
+
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_donation);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
+
+        // 숫자에 콤마 표시
+        DecimalFormat decimalFormat = new DecimalFormat("###,###");
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Donation");
@@ -100,7 +110,7 @@ public class DonationDetailActivity extends AppCompatActivity {
         if(donation != null){
             Glide.with(getApplicationContext()).load(donation.getDonationimg()).into(dodetailImg);
             dodetailName.setText(donation.getDonationname());
-            dodetatilallPoint.setText(String.valueOf(donation.getPoint()));
+            dodetatilallPoint.setText(String.valueOf(decimalFormat.format(donation.getPoint())) + " 씨드");
             dodetailStart.setText(donation.getDonationstart());
             dodetailEnd.setText(donation.getDonationend());
             Glide.with(getApplicationContext()).load(donation.getDonationdetailimg()).into(dodetailLongImg);
@@ -128,7 +138,7 @@ public class DonationDetailActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 User user = dataSnapshot.getValue(User.class);; //  만들어 뒀던 Product 객체에 데이터를 담는다.
-                dodetailuPoint.setText(user.getSpoint() + " 씨드");
+                dodetailuPoint.setText(decimalFormat.format(user.getSpoint()) + " 씨드");
 
             }
 
@@ -324,10 +334,7 @@ public class DonationDetailActivity extends AppCompatActivity {
             }
         });
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_donation);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
+
 
         dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
@@ -368,6 +375,16 @@ public class DonationDetailActivity extends AppCompatActivity {
         mNow = System.currentTimeMillis();
         mDate = new Date(mNow);
         return mFormat.format(mDate);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) { //뒤로가기
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
 

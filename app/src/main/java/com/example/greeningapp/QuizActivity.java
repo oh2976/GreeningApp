@@ -2,12 +2,19 @@ package com.example.greeningapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,11 +39,15 @@ public class QuizActivity extends AppCompatActivity {
     private FragmentQList fragmentQList;
 
     private FragmentEnd fragmentEnd;
-    private Button btnDoQuiz;
+    public Button btnDoQuiz;
 
     private String quizResult;
 
     private long quizTimestamp;
+
+    ImageView alreayDoImage;
+
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +56,11 @@ public class QuizActivity extends AppCompatActivity {
 
         firebaseAuth =  FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
 
         databaseReference = FirebaseDatabase.getInstance().getReference("User");
 
@@ -69,10 +85,18 @@ public class QuizActivity extends AppCompatActivity {
         fragmentEnd = new FragmentEnd();
         fragmentQList = new FragmentQList();
 
+        dialog = new Dialog(QuizActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_confirm3);
+
+        alreayDoImage = (ImageView) dialog.findViewById(R.id.image);
+
+
+
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragmentFrame1, fragmentStart);
+        fragmentTransaction.add(R.id.fragmentFrame2, fragmentStart);
         fragmentTransaction.commit();
 
         btnDoQuiz = (Button) findViewById(R.id.btnDoQuiz);
@@ -94,13 +118,14 @@ public class QuizActivity extends AppCompatActivity {
                     ft4.replace(R.id.fragmentFrame2, fragmentQList);
                     ft4.commit();
 
-                    btnDoQuiz.setVisibility(View.INVISIBLE);
+//                    btnDoQuiz.setVisibility(View.INVISIBLE);
 
                 } else if("Yes".equals(quizResult)){
-                    FragmentManager fm3 = getSupportFragmentManager();
-                    FragmentTransaction ft3 = fragmentManager.beginTransaction();
-                    ft3.replace(R.id.fragmentFrame1, fragmentEnd);
-                    ft3.commit();
+//                    FragmentManager fm3 = getSupportFragmentManager();
+//                    FragmentTransaction ft3 = fragmentManager.beginTransaction();
+//                    ft3.replace(R.id.fragmentFrame1, fragmentEnd);
+//                    ft3.commit();
+                    showDialog();
                 }
 
             }
@@ -113,6 +138,35 @@ public class QuizActivity extends AppCompatActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.remove(fragmentQList);
         ft.commit();
+    }
+
+    public void showDialog() {
+        dialog.show();
+
+        TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
+        confirmTextView.setText("오늘은 이미 퀴즈에 참여하였습니다. \n 내일 또 도전해주세요.");
+        alreayDoImage.setImageResource(R.drawable.quiz_alreay_do_size);
+
+        Button btnOk = dialog.findViewById(R.id.btn_ok);
+        btnOk.setText("홈으로 돌아가기");
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent intent = new Intent(QuizActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) { //뒤로가기
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
 

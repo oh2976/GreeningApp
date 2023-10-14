@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
@@ -33,6 +34,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference;
+
+    DecimalFormat decimalFormat = new DecimalFormat("###,###");
 
     int totalPrice = 0;
 
@@ -60,9 +63,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 .load(cartList.get(position).getProductImg())
                 .into(holder.productImg);
         holder.name.setText(cartList.get(position).getProductName());
-        holder.price.setText(cartList.get(position).getProductPrice());
-        holder.quantity.setText(cartList.get(position).getTotalQuantity());
-        holder.totalPrice.setText(String.valueOf(cartList.get(position).getTotalPrice()));
+        holder.price.setText(decimalFormat.format(Integer.parseInt(cartList.get(position).getProductPrice())) + "원");
+        holder.quantity.setText(decimalFormat.format(cartList.get(position).getSelectedQuantity()) +"개");
+        holder.totalPrice.setText(String.valueOf(decimalFormat.format(cartList.get(position).getTotalPrice())) + "원");
 
         holder.deleteItem.setOnClickListener(new View.OnClickListener() {
             @Override

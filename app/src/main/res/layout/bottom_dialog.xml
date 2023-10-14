@@ -36,8 +36,9 @@
 
         <EditText
             android:id="@+id/wannaDonatepoint"
-            android:layout_width="120dp"
+            android:layout_width="wrap_content"
             android:textSize="16sp"
+            android:hint="씨드를 입력해주세요."
             android:background="@drawable/square_box"
             android:layout_height="wrap_content"
             />
@@ -50,7 +51,7 @@
         android:text="반드시 200 씨드 이상, 10 배수로 입력해야 합니다."
         android:layout_gravity="right"
         android:layout_marginRight="32dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:textColor="#EA4335"
         android:textSize="13sp"
         android:layout_marginBottom="16dp"

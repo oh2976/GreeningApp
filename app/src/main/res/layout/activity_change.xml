@@ -5,35 +5,29 @@
     android:layout_height="match_parent"
     android:gravity="top"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".ChangeActivity">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:orientation="horizontal" >
-
-        <ImageButton
-            android:id="@+id/back_ic"
-            android:background="@drawable/baseline_arrow_back_24"
-            android:contentDescription="뒤로가기"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="16dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="centerInside"/>
+        android:layout_height="65dp"
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginRight="72dp"
-            android:gravity="center"
-            android:text="회원 정보 수정"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원정보수정"
+            android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="bold"
+            android:includeFontPadding="false"
+            android:layout_gravity="center"
             />
-    </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -161,21 +155,20 @@
 
     </ScrollView>
 
-    <LinearLayout
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom"
-        android:orientation="horizontal">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/save_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:textColor="@color/white"
-            android:background="@drawable/custom_btn"
-            android:text="저장하기" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"/>
 
 
-    </LinearLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/save_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/custom_btn"
+        android:text="저장하기"
+        android:textColor="@color/white" />
 </LinearLayout>

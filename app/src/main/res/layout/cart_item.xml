@@ -6,16 +6,13 @@
     android:layout_margin="5dp"
     app:cardCornerRadius="7dp"
     android:elevation="0dp"
-    app:cardElevation="5dp">
+    app:cardElevation="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         >
-
-
-
 
         <ImageView
             android:id="@+id/cart_pimg"
@@ -49,6 +46,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -64,11 +62,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/textGray"
                     android:text="수량"
 
                     />
@@ -79,6 +79,7 @@
                     android:layout_height="wrap_content"
                     android:text="Total Quantity"
                     android:textSize="14sp"
+                    android:textColor="@color/textGray"
                     android:layout_marginLeft="8dp"
                     android:gravity="left" />
             </LinearLayout>
@@ -86,6 +87,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
                 android:orientation="horizontal">
 
 
@@ -94,7 +96,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Total Price"
-
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:gravity="left"/>
@@ -109,9 +110,8 @@
             android:id="@+id/delete_item"
             android:src="@drawable/baseline_clear_24"
             android:layout_width="24dp"
-
             android:layout_height="24dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:layout_marginRight="4dp"/>
 
 

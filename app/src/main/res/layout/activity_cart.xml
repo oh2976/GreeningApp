@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:background="@drawable/custom_btn"
-            android:text="결제하기"
+            android:text="주문하기"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"

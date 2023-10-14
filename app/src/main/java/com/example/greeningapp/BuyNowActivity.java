@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -58,12 +59,14 @@ public class BuyNowActivity extends AppCompatActivity {
     private String strOrderPostcode;
     private int userSPoint;
 
-    private String productName, productPrice, totalQuantity, productImg;
-    private int totalPrice, pId, productStock;
+    private String productName, productPrice, productImg;
+    private int totalPrice, pId, productStock, selectedQuantity;
     int total = 0;
     Button btnPayment;
 
     private BottomNavigationView bottomNavigationView;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,11 @@ public class BuyNowActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+        Toolbar mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
 
         buynow_pimg = (ImageView) findViewById(R.id.buynow_pimg);
 
@@ -128,33 +136,32 @@ public class BuyNowActivity extends AppCompatActivity {
         if(bundle != null){
             productName = bundle.getString("productName");
             productPrice = bundle.getString("productPrice");
-            totalQuantity = bundle.getString("totalQuantity");
+            selectedQuantity = bundle.getInt("selectedQuantity");
             productImg = bundle.getString("productImg");
             totalPrice = bundle.getInt("totalPrice");
             pId = bundle.getInt("pId");
             productStock = bundle.getInt("productStock");
 
-            Log.d("BuyNow", productName + productPrice + totalQuantity + productImg + totalPrice + pId + productStock);
+            Log.d("BuyNow", productName + productPrice + selectedQuantity + productImg + totalPrice + pId + productStock);
         }
 
         Glide.with(getApplicationContext()).load(productImg).into(buynow_pimg);
 
+        DecimalFormat decimalFormat = new DecimalFormat("###,###");
+
         buynow_pname.setText(productName);
-        buynow_pprice.setText(productPrice);
-        buynow_totalprice.setText(String.valueOf(totalPrice));
-        buynow_totalquantity.setText(String.valueOf(totalQuantity));
+        buynow_pprice.setText(String.valueOf(decimalFormat.format(Integer.parseInt(productPrice)))+ "원");
+        buynow_totalprice.setText(String.valueOf(decimalFormat.format(totalPrice)) + "원");
+        buynow_totalquantity.setText(String.valueOf(decimalFormat.format( selectedQuantity)) + "개");
 
 
-        overTotalAmount.setText(String.valueOf(totalPrice));
+        overTotalAmount.setText(String.valueOf(decimalFormat.format(totalPrice)) + "원");
 
 
 
         final String orderId = databaseReference.push().getKey();
 
-        Toolbar mToolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
+
 
 
 
@@ -170,7 +177,7 @@ public class BuyNowActivity extends AppCompatActivity {
 
                 cartMap.put("productName", productName);
                 cartMap.put("productPrice", productPrice);
-                cartMap.put("totalQuantity", totalQuantity);
+                cartMap.put("totalQuantity", selectedQuantity);
                 cartMap.put("totalPrice", totalPrice);
                 cartMap.put("productId", pId);
                 cartMap.put("overTotalPrice", totalPrice);
@@ -185,7 +192,7 @@ public class BuyNowActivity extends AppCompatActivity {
                 cartMap.put("doReview", "No");
                 Log.d("OrderActivity1", total+"");
 
-                int totalStock = productStock - Integer.valueOf(totalQuantity);
+                int totalStock = productStock - Integer.valueOf(selectedQuantity);
                 double changePoint = userSPoint + totalPrice * 0.01;
 
 
@@ -288,5 +295,15 @@ public class BuyNowActivity extends AppCompatActivity {
         mNow = System.currentTimeMillis();
         mDate = new Date(mNow);
         return mFormat.format(mDate);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) { //뒤로가기
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 }

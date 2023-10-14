@@ -6,32 +6,25 @@
     android:orientation="vertical"
     tools:context=".WithdrawalActivity">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/back_ic"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="16dp"
-            android:background="@drawable/move_ic"
-            android:contentDescription="뒤로가기"
-            android:scaleType="centerInside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="65dp"
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginRight="72dp"
-            android:gravity="center"
-            android:text="회원탈퇴"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원 탈퇴"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:includeFontPadding="false"
+            android:layout_gravity="center"
+            />
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -55,7 +48,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="5dp"
                 android:text="함께 했던 기록이 사라져요"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -66,7 +59,7 @@
                 android:layout_marginBottom="16dp"
                 android:text="기부 내역, 상품 구매 내역 등 기록했던 내용들이 사라
 져요."
-                android:textSize="14dp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -86,7 +79,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="5dp"
                 android:text="처음부터 다시 가입해야해요"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -97,7 +90,7 @@
                 android:layout_marginBottom="16dp"
                 android:text="탈퇴회원의 정보는 탈퇴 후 완벽히 삭제되어요. 탈퇴
 하시면 회원가입부터 다시 해야 해요."
-                android:textSize="14dp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <RadioButton
@@ -112,30 +105,33 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="bottom"
-            android:layout_marginBottom="20dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center" >
+                android:layout_margin="8dp">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/wbtn1"
-                    android:layout_width="150dp"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
                     android:layout_height="50dp"
-                    android:textColor="@color/white"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/custom_btn"
-                    android:text="취소" />
+                    android:layout_marginRight="4dp"
+                    android:background="@drawable/custom_btn_2"
+                    android:text="취소"
+                    android:textSize="16sp"
+                    android:textColor="@color/black" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/wbtn2"
-                    android:layout_width="150dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="4dp"
                     android:textColor="@color/white"
-                    android:layout_marginLeft="20dp"
+                    android:textSize="16sp"
                     android:background="@drawable/custom_btn"
                     android:text="탈퇴하기" />
             </LinearLayout>

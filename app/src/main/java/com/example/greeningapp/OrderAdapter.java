@@ -14,12 +14,15 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
 
     Context context;
     List<Cart> cartList;
+
+    DecimalFormat decimalFormat = new DecimalFormat("###,###");
 
     public OrderAdapter(Context context, List<Cart> cartList) {
         this.context = context;
@@ -38,8 +41,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 .load(cartList.get(position).getProductImg())
                 .into(holder.pimg_orderitem);
         holder.pName_orderitem.setText(cartList.get(position).getProductName());
-        holder.pPrice_orderitem.setText(String.valueOf(cartList.get(position).getTotalPrice()));
-        holder.pQauntity_orderitem.setText(cartList.get(position).getTotalQuantity() + "개");
+        holder.pPrice_orderitem.setText(String.valueOf(decimalFormat.format(cartList.get(position).getTotalPrice())) + "원");
+        holder.pQauntity_orderitem.setText(decimalFormat.format(cartList.get(position).getSelectedQuantity()) + "개");
     }
 
     @Override

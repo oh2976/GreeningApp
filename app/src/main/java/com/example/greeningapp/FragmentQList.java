@@ -1,12 +1,20 @@
 package com.example.greeningapp;
 
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,18 +41,8 @@ public class FragmentQList extends Fragment {
     Date mDate;
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    private Button qlist1;
-    private Button qlist2;
-    private Button qlist3;
-    private Button qlist4;
-
-    private FragmentSuccess fragmentSuccess;
-
     private FragmentQList fragmentQList;
 
-    private FragmentFailure fragmentFailure;
-
-    private FragmentHome fragmentHome;
 
     private DatabaseReference databaseReference;
     private DatabaseReference databaseReferenceUser;
@@ -55,20 +53,50 @@ public class FragmentQList extends Fragment {
 
     private int userpoint = 0;
 
+    Dialog dialog;
+
+    ImageView successImage, failureImage;
+
+    RadioGroup radioGroup;
+
+    RadioButton qlist1RadioButton, qlist2RadioButton, qlist3RadioButton, qlist4RadioButton;
+
+    String resultUser;
+
+    private Button btnDoQuiz;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_qlist , container,false);
 
-        qlist1 = view.findViewById(R.id.qlist1);
-        qlist2 = view.findViewById(R.id.qlist2);
-        qlist3 = view.findViewById(R.id.qlist3);
-        qlist4 = view.findViewById(R.id.qlist4);
 
-        fragmentFailure = new FragmentFailure();
-        fragmentSuccess = new FragmentSuccess();
         fragmentQList = new FragmentQList();
-        fragmentHome = new FragmentHome();
+        QuizActivity quizActivity = (QuizActivity) getActivity();
+
+        if (quizActivity != null && quizActivity.btnDoQuiz != null) {
+            btnDoQuiz = quizActivity.btnDoQuiz;
+
+        }
+
+
+        dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_confirm3);
+
+        successImage = dialog.findViewById(R.id.image);
+
+        failureImage = dialog.findViewById(R.id.image);
+        
+        radioGroup = (RadioGroup) view.findViewById(R.id.qlistRadioGroup);
+        qlist1RadioButton = view.findViewById(R.id.qlist1);
+        qlist2RadioButton = view.findViewById(R.id.qlist2);
+        qlist3RadioButton = view.findViewById(R.id.qlist3);
+        qlist4RadioButton = view.findViewById(R.id.qlist4);
+
+
+
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Quiz");
         databaseReferenceUser = FirebaseDatabase.getInstance().getReference("User");
@@ -82,10 +110,10 @@ public class FragmentQList extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Quiz quiz = snapshot.getValue(Quiz.class);
-                qlist1.setText(quiz.getQlist1());
-                qlist2.setText(quiz.getQlist2());
-                qlist3.setText(quiz.getQlist3());
-                qlist4.setText(quiz.getQlist4());
+                qlist1RadioButton.setText(quiz.getQlist1());
+                qlist2RadioButton.setText(quiz.getQlist2());
+                qlist3RadioButton.setText(quiz.getQlist3());
+                qlist4RadioButton.setText(quiz.getQlist4());
 
                 databaseReferenceUser.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -95,16 +123,30 @@ public class FragmentQList extends Fragment {
                         Log.d("FragmentQList", "적립 전 데이터베이스 spoint" + userpoint);
                         int resultSpoint = userpoint + 10;
 
-                        qlist1.setOnClickListener(new View.OnClickListener() {
+                        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                                if(checkedId == R.id.qlist1){
+                                    resultUser = String.valueOf(qlist1RadioButton.getText());
+                                } else if(checkedId == R.id.qlist2){
+                                    resultUser = String.valueOf(qlist2RadioButton.getText());
+                                } else if(checkedId == R.id.qlist3){
+                                    resultUser = String.valueOf(qlist3RadioButton.getText());
+                                } else if(checkedId == R.id.qlist4){
+                                    resultUser = String.valueOf(qlist4RadioButton.getText());
+                                }
+
+                            }
+                        });
+
+                        btnDoQuiz.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                if(quiz.getQans().equals(resultUser)){
 
-                                if(quiz.getQans().equals(qlist1.getText().toString())){
-                                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                    transaction.replace(R.id.fragmentFrame1, fragmentSuccess);
-                                    transaction.commit();
+                                    showSuccessDialog();
 
-                                    databaseReferenceUser.child(firebaseUser.getUid()).child("spoint").setValue(userpoint).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    databaseReferenceUser.child(firebaseUser.getUid()).child("spoint").setValue(resultSpoint).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             Log.d("FragmentQList", "spoint 적립 완료" + userpoint);
@@ -138,215 +180,19 @@ public class FragmentQList extends Fragment {
                                         }
                                     });
 
-//                            ((QuizActivity) getActivity()).hideFragmentQList();
-
                                 } else {
-                                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                    transaction.replace(R.id.fragmentFrame1, fragmentFailure);
-                                    transaction.commit();
-                                }
-                                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                transaction.replace(R.id.fragmentFrame2, fragmentHome);
-                                transaction.commit();
-
-                                databaseReferenceUser.child(firebaseUser.getUid()).child("doquiz").setValue("Yes").addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        Log.d("FragmentQList", "doquiz 키값 변경 완료" + user.getDoquiz());
-                                    }
-                                });
-
-
-                            }
-                        });
-
-                        qlist2.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if(quiz.getQans().equals(qlist2.getText().toString())){
-                                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                    transaction.replace(R.id.fragmentFrame1, fragmentSuccess);
-                                    transaction.commit();
-
-                                    databaseReferenceUser.child(firebaseUser.getUid()).child("spoint").setValue(userpoint).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            Log.d("FragmentQList", "spoint 적립 완료" + userpoint);
-
-                                            databaseReferenceUser.child(firebaseAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                                                    User user = datasnapshot.getValue(User.class);
-                                                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                                                    final HashMap<String, Object> pointMap = new HashMap<>();
-                                                    pointMap.put("pointName", "씨드 적립 - 오늘의 퀴즈");
-                                                    pointMap.put("pointDate", getTime());
-                                                    pointMap.put("type", "savepoint");
-                                                    pointMap.put("point", 10);
-                                                    pointMap.put("userName", user.getUsername());
-
-                                                    String pointID = databaseReferenceCurrentUser.child(firebaseUser.getUid()).child("MyPoint").push().getKey();
-                                                    databaseReferenceCurrentUser.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<Void> task) {
-
-                                                        }
-                                                    });
-                                                }
-
-                                                @Override
-                                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                                }
-                                            });
-                                        }
-                                    });
-
-//                            ((QuizActivity) getActivity()).hideFragmentQList();
-
-                                } else {
-                                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                    transaction.replace(R.id.fragmentFrame1, fragmentFailure);
-                                    transaction.commit();
+                                    showFailureDialog();
                                 }
 
-                                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                transaction.replace(R.id.fragmentFrame2, fragmentHome);
-                                transaction.commit();
+                                // 테스트를 위해서 잠시 주석 처리 (퀴즈 완료 처리하는 코드)
+//                                databaseReferenceUser.child(firebaseUser.getUid()).child("doquiz").setValue("Yes").addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                    @Override
+//                                    public void onComplete(@NonNull Task<Void> task) {
+//                                        Log.d("FragmentQList", "doquiz 키값 변경 완료" + user.getDoquiz());
+//                                    }
+//                                });
 
-                                databaseReferenceUser.child(firebaseUser.getUid()).child("doquiz").setValue("Yes").addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        Log.d("FragmentQList", "doquiz 키값 변경 완료" + user.getDoquiz());
-                                    }
-                                });
-                            }
-                        });
-
-                        qlist3.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if(quiz.getQans().equals(qlist3.getText().toString())){
-                                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                    transaction.replace(R.id.fragmentFrame1, fragmentSuccess);
-                                    transaction.commit();
-
-                                    databaseReferenceUser.child(firebaseUser.getUid()).child("spoint").setValue(userpoint).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            Log.d("FragmentQList", "spoint 적립 완료" + userpoint);
-
-                                            databaseReferenceUser.child(firebaseAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                                                    User user = datasnapshot.getValue(User.class);
-                                                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                                                    final HashMap<String, Object> pointMap = new HashMap<>();
-                                                    pointMap.put("pointName", "씨드 적립 - 오늘의 퀴즈");
-                                                    pointMap.put("pointDate", getTime());
-                                                    pointMap.put("type", "savepoint");
-                                                    pointMap.put("point", 10);
-                                                    pointMap.put("userName", user.getUsername());
-
-                                                    String pointID = databaseReferenceCurrentUser.child(firebaseUser.getUid()).child("MyPoint").push().getKey();
-                                                    databaseReferenceCurrentUser.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<Void> task) {
-
-                                                        }
-                                                    });
-                                                }
-
-                                                @Override
-                                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                                }
-                                            });
-                                        }
-                                    });
-
-//                            ((QuizActivity) getActivity()).hideFragmentQList();
-
-                                } else {
-                                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                    transaction.replace(R.id.fragmentFrame1, fragmentFailure);
-                                    transaction.commit();
                                 }
-
-                                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                transaction.replace(R.id.fragmentFrame2, fragmentHome);
-                                transaction.commit();
-
-                                databaseReferenceUser.child(firebaseUser.getUid()).child("doquiz").setValue("Yes").addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        Log.d("FragmentQList", "doquiz 키값 변경 완료" + user.getDoquiz());
-                                    }
-                                });
-                            }
-                        });
-
-                        qlist4.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if(quiz.getQans().equals(qlist4.getText().toString())){
-                                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                    transaction.replace(R.id.fragmentFrame1, fragmentSuccess);
-                                    transaction.commit();
-
-                                    databaseReferenceUser.child(firebaseUser.getUid()).child("spoint").setValue(resultSpoint).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            Log.d("FragmentQList", "spoint 적립 완료" + resultSpoint);
-
-                                            databaseReferenceUser.child(firebaseAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                                                    User user = datasnapshot.getValue(User.class);
-                                                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                                                    final HashMap<String, Object> pointMap = new HashMap<>();
-                                                    pointMap.put("pointName", "씨드 적립 - 오늘의 퀴즈");
-                                                    pointMap.put("pointDate", getTime());
-                                                    pointMap.put("type", "savepoint");
-                                                    pointMap.put("point", 10);
-                                                    pointMap.put("userName", user.getUsername());
-
-                                                    String pointID = databaseReferenceCurrentUser.child(firebaseUser.getUid()).child("MyPoint").push().getKey();
-                                                    databaseReferenceCurrentUser.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<Void> task) {
-
-                                                        }
-                                                    });
-                                                }
-
-                                                @Override
-                                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                                }
-                                            });
-                                        }
-                                    });
-
-//                            ((QuizActivity) getActivity()).hideFragmentQList();
-
-                                } else {
-                                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                    transaction.replace(R.id.fragmentFrame1, fragmentFailure);
-                                    transaction.commit();
-                                }
-
-                                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                transaction.replace(R.id.fragmentFrame2, fragmentHome);
-                                transaction.commit();
-
-                                databaseReferenceUser.child(firebaseUser.getUid()).child("doquiz").setValue("Yes").addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        Log.d("FragmentQList", "doquiz 키값 변경 완료" + user.getDoquiz());
-                                    }
-                                });
-                            }
                         });
                     }
 
@@ -370,4 +216,48 @@ public class FragmentQList extends Fragment {
         mDate = new Date(mNow);
         return mFormat.format(mDate);
     }
+
+    public void showSuccessDialog() {
+        dialog.show();
+
+        TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
+        confirmTextView.setText("정답입니다! \n 10씨드가 적립되었습니다.");
+        successImage.setImageResource(R.drawable.quiz_success_size);
+
+        Button btnOk = dialog.findViewById(R.id.btn_ok);
+        btnOk.setText("홈으로 돌아가기");
+
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void showFailureDialog() {
+        dialog.show();
+
+        TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
+        confirmTextView.setText("오답입니다! \n 내일 또 도전해주세요.");
+        failureImage.setImageResource(R.drawable.quiz_failure_size);
+
+        Button btnOk = dialog.findViewById(R.id.btn_ok);
+        btnOk.setText("홈으로 돌아가기");
+
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+
 }

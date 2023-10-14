@@ -13,7 +13,7 @@ public class MyOrder  implements Serializable {
     private String productName;
     private String productPrice;
     private int totalPrice;
-    private String totalQuantity;
+    private int totalQuantity;
     private String userName;
     private String orderDate;
     private String doReview;
@@ -110,11 +110,11 @@ public class MyOrder  implements Serializable {
         this.totalPrice = totalPrice;
     }
 
-    public String getTotalQuantity() {
+    public int getTotalQuantity() {
         return totalQuantity;
     }
 
-    public void setTotalQuantity(String totalQuantity) {
+    public void setTotalQuantity(int totalQuantity) {
         this.totalQuantity = totalQuantity;
     }
 

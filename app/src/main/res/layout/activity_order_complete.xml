@@ -12,8 +12,6 @@
         android:id="@+id/toolbar"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
         android:background="@color/toolbar"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme">
@@ -65,6 +63,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
                         android:layout_marginLeft="8dp"
+                        android:textColor="@color/textGray"
                         android:text="No.주문번호"/>
 
                     <View
@@ -78,6 +77,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
+                        android:layout_marginRight="8dp"
+                        android:textColor="@color/textGray"
                         android:text="주문 날짜"/>
 
                 </LinearLayout>
@@ -100,7 +101,9 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView_orderComplete"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"/>
 
 
                 <LinearLayout
@@ -114,7 +117,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-
                         android:text="총 결제 금액"
                         android:textSize="14sp"
                         />
@@ -220,6 +222,11 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp">
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -231,10 +238,12 @@
                             android:id="@+id/cmp_postcode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="8dp"
                             android:text="우편번호"
                             android:gravity="right"
                             android:textSize="14sp"/>
+
+                    </LinearLayout>
 
                         <TextView
                             android:id="@+id/cmp_address"
@@ -243,6 +252,7 @@
                             android:layout_marginTop="8dp"
                             android:text="상세 주소"
                             android:gravity="right"
+                            android:layout_marginRight="8dp"
                             android:textSize="14sp"/>
                     </LinearLayout>
 

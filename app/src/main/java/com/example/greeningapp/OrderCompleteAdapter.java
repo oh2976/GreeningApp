@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class OrderCompleteAdapter extends RecyclerView.Adapter<OrderCompleteAdapter.OrderCompleteViewHolder>{
@@ -29,6 +30,9 @@ public class OrderCompleteAdapter extends RecyclerView.Adapter<OrderCompleteAdap
     DatabaseReference databaseReference;
 
     int totalPrice = 0;
+
+    DecimalFormat decimalFormat = new DecimalFormat("###,###");
+
 
     public OrderCompleteAdapter(Context context, List<MyOrder> myOrderList){
         this.context = context;
@@ -52,8 +56,8 @@ public class OrderCompleteAdapter extends RecyclerView.Adapter<OrderCompleteAdap
                 .load(myOrderList.get(position).getOrderImg())
                 .into(holder.pimg_orderitem);
         holder.pName_orderitem.setText(myOrderList.get(position).getProductName());
-        holder.pPrice_orderitem.setText(String.valueOf(myOrderList.get(position).getTotalPrice()));
-        holder.pQauntity_orderitem.setText(myOrderList.get(position).getTotalQuantity() + "개");
+        holder.pPrice_orderitem.setText(String.valueOf(decimalFormat.format(myOrderList.get(position).getTotalPrice())) + "원");
+        holder.pQauntity_orderitem.setText(decimalFormat.format(myOrderList.get(position).getTotalQuantity()) + "개");
     }
 
     @Override

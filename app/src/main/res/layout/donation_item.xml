@@ -28,32 +28,47 @@
             android:layout_marginBottom="8dp"
             >
 
-            <TextView
-                android:id="@+id/donation_name"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/LinearLayout_donation"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:text="기부 프로젝트 명"
+                android:layout_marginTop="8dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="8dp"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:layout_width="45dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:text="진행 중"
-                android:textSize="13sp"
-                android:textColor="@color/white"
-                android:layout_marginLeft="8dp"
-                android:background="@drawable/round_filled_box"
-                app:layout_constraintStart_toEndOf="@+id/donation_name"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/donation_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginRight="4dp"
+                    android:text="기부 프로젝트 명"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_filled_box"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:padding="2dp"
+                    android:text="진행 중"
+                    android:layout_marginRight="8dp"
+                    android:textColor="@color/white"
+                    android:textSize="11sp" />
+
+
+
+
+
+            </LinearLayout>
+
+
+
 
             <TextView
                 android:id="@+id/donation_start"
@@ -65,10 +80,11 @@
                 android:layout_marginBottom="8dp"
                 android:textSize="14sp"
                 android:gravity="right"
+                android:textColor="@color/textGray"
                 android:text="기부 프로젝트 시작 기간"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/donation_name"
+                app:layout_constraintTop_toBottomOf="@+id/LinearLayout_donation"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
@@ -79,9 +95,10 @@
                 android:gravity="right"
                 android:text=" ~ "
                 android:textSize="14sp"
+                android:textColor="@color/textGray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/donation_start"
-                app:layout_constraintTop_toBottomOf="@+id/donation_name" />
+                app:layout_constraintTop_toBottomOf="@+id/LinearLayout_donation" />
 
             <TextView
                 android:id="@+id/donation_end"
@@ -91,11 +108,12 @@
                 android:gravity="right"
                 android:text="기부 프로젝트 끝나는 기간"
                 android:textSize="14sp"
+                android:textColor="@color/textGray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/hyper"
-                app:layout_constraintTop_toBottomOf="@+id/donation_name" />
+                app:layout_constraintTop_toBottomOf="@+id/LinearLayout_donation" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

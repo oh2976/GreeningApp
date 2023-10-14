@@ -4,7 +4,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="toolbar">#FFFFFF</color>
     <color name="mainColor">#205107</color>
-    <color name="textColorGray">#919191</color>
+<!--    <color name="textColorGray">#919191</color>-->
+    <color name="textColorGray">#A0A0A0</color>
+    <color name="textGray">#808080</color>
+    <color name="gray">#DDDDDD</color>
 
 
     <color name="subColor">#377028</color>

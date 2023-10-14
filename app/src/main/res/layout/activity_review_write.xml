@@ -169,10 +169,12 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/writeUploadBtn"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="5"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:gravity="center"
+                    android:background="@drawable/custom_btn"
+                    android:textColor="@color/white"
                     android:layout_margin="8dp"
                     android:onClick="onClick"
                     android:text="확인"></androidx.appcompat.widget.AppCompatButton>

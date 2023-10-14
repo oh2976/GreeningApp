@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -76,10 +77,18 @@ public class OrderActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
 
+    DecimalFormat decimalFormat = new DecimalFormat("###,###");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
+
+        // 툴바 생성
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
 
         // AddToCart에 있는 데이터베이스를 넣을 상품 리사이클러뷰
         recyclerView = findViewById(R.id.recyclerView_order); //아디 연결
@@ -153,7 +162,7 @@ public class OrderActivity extends AppCompatActivity {
                     cart.setDataId(dataId);
                     total += cart.getTotalPrice();
                     Log.d("OrderActivity", total+"");
-                    overTotalAmount.setText(String.valueOf(total));
+                    overTotalAmount.setText(String.valueOf(decimalFormat.format(total)) + "원");
                 }
                 adapter.notifyDataSetChanged(); // 리스트 저장 및 새로고침
             }
@@ -165,16 +174,14 @@ public class OrderActivity extends AppCompatActivity {
             }
         });
 
+        Log.e("OrderActivity", String.valueOf(total)); // 에러문 출력
+
         adapter = new OrderAdapter(this, arrayList);
         recyclerView.setAdapter(adapter); //리사이클러뷰에 어댑터 연결
 
         String orderId = databaseReference.push().getKey();
 
-        // 툴바 생성
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
+
 
         List<Cart> list = (ArrayList<Cart>) getIntent().getSerializableExtra("itemList");
         btnPayment = (Button) findViewById(R.id.btnPayment);
@@ -219,7 +226,7 @@ public class OrderActivity extends AppCompatActivity {
 
                         cartMap.put("productName", model.getProductName());
                         cartMap.put("productPrice", model.getProductPrice());
-                        cartMap.put("totalQuantity", model.getTotalQuantity());
+                        cartMap.put("totalQuantity", model.getSelectedQuantity());
                         cartMap.put("totalPrice", model.getTotalPrice());
                         cartMap.put("productId", model.getpId());
                         cartMap.put("overTotalPrice", total);
@@ -234,7 +241,7 @@ public class OrderActivity extends AppCompatActivity {
                         cartMap.put("eachOrderedId", eachOrderedId);
 
                         // 결제 된 재고만큼 기존 재고에서 변경한 값을 변수에 저장
-                        int totalStock = model.getProductStock() - Integer.valueOf(model.getTotalQuantity());
+                        int totalStock = model.getProductStock() - Integer.valueOf(model.getSelectedQuantity());
                         // 기존 회원 sPoint에 있는 값에 결제 후 추가될 씨드 더하여 변수에 저장
                         double changePoint = userSPoint + total * 0.01;
 
@@ -333,5 +340,15 @@ public class OrderActivity extends AppCompatActivity {
         mNow = System.currentTimeMillis();
         mDate = new Date(mNow);
         return mFormat.format(mDate);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) { //뒤로가기
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 }

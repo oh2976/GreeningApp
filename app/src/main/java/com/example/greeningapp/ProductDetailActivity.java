@@ -31,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -104,6 +105,9 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         name = findViewById(R.id.detailed_name);
 
+        // 숫자에 콤마 표시
+        DecimalFormat decimalFormat = new DecimalFormat("###,###");
+
         // 하단바 구현
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigation_productDetail);
 
@@ -135,15 +139,18 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
 
+//        totalQuantity = Integer.parseInt(quantity.getText().toString());
+
         if (product != null) {
             Glide.with(getApplicationContext()).load(product.getPimg()).into(detailedImg);
 //            description.setText(product.getDescription());
-            price.setText(String.valueOf(product.getPprice()));
+            price.setText(String.valueOf(decimalFormat.format(product.getPprice())) + "원");
             stock.setText("( 재고: " + String.valueOf(product.getStock()) + " )");
             name.setText(product.getPname());
             Glide.with(getApplicationContext()).load(product.getPdetailimg()).into(detailedLongImg);
 
             totalPrice= product.getPprice() * totalQuantity;
+            decimalFormat.format(totalPrice);
 
             pid = product.getPid();
         }
@@ -205,8 +212,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                 final HashMap<String, Object> cartMap = new HashMap<>();
                 FirebaseUser firebaseUser = auth.getCurrentUser();
                 cartMap.put("productName", product.getPname());
-                cartMap.put("productPrice", price.getText().toString());
-                cartMap.put("totalQuantity", quantity.getText().toString());
+                cartMap.put("productPrice", String.valueOf(product.getPprice()));
+                cartMap.put("selectedQuantity", totalQuantity);
                 cartMap.put("totalPrice", totalPrice * totalQuantity);
                 cartMap.put("pId", product.getPid());
                 cartMap.put("productImg", product.getPimg());
@@ -233,8 +240,8 @@ public class ProductDetailActivity extends AppCompatActivity {
 
                 Bundle bundle = new Bundle();
                 bundle.putString("productName", product.getPname());
-                bundle.putString("productPrice", price.getText().toString());
-                bundle.putString("totalQuantity", quantity.getText().toString());
+                bundle.putString("productPrice", String.valueOf(product.getPprice()));
+                bundle.putInt("selectedQuantity", totalQuantity);
                 bundle.putInt("totalPrice", totalPrice * totalQuantity);
                 bundle.putInt("pId", product.getPid());
                 bundle.putString("productImg", product.getPimg());

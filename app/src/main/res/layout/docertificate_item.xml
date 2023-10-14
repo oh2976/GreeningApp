@@ -27,32 +27,45 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
 
-            <TextView
-                android:id="@+id/docerti_name"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/LinearLayout_docertificate"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="기부 프로젝트 명 기부 결산"
-                app:layout_constraintHorizontal_bias="0.043"
+                android:layout_marginLeft="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:layout_width="45dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/round_filled_box"
-                android:gravity="center"
-                android:text="종료"
-                android:textColor="@color/white"
-                android:layout_marginLeft="8dp"
-                android:textSize="13sp"
-                app:layout_constraintStart_toEndOf="@+id/docerti_name"
-                app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/docerti_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginRight="4dp"
+                    android:text="기부 프로젝트 명 기부 결산"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_filled_box_gray"
+                    android:layout_marginRight="8dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:padding="2dp"
+                    android:text="종료"
+                    android:textColor="@color/white"
+                    android:textSize="11sp" />
+
+
+
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/docerti_start"
@@ -65,9 +78,10 @@
                 android:gravity="right"
                 android:text="기부 프로젝트 시작 기간"
                 android:textSize="14sp"
+                android:textColor="@color/textGray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/docerti_name"
+                app:layout_constraintTop_toBottomOf="@+id/LinearLayout_docertificate"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
@@ -78,9 +92,10 @@
                 android:gravity="right"
                 android:textSize="14sp"
                 android:text=" ~ "
+                android:textColor="@color/textGray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/docerti_start"
-                app:layout_constraintTop_toBottomOf="@+id/docerti_name" />
+                app:layout_constraintTop_toBottomOf="@+id/LinearLayout_docertificate" />
 
             <TextView
                 android:id="@+id/docerti_end"
@@ -93,9 +108,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-
+                android:textColor="@color/textGray"
                 app:layout_constraintStart_toEndOf="@+id/hyper"
-                app:layout_constraintTop_toBottomOf="@+id/docerti_name" />
+                app:layout_constraintTop_toBottomOf="@+id/LinearLayout_docertificate" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

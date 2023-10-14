@@ -6,9 +6,8 @@ import java.io.Serializable;
 public class Cart implements Serializable {
     private String productName;
     private String productPrice;
-    private String totalQuantity;
     private int totalPrice;
-
+    private int selectedQuantity;
     private int pId;
     private String productImg;
 
@@ -68,20 +67,20 @@ public class Cart implements Serializable {
         this.productPrice = productPrice;
     }
 
-    public String getTotalQuantity() {
-        return totalQuantity;
-    }
-
-    public void setTotalQuantity(String totalQuantity) {
-        this.totalQuantity = totalQuantity;
-    }
-
     public int getTotalPrice() {
         return totalPrice;
     }
 
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public int getSelectedQuantity() {
+        return selectedQuantity;
+    }
+
+    public void setSelectedQuantity(int selectedQuantity) {
+        this.selectedQuantity = selectedQuantity;
     }
 }
 

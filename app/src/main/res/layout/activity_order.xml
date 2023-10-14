@@ -68,15 +68,17 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView_order"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"/>
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="31dp"
                     android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
                     android:layout_marginLeft="8dp">
 
                     <TextView
@@ -186,20 +188,28 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="16dp">
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="주소"
                             android:textSize="14sp" />
 
+
                         <TextView
                             android:id="@+id/order_postcode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
                             android:text="우편번호"
                             android:gravity="right"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:layout_marginRight="8dp"/>
+
+                        </LinearLayout>
 
                         <TextView
                             android:id="@+id/order_address"
@@ -208,7 +218,8 @@
                             android:layout_marginTop="8dp"
                             android:gravity="right"
                             android:text="상세 주소"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:layout_marginRight="8dp"/>
                     </LinearLayout>
 
                 </LinearLayout>

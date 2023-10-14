@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class DonationMainActivity extends AppCompatActivity {
@@ -50,6 +51,9 @@ public class DonationMainActivity extends AppCompatActivity {
 
 
     private ImageButton navMain, navCategory, navDonation, navMypage;
+
+
+    DecimalFormat decimalFormat = new DecimalFormat("###,###");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +114,7 @@ public class DonationMainActivity extends AppCompatActivity {
                 // 회원 정보 테이블에서 sPoint 데이터 가져와서 뿌리기
 
                 User user = dataSnapshot.getValue(User.class); //  만들어 뒀던 Product 객체에 데이터를 담는다.
-                donationPoint.setText(user.getSpoint() + " 씨드");
+                donationPoint.setText(decimalFormat.format(user.getSpoint()) + " 씨드");
 
             }
 
@@ -204,5 +208,15 @@ public class DonationMainActivity extends AppCompatActivity {
 //            }
 //        });
 
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) { //뒤로가기
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 }
