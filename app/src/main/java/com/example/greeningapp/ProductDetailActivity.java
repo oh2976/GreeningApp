@@ -47,7 +47,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     ImageView detailedImg;
     ImageView detailedLongImg;
-    TextView price, description, stock, name;
+    TextView price, stock, name;
     Button addToCart, buyNow;
     ImageView addItem, removeItem;
 
@@ -73,9 +73,8 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_product_detail);
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);//기본 제목 삭제.
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         dialog = new Dialog(ProductDetailActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -188,8 +187,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
 
-
-
         adapter = new ReviewAdapter(arrayList, this);
         recyclerView.setAdapter(adapter);
 
@@ -274,14 +271,12 @@ public class ProductDetailActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId ()) {
-            case android.R.id.home:
-                Intent intent = new Intent(ProductDetailActivity.this, CategoryActivity.class);
-                startActivity(intent);
-                finish ();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) { //뒤로가기
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 

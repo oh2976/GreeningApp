@@ -1,6 +1,5 @@
 package com.example.greeningapp;
 
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -88,7 +87,7 @@ public class FragmentQList extends Fragment {
         successImage = dialog.findViewById(R.id.image);
 
         failureImage = dialog.findViewById(R.id.image);
-        
+
         radioGroup = (RadioGroup) view.findViewById(R.id.qlistRadioGroup);
         qlist1RadioButton = view.findViewById(R.id.qlist1);
         qlist2RadioButton = view.findViewById(R.id.qlist2);
@@ -157,7 +156,7 @@ public class FragmentQList extends Fragment {
                                                     User user = datasnapshot.getValue(User.class);
                                                     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                                                     final HashMap<String, Object> pointMap = new HashMap<>();
-                                                    pointMap.put("pointname", "씨드 적립 - 오늘의 퀴즈");
+                                                    pointMap.put("pointName", "씨드 적립 - 오늘의 퀴즈");
                                                     pointMap.put("pointDate", getTime());
                                                     pointMap.put("type", "savepoint");
                                                     pointMap.put("point", 10);
@@ -192,7 +191,7 @@ public class FragmentQList extends Fragment {
 //                                    }
 //                                });
 
-                                }
+                            }
                         });
                     }
 

@@ -52,14 +52,18 @@ public class PointHistoryAdapter extends RecyclerView.Adapter<PointHistoryAdapte
         MyPoint myPoint = pointHistoryList.get(position);
 
         if (myPoint.getType().equals("savepoint")) {
-            holder.pointIcon.setImageResource(R.drawable.savep); // "savepoint"에 해당하는 이미지
+            holder.pointTextView.setText(String.valueOf(decimalFormat.format(myPoint.getPoint())) + "씨드가 적립되었습니다.");
         } else if (myPoint.getType().equals("usepoint")) {
-            holder.pointIcon.setImageResource(R.drawable.usep); // "usepoint"에 해당하는 이미지
+            holder.pointTextView.setText(String.valueOf(decimalFormat.format(myPoint.getPoint())) + "씨드가 기부 완료되었습니다.");
         }
 
-        holder.pointNameTextView.setText(myPoint.getPointName());
+        String pointNameTextView = myPoint.getPointName();
+        if (pointNameTextView.length() > 21) {
+            pointNameTextView = pointNameTextView.substring(0, 21) + "…";
+        }
+
+        holder.pointNameTextView.setText(pointNameTextView);
         holder.pointDateTextView.setText(myPoint.getPointDate());
-        holder.pointTextView.setText(String.valueOf(decimalFormat.format(myPoint.getPoint())) + "씨드");
     }
 
     @Override
@@ -74,7 +78,7 @@ public class PointHistoryAdapter extends RecyclerView.Adapter<PointHistoryAdapte
         private TextView pointNameTextView;
         private TextView pointDateTextView;
         private TextView pointTextView;
-        private ImageView pointIcon;
+        private ImageView pointListFigure;
 
         public PointHistoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -82,7 +86,7 @@ public class PointHistoryAdapter extends RecyclerView.Adapter<PointHistoryAdapte
             pointNameTextView = itemView.findViewById(R.id.pointNameTextView);
             pointDateTextView = itemView.findViewById(R.id.pointDateTextView);
             pointTextView = itemView.findViewById(R.id.pointTextView);
-            pointIcon = itemView.findViewById(R.id.pointIcon);
+            pointListFigure = itemView.findViewById(R.id.pointlistfigure);
         }
 
         public void bind(MyPoint myPoint) {
