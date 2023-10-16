@@ -14,10 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.CustomViewHolder>{
     private ArrayList<Review> dataList;
@@ -45,10 +42,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.CustomView
         holder.userrating.setRating(dataList.get(position).getRscore());
         holder.reviewdate.setText(dataList.get(position).getRdatetime());
         holder.username.setText(dataList.get(position).getUsername());
-        Glide.with(holder.itemView)
-                .load(dataList.get(position).getPimg())
-                .into(holder.reviewpimg);
-        holder.reviewpname.setText(String.valueOf(dataList.get(position).getPname()));
 
     }
 
@@ -64,8 +57,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.CustomView
         TextView username;
         TextView reviewdes;
         TextView reviewdate;
-        ImageView reviewpimg;
-        TextView reviewpname;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,9 +65,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.CustomView
             this.reviewdes = itemView.findViewById(R.id.reviewdes);
             this.userrating = itemView.findViewById(R.id.userrating);
             this.reviewdate = itemView.findViewById(R.id.reviewdate);
-            this.reviewpimg = itemView.findViewById(R.id.reviewpimg);
-            this.reviewpname = itemView.findViewById(R.id.reviewpname);
-
 
         }
     }

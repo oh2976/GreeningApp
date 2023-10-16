@@ -2,20 +2,28 @@ package com.example.greeningapp;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.greeningapp.DonationMainActivity;
+import com.example.greeningapp.OrderHistoryActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,23 +48,22 @@ public class ReviewActivity extends AppCompatActivity {
     private int pid;
 
 
-    //하단바 버튼
-    private ImageButton navMain, navCategory, navDonation, navMypage;
+    //하단바
+    private BottomNavigationView bottomNavigationView;
+
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
 
-
-        back_review = findViewById(R.id.back_review);
-        back_review.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ReviewActivity.this, OrderHistoryActivity.class);
-                startActivity(intent);
-            }
-        });
+        //상단바
+        toolbar = findViewById(R.id.review_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         //전체리뷰
         fullreviewrecyclerView = findViewById(R.id.fullrecyclerView); //어디연결
@@ -78,7 +85,6 @@ public class ReviewActivity extends AppCompatActivity {
         // pid가 일치하는 상품 리뷰만 가져오기
         Query reviewQuery = databaseReference.orderByChild("pid").equalTo(pid);
 
-        //databaseReference.addListenerForSingleValueEvent (원래코드인데 잠시 reviewQuery로 바꿔줌)
         reviewQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -121,7 +127,8 @@ public class ReviewActivity extends AppCompatActivity {
                 if (ratingCount != 0) {
                     averageRating = totalRating / ratingCount;
                 }
-                String formattedRating = String.format("%.2f", averageRating);
+                //총점과 개수
+                String formattedRating = String.format("%.2f (%d)", averageRating , ratingCount);
 
                 TextView reviewRating = findViewById(R.id.value);
                 reviewRating.setText(formattedRating);
@@ -130,7 +137,17 @@ public class ReviewActivity extends AppCompatActivity {
                 RatingBar ratingBar = findViewById(R.id.reviewRating);
                 float scaledRating = Math.round(averageRating * 5 / 5.0f);  // 평점 값을 5로 스케일링하고 소수점 자리 반올림
                 ratingBar.setRating(scaledRating);
+
                 // ratingBar.setRating(averageRating);
+
+                //잠시 메인엑티비티 총점시도로 추가해봄
+//                Intent intent = new Intent(ReviewActivity.this, MainActivity.class);
+//                intent.putExtra("averageRating", averageRating); // 평점
+//                intent.putExtra("ratingCount", ratingCount);     // 평점 수
+//                startActivity(intent);
+
+
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -138,48 +155,47 @@ public class ReviewActivity extends AppCompatActivity {
             }
         });
 
-        // 하단바 아이콘 초기화
-        navMain = findViewById(R.id.navMain_review);
-        navCategory = findViewById(R.id.navCategory_review);
-        navDonation = findViewById(R.id.navDonation_review);
-        navMypage = findViewById(R.id.navMypage_review);
+        // 하단바 구현
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigation_review);
+        // 초기 선택 항목 설정
+        bottomNavigationView.setSelectedItemId(R.id.tab_shopping);
 
-        // 각 아이콘 클릭 이벤트 처리
-        navMain.setOnClickListener(new View.OnClickListener() {
+        // BottomNavigationView의 아이템 클릭 리스너 설정
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                // 홈 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(ReviewActivity.this, MainActivity.class);
-                startActivity(intent);
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.tab_home) {
+                    // Home 액티비티로 이동
+                    startActivity(new Intent(ReviewActivity.this, MainActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_shopping) {
+                    // Category 액티비티로 이동
+                    startActivity(new Intent(ReviewActivity.this, CategoryActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_donation) {
+                    // Donation 액티비티로 이동
+                    startActivity(new Intent(ReviewActivity.this, DonationMainActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_mypage) {
+                    // My Page 액티비티로 이동
+                    startActivity(new Intent(ReviewActivity.this, MyPageActivity.class));
+                    return true;
+                }
+                return false;
             }
         });
 
-        navCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 카테고리 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(ReviewActivity.this, CategoryActivity.class);
-                startActivity(intent);
-            }
-        });
 
-        navDonation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 기부 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(ReviewActivity.this, DonationMainActivity.class);
-                startActivity(intent);
-            }
-        });
+    }
 
-        navMypage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 마이페이지 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(ReviewActivity.this, MyPageActivity.class);
-                startActivity(intent);
-            }
-        });
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) { //뒤로가기
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
 }

@@ -1,15 +1,19 @@
 package com.example.greeningapp;
 
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,6 +33,7 @@ public class WithdrawalActivity extends AppCompatActivity {
     private RadioButton radioButton;
     private Button cancelButton, withdrawalButton;
     Toolbar toolbar;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +45,13 @@ public class WithdrawalActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);//기본 제목 삭제.
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_24);
+
+        ///다이얼로그
+        dialog = new Dialog(WithdrawalActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.customdialog);
+        dialog.setContentView(R.layout.dialog_confirm);
+
 
         // XML 레이아웃의 요소와 연결
         radioButton = findViewById(R.id.radioButton);
@@ -72,34 +83,76 @@ public class WithdrawalActivity extends AppCompatActivity {
                 if (radioButton.isChecked()) {
                     showConfirmationDialog();
                 } else {
-                    Toast.makeText(WithdrawalActivity.this, "체크박스를 체크해주세요.", Toast.LENGTH_SHORT).show();
+                    showFaildialog();
                 }
             }
         });
     }
+    public void showFaildialog() {
+        dialog.show();
 
-    // 팝업 창 표시
-    private void showConfirmationDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("탈퇴 확인");
-        builder.setMessage("정말로 이 앱을 탈퇴하시겠습니까?");
-        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+        TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
+        confirmTextView.setText("유의사항 확인 후 동의하셔야 회원탈퇴가 가능합니다.");
+
+        Button btnOk = dialog.findViewById(R.id.btn_ok);
+        btnOk.setText("확인");
+        btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // 사용자 계정 삭제
-                deleteAccount();
-
-            }
-        });
-
-        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
                 dialog.dismiss();
             }
         });
-        builder.create().show();
     }
+    // 팝업 창 표시
+    private void showConfirmationDialog() {
+        dialog.show();
+
+        TextView confirmTextView = dialog.findViewById(R.id.say);
+        confirmTextView.setText("앱을 탈퇴하시겠습니까?");
+
+        Button btnno = dialog.findViewById(R.id.btnNo);
+        Button btnok = dialog.findViewById(R.id.btnOk);
+        btnno.setText("아니요");
+        btnok.setText("예");
+
+        btnok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 사용자 계정 삭제
+                deleteAccount();
+                dialog.dismiss();
+            }
+        });
+
+        btnno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+            }
+        });
+    }
+//
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("탈퇴 확인");
+//        builder.setMessage("정말로 이 앱을 탈퇴하시겠습니까?");
+//        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                // 사용자 계정 삭제
+//                deleteAccount();
+//
+//            }
+//        });
+//
+//        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+//        builder.create().show();
+//    }
 
 
     private void deleteAccount() {
@@ -112,7 +165,19 @@ public class WithdrawalActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 // 계정 삭제가 성공한 경우
-                                Toast.makeText(WithdrawalActivity.this, "계정이 성공적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                                dialog.show();
+
+                                TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
+                                confirmTextView.setText("계정이 성공적으로 삭제되었습니다..");
+
+                                Button btnOk = dialog.findViewById(R.id.btn_ok);
+                                btnOk.setText("확인");
+                                btnOk.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.dismiss();
+                                    }
+                                });
                                 Intent intent = new Intent(WithdrawalActivity.this, LoginActivity.class);
                                 startActivity(intent);
 

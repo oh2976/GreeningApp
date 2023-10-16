@@ -1,38 +1,29 @@
 package com.example.greeningapp;
 
 public class Review {
-    private int rid;
-    private String rtitle;
+    private String rimage;
     private String rcontent;
     private float rscore;
-    private String rdatetime;
-    private String userid;
-    private int pid;
+
     private String pname;
-
+    private int pid;
+    private  String pimg;
     private String username;
-    private String pimg;
-    private String rimage;
 
+    private String productPrice;
 
     public Review() {
+
     }
 
+    private String rdatetime;
 
-    public int getRid() {
-        return rid;
+    public String getRimage() {
+        return rimage;
     }
 
-    public void setRid(int rid) {
-        this.rid = rid;
-    }
-
-    public String getRtitle() {
-        return rtitle;
-    }
-
-    public void setRtitle(String rtitle) {
-        this.rtitle = rtitle;
+    public void setRimage(String rimage) {
+        this.rimage = rimage;
     }
 
     public String getRcontent() {
@@ -59,12 +50,12 @@ public class Review {
         this.rdatetime = rdatetime;
     }
 
-    public String getUserid() {
-        return userid;
+    public String getPname() {
+        return pname;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setPname(String pname) {
+        this.pname = pname;
     }
 
     public int getPid() {
@@ -75,12 +66,12 @@ public class Review {
         this.pid = pid;
     }
 
-    public String getPname() {
-        return pname;
+    public String getPimg() {
+        return pimg;
     }
 
-    public void setPname(String pname) {
-        this.pname = pname;
+    public void setPimg(String pimg) {
+        this.pimg = pimg;
     }
 
     public String getUsername() {
@@ -91,19 +82,10 @@ public class Review {
         this.username = username;
     }
 
-    public String getPimg() {
-        return pimg;
+    public String getProductPrice() {
+        return productPrice;
     }
-
-    public void setPimg(String pimg) {
-        this.pimg = pimg;
-    }
-
-    public String getRimage() {
-        return rimage;
-    }
-
-    public void setRimage(String rimage) {
-        this.rimage = rimage;
+    public void setProductPrice(String productPrice) {
+        this.productPrice = productPrice;
     }
 }

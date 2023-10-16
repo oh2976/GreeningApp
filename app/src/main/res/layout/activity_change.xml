@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:gravity="top"
     android:orientation="vertical"
-    android:background="@color/white"
     tools:context=".ChangeActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -20,9 +19,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="회원정보수정"
+            android:text="회원 정보 수정"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:includeFontPadding="false"
             android:layout_gravity="center"
             />
@@ -36,12 +35,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_margin="20dp"
                 android:gravity="center"
                 android:orientation="vertical"
                 >
@@ -52,13 +52,16 @@
                     android:textAlignment="viewStart"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:text="이름" />
+                    android:text="이름"
+                    android:layout_marginBottom="16dp"/>
 
                 <EditText
                     android:id="@+id/et_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginBottom="16dp"
+                    android:paddingBottom="16dp"
+                    style="@style/bottomline"
                     android:inputType="textPersonName" />
 
                 <TextView
@@ -68,6 +71,7 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:text="전화번호"
+                    android:layout_marginBottom="16dp"
                     />
 
                 <EditText
@@ -75,7 +79,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginBottom="16dp"
+                    android:paddingBottom="16dp"
+                    style="@style/bottomline"
                     android:focusableInTouchMode="false"/>
 
                 <TextView
@@ -84,14 +90,17 @@
                     android:textAlignment="viewStart"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:text="이메일" />
+                    android:text="이메일"
+                    android:layout_marginBottom="16dp"/>
 
                 <EditText
                     android:id="@+id/et_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginBottom="16dp"
+                    android:paddingBottom="16dp"
+                    style="@style/bottomline"
                     android:focusableInTouchMode="false"/>
 
                 <TextView
@@ -100,14 +109,17 @@
                     android:textAlignment="viewStart"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:text="우편번호" />
+                    android:text="우편번호"
+                    android:layout_marginBottom="16dp"/>
 
                 <EditText
                     android:id="@+id/et_postcode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPostalAddress"
-                    android:layout_marginBottom="15dp"/>
+                    android:layout_marginBottom="16dp"
+                    android:paddingBottom="16dp"
+                    style="@style/bottomline"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -115,36 +127,41 @@
                     android:textAlignment="viewStart"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:text="주소" />
+                    android:text="주소"
+                    android:layout_marginBottom="16dp" />
 
                 <EditText
                     android:id="@+id/et_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:layout_marginBottom="15dp" />
+                    android:layout_marginBottom="16dp"
+                    android:paddingBottom="16dp"
+                    style="@style/bottomline" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="4dp">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
-                        android:text="비밀번호 재설정은 여기를 클릭하세요"
+                        android:text="비밀번호 재설정"
                         android:textAlignment="viewStart"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_weight="1"/>
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnPassword"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/round_box"
+                        android:background="@drawable/custom_btn_white"
                         android:onClick="setUpdatePasswordBtn"
-                        android:text="비밀번호 재설정"
+                        android:text="비밀번호 변경하기"
                         android:textColor="#000000"/>
 
                 </LinearLayout>

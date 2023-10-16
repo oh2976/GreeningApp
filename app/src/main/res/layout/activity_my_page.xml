@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:text="마이페이지"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:includeFontPadding="false"
             android:layout_gravity="center"
             />
@@ -35,82 +35,67 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
+            android:orientation="vertical"
+            android:background="@color/white"
+            >
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/my_name"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="60dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="4dp"
-                    android:background="@drawable/custom_btn_white"
-                    android:gravity="center"
-                    android:textColor="#000"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/main00"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_weight="1"
-                    android:layout_marginRight="16dp"
-                    android:background="@drawable/btn_bg_detailed2"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/my_name"
+                        style="@style/bottomline"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="16dp"
-                        android:text="보유 씨드"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:paddingBottom="20dp"
+                        android:text=" "
+                        android:textAlignment="textStart"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/myPageSeed"
-                        android:layout_width="wrap_content"
+                        style="@style/bottomline"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="16dp"
+                        android:layout_weight="1"
+                        android:paddingBottom="20dp"
                         android:text="-씨드"
-                        android:textColor="@color/white"
+                        android:textAlignment="viewEnd"
+                        android:textColor="@color/mainColor"
                         android:textSize="16sp"
                         android:textStyle="bold" />
                 </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/Main1"
+                android:id="@+id/Main"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginBottom="4dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/main_color"
-                    android:text="쇼핑 / 참여" />
-
                 <LinearLayout
-                    android:id="@+id/Main01"
+                    android:id="@+id/Main_s_j_h"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -123,93 +108,23 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_gravity="center"
-                            android:text="출석 체크"
+                            android:text="씨드 내역"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <ImageButton
-                            android:id="@+id/cc_move"
+                            android:id="@+id/pn_move"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/baseline_arrow_forward_ios_24" />
-
+                            android:background="@drawable/baseline_arrow_forward_ios_24"
+                            />
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:layout_centerInParent="true"
-                        android:background="#F5F5F5" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_margin="16dp">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_gravity="center"
-                            android:text="오늘의 퀴즈"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <ImageButton
-                            android:id="@+id/qz_move"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/baseline_arrow_forward_ios_24" />
-
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:layout_centerInParent="true"
-                        android:background="#F5F5F5" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_margin="16dp">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_gravity="center"
-                            android:text="기부 증명서 내역"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <ImageButton
-                            android:id="@+id/gv_move"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/baseline_arrow_forward_ios_24" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:layout_centerInParent="true"
-                        android:background="#F5F5F5" />
-
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_margin="16dp">
-
-
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -223,52 +138,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/baseline_arrow_forward_ios_24" />
-
-
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:layout_centerInParent="true"
-                        android:background="#F5F5F5" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_margin="16dp">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_gravity="center"
-                            android:text="포인트 내역"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <ImageButton
-                            android:id="@+id/pn_move"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/baseline_arrow_forward_ios_24" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:layout_centerInParent="true"
-                        android:background="#F5F5F5" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_margin="16dp">
-
-
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -286,35 +161,79 @@
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="3dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_height="2dp"
                         android:layout_centerInParent="true"
-                        android:background="#F5F5F5" />
-
+                        android:background="#CCCCCC" />
                 </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp">
-
-                <TextView
-                    android:id="@+id/Main2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginBottom="4dp"
-
-                    android:textSize="14sp"
-                    android:textColor="@color/main_color"
-                    android:text="회원 정보" />
 
                 <LinearLayout
-                    android:id="@+id/Main02"
+                    android:id="@+id/Main_c_q"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:text="출석 체크"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <ImageButton
+                            android:id="@+id/cc_move"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/baseline_arrow_forward_ios_24" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="16dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:text="오늘의 퀴즈"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <ImageButton
+                            android:id="@+id/qz_move"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/baseline_arrow_forward_ios_24" />
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_height="2dp"
+                        android:layout_centerInParent="true"
+                        android:background="#CCCCCC" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Main_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -338,39 +257,6 @@
                             android:background="@drawable/baseline_arrow_forward_ios_24" />
 
                     </LinearLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:layout_centerInParent="true"
-                        android:background="#F5F5F5" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_margin="16dp">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_gravity="center"
-                            android:text="회원 탈퇴"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-                        <ImageButton
-                            android:id="@+id/tt_move"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/baseline_arrow_forward_ios_24" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:layout_centerInParent="true"
-                        android:background="#F5F5F5" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -394,31 +280,61 @@
                             android:background="@drawable/baseline_arrow_forward_ios_24" />
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:layout_centerInParent="true"
-                        android:background="#F5F5F5" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_margin="16dp">
-
-
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_gravity="center"
-                            android:text="버전"
+                            android:text="회원 탈퇴"
                             android:textSize="16sp"
                             android:textStyle="bold" />
+                        <ImageButton
+                            android:id="@+id/tt_move"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/baseline_arrow_forward_ios_24" />
                     </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_height="2dp"
+                        android:layout_centerInParent="true"
+                        android:background="#CCCCCC" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="16dp">
 
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:text="현재버전 1.0"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="1"
+                        android:text="최신버전"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/gray"
+                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

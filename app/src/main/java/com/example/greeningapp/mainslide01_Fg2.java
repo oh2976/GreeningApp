@@ -26,7 +26,7 @@ public class mainslide01_Fg2 extends Fragment {
         slide01_main2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ShoppingMainActivity.class);
+                Intent intent = new Intent(getActivity(), CategoryActivity.class);
                 startActivity(intent);
             }
         });

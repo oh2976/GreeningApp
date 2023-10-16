@@ -1,9 +1,13 @@
 package com.example.greeningapp;
+
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +33,7 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
     private FirebaseAuth mFirebaseAuth; // 파이어베이스 인증 처리
     private DatabaseReference mDatabaseRef;
     Toolbar toolbar;
-
+    Dialog dialog;
     private BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +45,10 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);//기본 제목 삭제.
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_24);
+
+        dialog = new Dialog(MyPageActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.customdialog);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("User");
@@ -117,9 +124,6 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         ImageButton quizBtn = findViewById(R.id.qz_move);
         quizBtn.setOnClickListener(this);
 
-        ImageButton donationBtn = findViewById(R.id.gv_move);
-        donationBtn.setOnClickListener(this);
-
         ImageButton ChangeBtn = findViewById(R.id.change_move);
         ChangeBtn.setOnClickListener(this);
 
@@ -136,6 +140,7 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 showLogoutConfirmationDialog();
             }
         });
@@ -160,10 +165,6 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
             intent = new Intent(MyPageActivity.this, QuizActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.gv_move) {
-            intent = new Intent(MyPageActivity.this, DonationCertificateActivity.class);
-            startActivity(intent);
-
         } else if (id == R.id.change_move) {
             intent = new Intent(MyPageActivity.this, ChangeActivity.class);
             startActivity(intent);
@@ -184,22 +185,31 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
 
     //로그아웃ㅅ 확인
     public void showLogoutConfirmationDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MyPageActivity.this);
-        builder.setTitle("로그아웃");
-        builder.setMessage("정말로 로그아웃하시겠습니까?");
-        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+
+        dialog.show();
+
+        TextView confirmTextView = dialog.findViewById(R.id.say);
+        confirmTextView.setText("로그아웃하시겠습니까?");
+
+        Button btnno = dialog.findViewById(R.id.btnNo);
+        Button btnok = dialog.findViewById(R.id.btnOk);
+        btnno.setText("아니요");
+        btnok.setText("예");
+
+        btnok.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
+                // 사용자 계정 삭제
                 logout();
+                dialog.dismiss();
             }
         });
-        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+        btnno.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // 취소 버튼 클릭 시 아무 작업도 수행하지 않음
+            public void onClick(View v) {
+                dialog.dismiss();
             }
         });
-        builder.create().show();
     }
 
     private void logout() {

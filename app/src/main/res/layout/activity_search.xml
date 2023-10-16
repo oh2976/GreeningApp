@@ -23,12 +23,11 @@
             android:layout_height="wrap_content"
             android:text="검색"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:includeFontPadding="false"
             android:layout_gravity="center"
             />
     </androidx.appcompat.widget.Toolbar>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchRecyclerView"
         android:layout_width="match_parent"

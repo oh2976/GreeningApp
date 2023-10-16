@@ -1,68 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="#EAE7E7"
-    app:cardElevation="3dp"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_centerInParent="true"
-        android:background="#EAE7E7"
-        />
-    <!--    app:cardCornerRadius="4dp"-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:background="@color/white">
+        android:layout_height="31dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
         <TextView
-            android:id="@+id/orderDate"
+            android:id="@+id/ordh_OrderId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginLeft="5dp"
-            android:text="2023-05-10"
-            android:textSize="16sp"
-            android:textColor="#000000"/>
-
+            android:text="user01"
+            android:textSize="14sp"
+            android:textColor="#5D5D5D"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="6dp"
+            />
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
         <LinearLayout
-            android:id="@+id/ohBtn"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:clickable="true"
-            android:onClick="onOhBtnClicked">
-
+            android:layout_marginRight="9dp"
+            >
             <TextView
-                android:id="@+id/order_next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="주문 상세"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <ImageButton
-                android:id="@+id/back_history"
-                android:layout_width="30dp"
-                android:layout_height="29dp"
-                android:background="@drawable/move_ic"
-                android:contentDescription="뒤로가기"
-                android:scaleType="centerInside" />
-
+                android:textColor="#5D5D5D"
+                android:layout_marginTop="4dp"
+                android:text="주문 일시 | "
+                />
+            <!--                    android:id="@+id/reviewdate"-->
+            <TextView
+                android:id="@+id/orderDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="2023-03-23"
+                android:textColor="#5D5D5D"
+                android:textSize="14sp" />
         </LinearLayout>
+
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="5dp"
+        android:background="#27231919"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -73,10 +69,11 @@
             android:id="@+id/Child_RV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="37dp"
+            android:layout_marginTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.461"
             app:layout_constraintStart_toStartOf="parent" />
-
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

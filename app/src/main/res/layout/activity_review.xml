@@ -6,175 +6,153 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".ReviewActivity">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/review_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:orientation="horizontal" >
-
-        <ImageButton
-            android:id="@+id/back_review"
-            android:background="@drawable/baseline_arrow_back_24"
-            android:contentDescription="뒤로가기"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="16dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="centerInside"/>
+        android:layout_height="wrap_content"
+        android:background="@color/toolbar"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginRight="72dp"
-            android:gravity="center"
-            android:text="리뷰"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            />
-    </LinearLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="상품 후기"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
-    <androidx.core.widget.NestedScrollView
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/white"
             android:orientation="vertical">
+
+            <!--            //여기까지-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <RatingBar
-                    android:id="@+id/reviewRating"
-                    style="?android:attr/ratingBarStyleIndicator"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="45dp"
-                    android:layout_marginRight="27dp"
-                    android:contentDescription="별점을 선택하세요"
-                    android:isIndicator="true"
-                    android:max="5"
-                    android:numStars="5"
-                    android:progressTint="@android:color/holo_orange_light"
-                    android:rating="0"
-                    android:stepSize="0.5" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textAppearance="?android:attr/textAppearanceLarge"/>
+                    android:layout_marginLeft="59dp">
 
-                    <TextView
-                        android:id="@+id/ratingNum"
+                    <RatingBar
+                        android:id="@+id/reviewRating"
+                        style="?android:attr/ratingBarStyleIndicator"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:text=" /5 "
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textSize="16sp" />
+                        android:contentDescription="별점을 선택하세요"
+                        android:isIndicator="true"
+                        android:max="5"
+                        android:numStars="5"
+                        android:progressTint="@android:color/holo_orange_light"
+                        android:rating="0"
+                        android:stepSize="0.5" />
 
                 </LinearLayout>
 
-
-            </LinearLayout>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="550dp">
-
-                <TextView
-                    android:id="@+id/fullreviewname"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_margin="4dp"
-                    android:text="전체 리뷰"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/fullrecyclerView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.044"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.022" />
+                    android:layout_marginTop="3dp"
+                    android:layout_marginLeft="13dp">
+                    <!--            android:gravity="center_horizontal"-->
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp">
+
+                        <TextView
+                            android:id="@+id/value"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="4.75"
+                            android:textSize="16sp"
+                            android:textAppearance="?android:attr/textAppearanceLarge"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp">
+                        <TextView
+                            android:id="@+id/ratingNum"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text=" /5 "
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <!--//리뷰내용-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:layout_marginTop="25dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/fullrecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_margin="8dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="9dp"
                     android:nestedScrollingEnabled="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fullreviewname"
                     app:layout_constraintVertical_bias="1.0" />
+                <!--        app:layout_constraintTop_toBottomOf="@+id/fullreviewname"-->
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
 
         </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
+    </ScrollView>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_centerInParent="true"
         android:background="#27231919"/>
 
-    <LinearLayout
-        android:id="@+id/bottomNavigation"
+    <!-- 하단 네비게이션 바 -->
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="64dp"-->
+    <!--        android:layout_gravity="bottom"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        android:background="@color/white">-->
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation_review"
+        style="@style/BottomNavigationViewNoRipple"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="65dp"
         android:layout_gravity="bottom"
-        android:orientation="horizontal"
-        android:background="@color/white">
+        app:itemBackground="@android:color/white"
+        app:itemIconTint="@drawable/menu_selector_color"
+        app:itemTextColor="@drawable/menu_selector_color"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottommenu" />
+    <!--    </LinearLayout>-->
 
-        <ImageButton
-            android:id="@+id/navMain_review"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/home_logo_size"
-            android:background="@android:color/transparent"/>
-
-        <ImageButton
-            android:id="@+id/navCategory_review"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/shopping_logo_size"
-            android:background="@android:color/transparent"/>
-
-        <ImageButton
-            android:id="@+id/navDonation_review"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/donation_logo_size"
-            android:background="@android:color/transparent"/>
-
-        <ImageButton
-            android:id="@+id/navMypage_review"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/user_logo_size"
-            android:background="@android:color/transparent"/>
-
-    </LinearLayout>
 </LinearLayout>

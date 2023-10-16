@@ -1,4 +1,5 @@
 package com.example.greeningapp;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,23 +11,31 @@ import me.relex.circleindicator.CircleIndicator3;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.example.greeningapp.Product;
 import com.example.greeningapp.DonationMainActivity;
+import com.example.greeningapp.BuyNowActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,14 +44,15 @@ public class MainActivity extends FragmentActivity {
 
     private ViewPager2 mPager;
     private ViewPager2 mPager01;   //01붙은거는 슬라이드2변수
-    //잠시 추가
+    //광고 타이머
     private int currentPage = 0;
+    private int currentPage01 = 0;
     private final long DELAY_MS = 3000; // 광고를 자동으로 넘길 시간 간격 (3초)
     private final long PERIOD_MS = 3000; // 타이머 주기 (3초)
 
     private FragmentStateAdapter pagerAdapter;
     private FragmentStateAdapter pagerAdapter01;
-    private final int num_page = 4;    //viewpager2에 2개의 페이지가 표시됨.
+    private final int num_page = 3;    //viewpager2에 4개의 페이지가 표시됨.
     private final int num_page01 = 3;
     private CircleIndicator3 mIndicator;
     private CircleIndicator3 mIndicator01;
@@ -53,10 +63,12 @@ public class MainActivity extends FragmentActivity {
     private ArrayList<Product> arrayList;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
-    private Button goToShoppingMain;
+    private TextView main_addbtn;
 
-    //하단바 버튼
-    private ImageButton navMain, navCategory, navDonation, navMypage;
+    //하단바
+    private BottomNavigationView bottomNavigationView;
+
+
 
     //슬라이드1 화면
     @Override
@@ -87,12 +99,13 @@ public class MainActivity extends FragmentActivity {
         mPager.setCurrentItem(1000);           // 시작 지점
         mPager.setOffscreenPageLimit(2);       // 최대 이미지 수
 
-        mPager01.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);  //슬라이드방향(수평)
+        mPager01.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         mPager01.setCurrentItem(1000);           // 시작 지점
         mPager01.setOffscreenPageLimit(2);
 
-        // 광고 타이머 설정
+        // 광고 타이머 설정(베너1)
         final Handler handler = new Handler(Looper.getMainLooper());
+        //베너 01 타이머
         final Runnable update = new Runnable() {
             public void run() {
                 if (currentPage == pagerAdapter.getItemCount()) {
@@ -101,7 +114,6 @@ public class MainActivity extends FragmentActivity {
                 mPager.setCurrentItem(currentPage++);
             }
         };
-
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -110,11 +122,31 @@ public class MainActivity extends FragmentActivity {
             }
         }, DELAY_MS, PERIOD_MS);
 
+        // 광고 타이머 설정(베너1)
+        final Handler handler01 = new Handler(Looper.getMainLooper());
+        //베너 02 타이머
+        final Runnable update01 = new Runnable() {
+            public void run() {
+                if (currentPage01 == pagerAdapter01.getItemCount()) {
+                    currentPage01 = 0;
+                }
+                mPager01.setCurrentItem(currentPage01++);
+            }
+        };
+        Timer timer01 = new Timer();
+        timer01.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler01.post(update01);
+            }
+        }, DELAY_MS, PERIOD_MS);
+
+
         //상품목록
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_main); //아이디연결
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_main);
         recyclerView.setHasFixedSize(true); //리사이클뷰 성능강화
         layoutManager = new LinearLayoutManager(this);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);   //가로2개(추가)
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 3); //가로 3개
         recyclerView.setLayoutManager(layoutManager);
         arrayList = new ArrayList<>(); //Product객체를 담을 ArrayList(어댑터쪽으로)
 
@@ -127,20 +159,34 @@ public class MainActivity extends FragmentActivity {
                 //파이어베이스 데이터베이스의 데이터를 받아오는곳
                 arrayList.clear(); //기준 배열리스트가 존재하지않게 초기화
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) { //반복문으로 데이터리스트 추출
-                    Product product = snapshot.getValue(Product.class);  //만들어뒀던 user객체에 데이터를 담는다
+                    Product product = snapshot.getValue(Product.class);  //만들어뒀던 Product에 데이터를 담음
                     arrayList.add(product); //담은 데이터들을 배열리스트에 넣고 리사이클뷰로 보낼준비
+//                    tv_pprice.setText(String.valueOf(decimalFormat.format(product.getPprice())) + "원");
+
                 }
                 adapter.notifyDataSetChanged(); //리스트저장 및 새로고침
                 //db가져오던중 에러발생시
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("MainActivity", String.valueOf(databaseError.toException())); //에러문출력
+                Log.e("MainActivity", String.valueOf(databaseError.toException()));
             }
         });
         adapter = new MainProductAdapter(arrayList, this);
 //        adapter = new ProductAdapter(arrayList, this);
         recyclerView.setAdapter(adapter);  //리사이클뷰에 어댑터연결
+
+
+
+        // 리뷰엑티비티 인텐트 잠시 시도 (레이팅바 총점)
+//        float averageRating = getIntent().getFloatExtra("averageRating", 0);
+//        int ratingCount = getIntent().getIntExtra("ratingCount", 0);
+
+
+
+
+
+
 
 
         //페이지 변경 이벤트 리스너 등록
@@ -176,58 +222,43 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
-        goToShoppingMain = (Button) findViewById(R.id.goToShoppingMain);
-        goToShoppingMain.setOnClickListener(new View.OnClickListener() {
+        //상품더보기 버튼
+        main_addbtn =  findViewById(R.id.main_addbtn);
+        main_addbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
                 startActivity(intent);
-
-//                Intent intent = new Intent(MainActivity.this, ShoppingMainActivity.class);
-//                startActivity(intent);
             }
         });
 
-        // 하단바 아이콘 초기화
-        navMain = findViewById(R.id.navMain);
-        navCategory = findViewById(R.id.navCategory);
-        navDonation = findViewById(R.id.navDonation);
-        navMypage = findViewById(R.id.navMypage);
+        // 하단바 구현
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigation_main);
+        // 초기 선택 항목 설정
+        bottomNavigationView.setSelectedItemId(R.id.tab_home);
 
-        // 각 아이콘 클릭 이벤트 처리
-        navMain.setOnClickListener(new View.OnClickListener() {
+        // BottomNavigationView의 아이템 클릭 리스너 설정
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                // 홈 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        navCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 카테고리 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        navDonation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 기부 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(MainActivity.this, DonationMainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        navMypage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 마이페이지 아이콘 클릭 시 처리할 내용
-                Intent intent = new Intent(MainActivity.this, MyPageActivity.class);
-                startActivity(intent);
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.tab_home) {
+                    // Home 액티비티로 이동
+                    startActivity(new Intent(MainActivity.this, MainActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_shopping) {
+                    // Category 액티비티로 이동
+                    startActivity(new Intent(MainActivity.this, CategoryActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_donation) {
+                    // Donation 액티비티로 이동
+                    startActivity(new Intent(MainActivity.this, DonationMainActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.tab_mypage) {
+                    // My Page 액티비티로 이동
+                    startActivity(new Intent(MainActivity.this, MyPageActivity.class));
+                    return true;
+                }
+                return false;
             }
         });
 

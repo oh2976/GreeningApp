@@ -43,6 +43,7 @@ public class OrderHistoryParentRcyAdapter extends RecyclerView.Adapter<OrderHist
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.orderDate.setText(parentModelArrayList.get(position).getOrderDate());
+        holder.ordh_OrderId.setText(parentModelArrayList.get(position).getOrderId());
 
         ArrayList<MyOrder> childModelArrayList = parentModelArrayList.get(position).getChildModelArrayList();
 
@@ -57,28 +58,16 @@ public class OrderHistoryParentRcyAdapter extends RecyclerView.Adapter<OrderHist
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView orderDate;
         public RecyclerView childRecyclerView;
+        public TextView ordh_OrderId;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
+            ordh_OrderId = itemView.findViewById(R.id.ordh_OrderId);
             orderDate = itemView.findViewById(R.id.orderDate);
             childRecyclerView = itemView.findViewById(R.id.Child_RV);
 
-            LinearLayout ohBtnLayout = itemView.findViewById(R.id.ohBtn);
-            ohBtnLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onOhBtnClicked();
-                }
-            });
 
-            ImageButton backHistoryBtn = itemView.findViewById(R.id.back_history);
-            backHistoryBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onOhBtnClicked();
-                }
-            });
         }
     }
     private void onOhBtnClicked() {

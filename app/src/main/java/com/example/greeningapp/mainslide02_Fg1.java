@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.greeningapp.AttendanceActivity;
+import com.example.greeningapp.ShoppingMainActivity;
+
 public class mainslide02_Fg1 extends Fragment{
 
     private TextView slide02_main1;
@@ -28,6 +31,7 @@ public class mainslide02_Fg1 extends Fragment{
                 startActivity(intent);
             }
         });
+
 
         return rootView;
     }

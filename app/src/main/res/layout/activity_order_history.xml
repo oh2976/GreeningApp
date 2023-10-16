@@ -4,111 +4,85 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".OrderHistoryActivity"
+    android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".Order.OrderHistoryActivity">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/ordh_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:orientation="horizontal" >
-
-        <ImageButton
-            android:id="@+id/back_orderhistory"
-            android:background="@drawable/baseline_arrow_back_24"
-            android:contentDescription="뒤로가기"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="16dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="centerInside"/>
+        android:layout_height="wrap_content"
+        android:background="@color/toolbar"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginRight="72dp"
-            android:gravity="center"
-            android:text="주문 내역"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_centerInParent="true"
-        android:background="#27231919"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="600dp"
-        android:orientation="vertical"
-        >
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/Parent_recyclerView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.461"
-            app:layout_constraintStart_toStartOf="parent"
-            />
+            android:layout_gravity="center"
+            android:text="주문 내역"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
-    </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
 
-    <!--    <ScrollView-->
-    <!--        android:id="@+id/bio_scroll"-->
+    <!--    <View-->
     <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_weight="1">-->
-    <!--    </ScrollView>-->
-    <LinearLayout
-        android:id="@+id/bottomNavigation"
+    <!--        android:layout_height="1dp"-->
+    <!--        android:layout_centerInParent="true"-->
+    <!--        android:background="#27231919"/>-->
+
+
+    <!-- 하단 네비게이션 바 -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_gravity="bottom"
-        android:orientation="horizontal"
-        android:background="@color/white"
+        android:layout_height="0dp"
         android:layout_weight="1">
 
-        <ImageButton
-            android:id="@+id/navMain_odhistory"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/home_logo_size"
-            android:background="@android:color/transparent"/>
+            android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/navCategory_odhistory"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/shopping_logo_size"
-            android:background="@android:color/transparent"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/navDonation_odhistory"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/donation_logo_size"
-            android:background="@android:color/transparent"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/Parent_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.461"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageButton
-            android:id="@+id/navMypage_odhistory"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/user_logo_size"
-            android:background="@android:color/transparent"/>
+            </LinearLayout>
 
-    </LinearLayout>
 
+        </LinearLayout>
+    </ScrollView>
+
+    <!--    <View-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="1dp"-->
+    <!--        android:layout_centerInParent="true"-->
+    <!--        android:background="#27231919"/>-->
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation_orderhistory"
+        style="@style/BottomNavigationViewNoRipple"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_gravity="bottom"
+        app:itemBackground="@android:color/white"
+        app:itemIconTint="@drawable/menu_selector_color"
+        app:itemTextColor="@drawable/menu_selector_color"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottommenu" />
 
 </LinearLayout>

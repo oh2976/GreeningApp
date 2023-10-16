@@ -27,4 +27,6 @@
     <color name="sub2">#94B58B</color>
     <color name="sub4">#C6EDC2</color>
     <color name="sub5">#EBF7F0</color>
+
+    <color name="ordh_btn_click">#BBBBBB</color>
 </resources>

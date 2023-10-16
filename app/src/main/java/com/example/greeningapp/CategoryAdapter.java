@@ -14,12 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHorder> {
 
     private ArrayList<Product> arrayList;
     private Context context;
+
+    DecimalFormat decimalFormat = new DecimalFormat("###,###");
 
     public CategoryAdapter(ArrayList<Product> arrayList, Context context) {
         this.arrayList = arrayList;
@@ -42,7 +45,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 .into(holder.pimg);
         holder.pname.setText(arrayList.get(position).getPname());
         holder.psay.setText(arrayList.get(position).getPsay());
-        holder.pprice.setText(String.valueOf(arrayList.get(position).getPprice()));
+        holder.pprice.setText(String.valueOf(decimalFormat.format(arrayList.get(position).getPprice())) + "원");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

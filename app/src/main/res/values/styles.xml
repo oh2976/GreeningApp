@@ -9,4 +9,8 @@
         <item name="colorAccent">@color/mainColor</item>
         <item name="colorControlNormal">@color/textColorGray</item>
     </style>
+
+    <style name="bottomline">
+        <item name="android:background">@drawable/bottom_line</item>
+    </style>
 </resources>

@@ -2,16 +2,16 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/slide01_main2"
-        android:layout_width="400dp"
-        android:layout_height="415dp"
+        android:layout_width="match_parent"
+        android:layout_height="340dp"
         android:gravity="center"
-        android:background="@drawable/big3"
+        android:background="@drawable/big2"
         />
     <!--    android:text="2"-->
 </LinearLayout>
