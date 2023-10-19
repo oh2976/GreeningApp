@@ -179,7 +179,7 @@ public class ReviewHistoryAdapter extends RecyclerView.Adapter<ReviewHistoryAdap
         holder.recyclerEt.setText(String.valueOf(reviewhistoryList.get(position).getRcontent()));
         //holder.recyclerRating.setRating(reviewhistoryList.get(position).getRscore());
         holder.reviewdate.setText(String.valueOf(reviewhistoryList.get(position).getRdatetime()));
-        holder.ProductPrice.setText(String.valueOf(reviewhistoryList.get(position).getProductPrice()));
+        holder.ProductPrice.setText(String.valueOf(reviewhistoryList.get(position).getPprice()));
         holder.ProductName.setText(String.valueOf(reviewhistoryList.get(position).getPname()));
         Glide.with(holder.itemView).load(reviewhistoryList.get(position).getPimg()).into(holder.ProductImg);
 

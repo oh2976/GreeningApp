@@ -36,9 +36,9 @@ public class ViewPagerCategoryAdapter extends FragmentPagerAdapter {
         } else if (position==1) {
             return "욕실/주방";
         } else if (position==2) {
-            return "취미";
-        } else { //3
             return "생활/잡화";
+        } else { //3
+            return "취미";
         }
     }
 }

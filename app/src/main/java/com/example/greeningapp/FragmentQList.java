@@ -184,12 +184,12 @@ public class FragmentQList extends Fragment {
                                 }
 
                                 // 테스트를 위해서 잠시 주석 처리 (퀴즈 완료 처리하는 코드)
-//                                databaseReferenceUser.child(firebaseUser.getUid()).child("doquiz").setValue("Yes").addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                    @Override
-//                                    public void onComplete(@NonNull Task<Void> task) {
-//                                        Log.d("FragmentQList", "doquiz 키값 변경 완료" + user.getDoquiz());
-//                                    }
-//                                });
+                                databaseReferenceUser.child(firebaseUser.getUid()).child("doquiz").setValue("Yes").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Log.d("FragmentQList", "doquiz 키값 변경 완료" + user.getDoquiz());
+                                    }
+                                });
 
                             }
                         });

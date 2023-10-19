@@ -10,7 +10,7 @@ public class Review {
     private  String pimg;
     private String username;
 
-    private String productPrice;
+    private String pprice;
 
     public Review() {
 
@@ -82,10 +82,11 @@ public class Review {
         this.username = username;
     }
 
-    public String getProductPrice() {
-        return productPrice;
+    public String getPprice() {
+        return pprice;
     }
-    public void setProductPrice(String productPrice) {
-        this.productPrice = productPrice;
+
+    public void setPprice(String pprice) {
+        this.pprice = pprice;
     }
 }
