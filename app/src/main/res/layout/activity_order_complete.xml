@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_centerInParent="true"
-        android:background="#D9D9D9"/>
+        android:background="@color/gray"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -141,7 +141,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_centerInParent="true"
-                    android:background="@color/back"/>
+                    android:background="@color/gray"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -275,7 +275,8 @@
         android:layout_marginBottom="8dp"
         android:layout_marginRight="8dp"
         android:background="@drawable/custom_btn"
-        android:text="홈으로 돌아가기" />
+        android:text="홈으로 돌아가기"
+        android:stateListAnimator="@null"/>
 
     <!-- 하단 네비게이션 바 -->
     <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,6 +43,9 @@ public class DonationDetailActivity extends AppCompatActivity {
 
     long mNow;
     Date mDate;
+
+    Dialog dialog2;
+
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     ImageView dodetailImg;
@@ -99,6 +104,10 @@ public class DonationDetailActivity extends AppCompatActivity {
             donation = (Donation) object;
         }
 
+        dialog2 = new Dialog(DonationDetailActivity.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.setContentView(R.layout.dialog_confirm);
+
         dodetailImg = findViewById(R.id.dodetailed_img);
         dodetailName = findViewById(R.id.dodetailed_name);
         dodetailLongImg = findViewById(R.id.dodetail_longimg);
@@ -151,6 +160,7 @@ public class DonationDetailActivity extends AppCompatActivity {
         doDonate = (Button) findViewById(R.id.doDonate);
 
         dialog = new BottomSheetDialog(this);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         View view = getLayoutInflater().inflate(R.layout.bottom_dialog, null, false);
 
@@ -164,119 +174,129 @@ public class DonationDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // EditText에 적은 값이 200보다 크고 10의 배수여야 한다.
-                if( Integer.parseInt(wannaDonatepoint.getText().toString()) >= 200 && Integer.parseInt(wannaDonatepoint.getText().toString()) % 10 == 0 ){
+                try{
+                    // EditText에 적은 값이 200보다 크고 10의 배수여야 한다.
+                    if( Integer.parseInt(wannaDonatepoint.getText().toString()) >= 200 && Integer.parseInt(wannaDonatepoint.getText().toString()) % 10 == 0 ){
 
-                    //회원 정보에 있는 sPoint와 uPoint 변경을 위해 데이터베이스에서 가져와 변수 처리
-                    databaseReference.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        //회원 정보에 있는 sPoint와 uPoint 변경을 위해 데이터베이스에서 가져와 변수 처리
+                        databaseReference.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                            Point point = dataSnapshot.getValue(Point.class);//  만들어 뒀던 Point 객체에 데이터를 담는다.
-                            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                            spoint = point.getSpoint();
-                            spoint = spoint - Integer.parseInt(wannaDonatepoint.getText().toString());
-                            upoint = point.getUpoint();
-                            upoint = upoint + Integer.parseInt(wannaDonatepoint.getText().toString());
+                                Point point = dataSnapshot.getValue(Point.class);//  만들어 뒀던 Point 객체에 데이터를 담는다.
+                                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                                spoint = point.getSpoint();
+                                spoint = spoint - Integer.parseInt(wannaDonatepoint.getText().toString());
+                                upoint = point.getUpoint();
+                                upoint = upoint + Integer.parseInt(wannaDonatepoint.getText().toString());
 
-                            // 프로젝트에 기부된 전체 포인트를 담는 변수
-                            allDoPoint = allDoPoint + Integer.parseInt(wannaDonatepoint.getText().toString());
+                                // 프로젝트에 기부된 전체 포인트를 담는 변수
+                                allDoPoint = allDoPoint + Integer.parseInt(wannaDonatepoint.getText().toString());
 
-                            // Donation 테이블에 있는 point 값 변경
-                            databaseReference3.child(String.valueOf(donationId)).child("point").setValue(allDoPoint).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
+                                // Donation 테이블에 있는 point 값 변경
+                                databaseReference3.child(String.valueOf(donationId)).child("point").setValue(allDoPoint).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
 //                                    Toast.makeText(DonationDetailActivity.this, "allDoPoint 변동 완료", Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                                    }
+                                });
 
-                            // 회원 정보에 있는 sPoint 변경
-                            databaseReference2.child(firebaseUser.getUid()).child("spoint").setValue(spoint).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
+                                // 회원 정보에 있는 sPoint 변경
+                                databaseReference2.child(firebaseUser.getUid()).child("spoint").setValue(spoint).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
 //                                    Toast.makeText(DonationDetailActivity.this, "spoint 변동 완료", Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                                    }
+                                });
 
-                            // 회원 정보에 있는 uPoint 변경
-                            databaseReference2.child(firebaseUser.getUid()).child("upoint").setValue(upoint).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
+                                // 회원 정보에 있는 uPoint 변경
+                                databaseReference2.child(firebaseUser.getUid()).child("upoint").setValue(upoint).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
 //                                    Toast.makeText(DonationDetailActivity.this, "upoint 변동 완료", Toast.LENGTH_LONG).show();
-                                }
-                            });
+                                    }
+                                });
 
-                            // 회원 정보에 있는 sPoint, uPoint 정보를 가져오기 위해 만들었던 임시 테이블 삭제
-                            databaseReference.child(firebaseUser.getUid())
-                                    .removeValue()
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
+                                // 회원 정보에 있는 sPoint, uPoint 정보를 가져오기 위해 만들었던 임시 테이블 삭제
+                                databaseReference.child(firebaseUser.getUid())
+                                        .removeValue()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
 //                                            Toast.makeText(DonationDetailActivity.this, "임시 Point 테이블 삭제 완료", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                                            }
+                                        });
 
-                            databaseReference2.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                databaseReference2.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                    // 기부한 정보를 저장하기 위해서 데이터베이스 값 가져오기
-                                    User user = dataSnapshot.getValue(User.class); //  만들어 뒀던 Product 객체에 데이터를 담는다.
-                                    final HashMap<String, Object> pointMap = new HashMap<>();
-                                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                                    pointMap.put("userName", user.getUsername());
-                                    pointMap.put("pointName", "씨드 기부 - " + donationName);
-                                    pointMap.put("point", Integer.parseInt(wannaDonatepoint.getText().toString()));
-                                    pointMap.put("pointDate", getTime());
-                                    pointMap.put("type", "usepoint");
-                                    userAccountName = user.getUsername();
+                                        // 기부한 정보를 저장하기 위해서 데이터베이스 값 가져오기
+                                        User user = dataSnapshot.getValue(User.class); //  만들어 뒀던 Product 객체에 데이터를 담는다.
+                                        final HashMap<String, Object> pointMap = new HashMap<>();
+                                        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                                        pointMap.put("userName", user.getUsername());
+                                        pointMap.put("pointName", "씨드 기부 - " + donationName);
+                                        pointMap.put("point", Integer.parseInt(wannaDonatepoint.getText().toString()));
+                                        pointMap.put("pointDate", getTime());
+                                        pointMap.put("type", "usepoint");
+                                        userAccountName = user.getUsername();
 
-                                    // 기부한 정보 저장
-                                    databaseReference4.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
+                                        // 기부한 정보 저장
+                                        databaseReference4.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
 //                                            Toast.makeText(DonationDetailActivity.this, "point table create", Toast.LENGTH_SHORT).show();
-                                            dialog.show();
-                                        }
-                                    });
+                                                dialog.show();
+                                            }
+                                        });
 
-                                    // 기부 완료 페이지를 위해 현재 유저, 프로젝트에 관한 내용을 묶어서 DonationCompleteActivity로 보내기
-                                    Intent intent = new Intent(DonationDetailActivity.this, DonationCompleteActivity.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("userName", userAccountName);
-                                    bundle.putString("donationName", donationName);
-                                    bundle.putInt("donationPoint", Integer.parseInt(wannaDonatepoint.getText().toString()));
-                                    bundle.putString("donationDate", getTime());
-                                    bundle.putString("donationImg", donation.getDonationimg());
+                                        // 기부 완료 페이지를 위해 현재 유저, 프로젝트에 관한 내용을 묶어서 DonationCompleteActivity로 보내기
+                                        Intent intent = new Intent(DonationDetailActivity.this, DonationCompleteActivity.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("userName", userAccountName);
+                                        bundle.putString("donationName", donationName);
+                                        bundle.putInt("donationPoint", Integer.parseInt(wannaDonatepoint.getText().toString()));
+                                        bundle.putString("donationDate", getTime());
+                                        bundle.putString("donationImg", donation.getDonationimg());
 
-                                    intent.putExtras(bundle);
-                                    startActivity(intent);
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
 
-                                }
+                                    }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
 
-                                }
-                            });
+                                    }
+                                });
 
-                        }
+                            }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-                    });
+                            }
+                        });
 
 
-                    // 완료 되면 다이어로그 화면 없애기
-                    dialog.dismiss();
+                        // 완료 되면 다이어로그 화면 없애기
+                        dialog.dismiss();
 
-                    // 기부 하고 싶은 씨드 정보 토스트
+                        // 기부 하고 싶은 씨드 정보 토스트
 //                    Toast.makeText(DonationDetailActivity.this, wannaDonatepoint.getText(), Toast.LENGTH_SHORT).show();
-                    Log.d("DonationDetailActivity",databaseReference2.child(firebaseUser.getUid()).child("spoint").toString());
+                        Log.d("DonationDetailActivity",databaseReference2.child(firebaseUser.getUid()).child("spoint").toString());
+                    } else{
+                        showCheckPoint();
+                    }
+                }catch (NumberFormatException exception){
+                    showCheckPoint();
+                } catch (Exception e){
+                    showCheckPoint();
                 }
+
+
 
             }
         });
@@ -385,6 +405,26 @@ public class DonationDetailActivity extends AppCompatActivity {
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void showCheckPoint() {
+        dialog2.show();
+
+        TextView confirmTextView = dialog2.findViewById(R.id.confirmTextView);
+        confirmTextView.setText("작성된 씨드를 다시 한 번 확인해주세요.");
+
+        Button btnOk = dialog2.findViewById(R.id.btn_ok);
+        btnOk.setText("확인");
+
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog2.dismiss();
+//                Intent intent = new Intent(ProductDetailActivity.this, MainActivity.class);
+//                startActivity(intent);
+            }
+        });
     }
 
 

@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_centerInParent="true"
-            android:background="@color/back" />
+            android:background="@color/gray" />
 
         <ImageView
             android:id="@+id/donation_img_complete"
@@ -97,7 +97,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
-            android:background="@color/back" />
+            android:background="@color/gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -204,7 +204,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigation_docomplete"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:stateListAnimator="@null"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation_docomplete"

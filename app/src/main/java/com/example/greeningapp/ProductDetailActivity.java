@@ -17,6 +17,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,6 +43,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     int totalPrice = 0;
 
     Dialog dialog;
+    Dialog dialog2;
 
     private int pid;
 
@@ -66,6 +68,8 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
 
+    private int getstock;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +83,10 @@ public class ProductDetailActivity extends AppCompatActivity {
         dialog = new Dialog(ProductDetailActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_confirm2);
+
+        dialog2 = new Dialog(ProductDetailActivity.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.setContentView(R.layout.dialog_confirm);
 
         database = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("CurrentUser");
@@ -152,6 +160,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             decimalFormat.format(totalPrice);
 
             pid = product.getPid();
+            getstock = product.getStock();
         }
 
         // 더 많은 리뷰 보기 버튼 및 리사이클러뷰 초기화
@@ -206,46 +215,61 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                addedToCart();
-                final HashMap<String, Object> cartMap = new HashMap<>();
-                FirebaseUser firebaseUser = auth.getCurrentUser();
-                cartMap.put("productName", product.getPname());
-                cartMap.put("productPrice", String.valueOf(product.getPprice()));
-                cartMap.put("selectedQuantity", totalQuantity);
-                cartMap.put("totalPrice", totalPrice * totalQuantity);
-                cartMap.put("pId", product.getPid());
-                cartMap.put("productImg", product.getPimg());
-                cartMap.put("productStock", product.getStock());
-                Log.d("DetailActivity", product.getPid()+"");
 
-                databaseReference.child(firebaseUser.getUid()).child("AddToCart").child(cartID).setValue(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        showDialog();
-                    }
-                });
+                if (getstock > 0){
+                    final HashMap<String, Object> cartMap = new HashMap<>();
+                    FirebaseUser firebaseUser = auth.getCurrentUser();
+                    cartMap.put("productName", product.getPname());
+                    cartMap.put("productPrice", String.valueOf(product.getPprice()));
+                    cartMap.put("selectedQuantity", totalQuantity);
+                    cartMap.put("totalPrice", totalPrice * totalQuantity);
+                    cartMap.put("pId", product.getPid());
+                    cartMap.put("productImg", product.getPimg());
+                    cartMap.put("productStock", product.getStock());
+                    Log.d("DetailActivity", product.getPid()+"");
+
+                    databaseReference.child(firebaseUser.getUid()).child("AddToCart").child(cartID).setValue(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            showDialog();
+                        }
+                    });
+                } else{
+//                    Toast.makeText(ProductDetailActivity.this, "재고가 부족합니다.", Toast.LENGTH_SHORT).show();
+                    showStockDialog();
+                }
 
             }
         });
 
         buyNow = (Button) findViewById(R.id.buyNow);
         buyNow.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProductDetailActivity.this, BuyNowActivity.class);
+
+                if(getstock > 0){
+                    Intent intent = new Intent(ProductDetailActivity.this, BuyNowActivity.class);
 
 
 
-                Bundle bundle = new Bundle();
-                bundle.putString("productName", product.getPname());
-                bundle.putString("productPrice", String.valueOf(product.getPprice()));
-                bundle.putInt("selectedQuantity", totalQuantity);
-                bundle.putInt("totalPrice", totalPrice * totalQuantity);
-                bundle.putInt("pId", product.getPid());
-                bundle.putString("productImg", product.getPimg());
-                bundle.putInt("productStock", product.getStock());
+                    Bundle bundle = new Bundle();
+                    bundle.putString("productName", product.getPname());
+                    bundle.putString("productPrice", String.valueOf(product.getPprice()));
+                    bundle.putInt("selectedQuantity", totalQuantity);
+                    bundle.putInt("totalPrice", totalPrice * totalQuantity);
+                    bundle.putInt("pId", product.getPid());
+                    bundle.putString("productImg", product.getPimg());
+                    bundle.putInt("productStock", product.getStock());
 
-                intent.putExtras(bundle);
-                startActivity(intent);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else{
+//                    Toast.makeText(ProductDetailActivity.this, "재고가 부족합니다.", Toast.LENGTH_SHORT).show();
+                    showStockDialog();
+                }
+
             }
         });
 
@@ -303,6 +327,26 @@ public class ProductDetailActivity extends AppCompatActivity {
                 Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+    }
+
+    public void showStockDialog() {
+        dialog2.show();
+
+        TextView confirmTextView = dialog2.findViewById(R.id.confirmTextView);
+        confirmTextView.setText("재고가 부족합니다.");
+
+        Button btnOk = dialog2.findViewById(R.id.btn_ok);
+        btnOk.setText("확인");
+
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog2.dismiss();
+//                Intent intent = new Intent(ProductDetailActivity.this, MainActivity.class);
+//                startActivity(intent);
             }
         });
     }

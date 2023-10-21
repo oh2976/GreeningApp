@@ -5,6 +5,7 @@
     android:background="@color/white"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
+    android:fitsSystemWindows="true"
     >
 
     <LinearLayout
@@ -36,8 +37,8 @@
 
         <EditText
             android:id="@+id/wannaDonatepoint"
-            android:layout_width="wrap_content"
-            android:textSize="16sp"
+            android:layout_width="180dp"
+            android:textSize="14sp"
             android:hint="씨드를 입력해주세요."
             android:background="@drawable/square_box"
             android:layout_height="wrap_content"

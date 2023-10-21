@@ -194,7 +194,8 @@
             android:text="기부하기"
             android:textColor="@color/white"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:stateListAnimator="@null"/>
 
         <!-- 하단 네비게이션 바 -->
         <com.google.android.material.bottomnavigation.BottomNavigationView

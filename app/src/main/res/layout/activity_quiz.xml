@@ -82,7 +82,8 @@
             android:layout_weight="1"
             android:background="@drawable/custom_btn"
             android:text="퀴즈 풀기"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:stateListAnimator="@null"/>
 
     </LinearLayout>
 

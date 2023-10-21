@@ -95,6 +95,10 @@ public class FragmentQList extends Fragment {
         qlist4RadioButton = view.findViewById(R.id.qlist4);
 
 
+        // 초기 상태에서 버튼 비활성화
+        btnDoQuiz.setEnabled(false);
+        btnDoQuiz.setBackgroundColor(getResources().getColor(R.color.textColorGray));
+
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Quiz");
@@ -127,12 +131,20 @@ public class FragmentQList extends Fragment {
                             public void onCheckedChanged(RadioGroup group, int checkedId) {
                                 if(checkedId == R.id.qlist1){
                                     resultUser = String.valueOf(qlist1RadioButton.getText());
+                                    btnDoQuiz.setEnabled(true);
+                                    btnDoQuiz.setBackgroundColor(getResources().getColor(R.color.mainColor));
                                 } else if(checkedId == R.id.qlist2){
                                     resultUser = String.valueOf(qlist2RadioButton.getText());
+                                    btnDoQuiz.setEnabled(true);
+                                    btnDoQuiz.setBackgroundColor(getResources().getColor(R.color.mainColor));
                                 } else if(checkedId == R.id.qlist3){
                                     resultUser = String.valueOf(qlist3RadioButton.getText());
+                                    btnDoQuiz.setEnabled(true);
+                                    btnDoQuiz.setBackgroundColor(getResources().getColor(R.color.mainColor));
                                 } else if(checkedId == R.id.qlist4){
                                     resultUser = String.valueOf(qlist4RadioButton.getText());
+                                    btnDoQuiz.setEnabled(true);
+                                    btnDoQuiz.setBackgroundColor(getResources().getColor(R.color.mainColor));
                                 }
 
                             }
