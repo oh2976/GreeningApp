@@ -110,13 +110,7 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         ImageButton pointBtn = findViewById(R.id.pn_move);
-        pointBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MyPageActivity.this, PointHistoryActivity.class);
-                startActivity(intent);
-            }
-        });
+        pointBtn.setOnClickListener(this);
 
         ImageButton checkInBtn = findViewById(R.id.cc_move);
         checkInBtn.setOnClickListener(this);
@@ -144,6 +138,35 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
                 showLogoutConfirmationDialog();
             }
         });
+        Button seedBtn = findViewById(R.id.seed_move);
+        seedBtn.setOnClickListener(this);
+
+        Button quizeBtn = findViewById(R.id.quiz_move);
+        quizeBtn.setOnClickListener(this);
+
+        Button reviewBtn = findViewById(R.id.review_move);
+        reviewBtn.setOnClickListener(this);
+
+        Button ordermBtn = findViewById(R.id.order_move);
+        ordermBtn.setOnClickListener(this);
+
+        Button checkMeBtn = findViewById(R.id.check_move);
+        checkMeBtn.setOnClickListener(this);
+
+        Button changeBtn = findViewById(R.id.change1_move);
+        changeBtn.setOnClickListener(this);
+
+        Button wdlBtn = findViewById(R.id.wdl_move);
+        wdlBtn.setOnClickListener(this);
+
+        Button logoutmBtn = findViewById(R.id.logout_move);
+        logoutmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                showLogoutConfirmationDialog();
+            }
+        });
     }
 
     @Override
@@ -156,34 +179,55 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         if (id == R.id.pn_move) {
             intent = new Intent(MyPageActivity.this, PointHistoryActivity.class);
             startActivity(intent);
+        } else if (id == R.id.seed_move) {
+            intent = new Intent(MyPageActivity.this, PointHistoryActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.cc_move) {
             intent = new Intent(MyPageActivity.this, AttendanceActivity.class);
             startActivity(intent);
+        } else if (id == R.id.check_move) {
+            intent = new Intent(MyPageActivity.this, AttendanceActivity.class);
+            startActivity(intent);
 
-        }else if (id == R.id.qz_move) {
+        } else if (id == R.id.qz_move) {
+            intent = new Intent(MyPageActivity.this, QuizActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.quiz_move) {
             intent = new Intent(MyPageActivity.this, QuizActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.change_move) {
             intent = new Intent(MyPageActivity.this, ChangeActivity.class);
             startActivity(intent);
+        } else if (id == R.id.change1_move) {
+            intent = new Intent(MyPageActivity.this, ChangeActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.orderhistory_move) {
+            intent = new Intent(MyPageActivity.this, OrderHistoryActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.order_move) {
             intent = new Intent(MyPageActivity.this, OrderHistoryActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.hg_move) {
             intent = new Intent(MyPageActivity.this, ReviewHistoryActivity.class);
             startActivity(intent);
+        } else if (id == R.id.review_move) {
+            intent = new Intent(MyPageActivity.this, ReviewHistoryActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.tt_move) {
+            intent = new Intent(MyPageActivity.this, WithdrawalActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.wdl_move) {
             intent = new Intent(MyPageActivity.this, WithdrawalActivity.class);
             startActivity(intent);
         }
     }
 
-    //로그아웃ㅅ 확인
+    //로그아웃 확인
     public void showLogoutConfirmationDialog() {
 
         dialog.show();

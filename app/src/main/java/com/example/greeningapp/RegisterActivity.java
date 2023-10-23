@@ -32,22 +32,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class RegisterActivity extends AppCompatActivity {
-
     long mNow;
     Date mDate;
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd");
-
     Dialog dialog;
-
-    private FirebaseAuth mFirebaseAuth; // 파이어베이스 인증 처리
-    private DatabaseReference mDatabaseRef; // 실시간 데이터베이스
-    private EditText mEtEmail, mEtPwd; // 회원가입 입력필드
-
+    private FirebaseAuth mFirebaseAuth;
+    private DatabaseReference mDatabaseRef;
+    private EditText mEtEmail, mEtPwd;
     private EditText mEtName, mEtPhone, mEtPostcode, mEtAddress;
     private CheckBox checkBoxAll;
     private CheckBox checkBox1;
     private CheckBox checkBox2;
-    private Button mBtnRegister; // 회원가입 입력 버튼
+    private Button mBtnRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,7 +165,6 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Firebase auth 진행
                 mFirebaseAuth.createUserWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -194,10 +189,8 @@ public class RegisterActivity extends AppCompatActivity {
                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                             intent.putExtra("userEmail", firebaseUser.getEmail());
                             startActivity(intent);
-
-                            Toast.makeText(RegisterActivity.this, "회원가입에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(RegisterActivity.this, "회원가입에 실패하셨습니다.", Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 });
@@ -230,7 +223,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == android.R.id.home) { //뒤로가기
+        if (itemId == android.R.id.home) {
             onBackPressed();
             return true;
         } else {

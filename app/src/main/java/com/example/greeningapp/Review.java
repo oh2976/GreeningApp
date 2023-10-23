@@ -1,5 +1,4 @@
 package com.example.greeningapp;
-
 public class Review {
     private String rimage;
     private String rcontent;
@@ -8,15 +7,18 @@ public class Review {
     private String pname;
     private int pid;
     private  String pimg;
+    private String rdatetime;
     private String username;
 
     private String pprice;
+
+    private int totalquantity;
 
     public Review() {
 
     }
 
-    private String rdatetime;
+
 
     public String getRimage() {
         return rimage;
@@ -82,11 +84,14 @@ public class Review {
         this.username = username;
     }
 
-    public String getPprice() {
-        return pprice;
+    public String getPprice() { return pprice; }
+    public void setPprice(String pprice) { this.pprice = pprice; }
+
+    public int getTotalquantity() {
+        return totalquantity;
     }
 
-    public void setPprice(String pprice) {
-        this.pprice = pprice;
+    public void setTotalquantity(int totalquantity) {
+        this.totalquantity = totalquantity;
     }
 }

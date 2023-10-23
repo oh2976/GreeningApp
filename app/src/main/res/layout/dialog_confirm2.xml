@@ -48,6 +48,7 @@
             android:text="버튼2"
             android:textSize="12sp"
             android:textColor="@color/white"
+            android:textStyle="bold"
             android:stateListAnimator="@null"
             android:background="@drawable/custom_btn"/>
 

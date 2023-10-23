@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -34,15 +35,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
-    private FirebaseAuth mFirebaseAuth; // 파이어베이스 인증 처리
-    private DatabaseReference mDatabaseRef; // 실시간 데이터베이스
-    private EditText mEtEmail, mEtPwd; // 로그인 입력필드
+    private FirebaseAuth mFirebaseAuth;
+    private DatabaseReference mDatabaseRef;
+    private EditText mEtEmail, mEtPwd;
     private CheckBox mCheckBoxSaveId;
-
     private SharedPreferences sharedPreferences;
-
     String strEmail;
-
     Dialog dialog;
 
     @Override
@@ -94,7 +92,6 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 로그인 요청
                 strEmail = mEtEmail.getText().toString();
                 String strPwd = mEtPwd.getText().toString();
 
@@ -103,18 +100,14 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             if (mCheckBoxSaveId.isChecked()) {
-                                // 로그인 성공 후, Firebase Uid를 사용하여 사용자 정보를 불러옴
-                                // 사용자 정보를 SharedPreferences에 저장할 수 있음
                                 String uid = mFirebaseAuth.getCurrentUser().getUid();
                                 mDatabaseRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         if (snapshot.exists()) {
-                                            // 사용자 정보를 불러와 SharedPreferences에 저장
                                             User user = snapshot.getValue(User.class);
                                             SharedPreferences.Editor editor = sharedPreferences.edit();
                                             editor.putString("email", user.getEmailId());
-                                            // 다른 사용자 정보도 저장할 수 있음
                                             editor.putBoolean("save_id", true);
                                             editor.apply();
                                         }
@@ -122,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
-                                        // 처리 중 에러 발생 시 처리
+                                        Log.e("LoginActivity, 로그인 오류", String.valueOf(error.toException()));
                                     }
                                 });
                             } else {
@@ -132,7 +125,6 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.apply();
                             }
 
-                            //로그인 성공
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();

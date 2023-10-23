@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="135dp"
-    android:layout_height="190dp"
+    android:layout_height="210dp"
     android:orientation="vertical">
 
     <ImageView
@@ -25,7 +24,7 @@
             <TextView
                 android:id="@+id/pname"
                 android:layout_width="122dp"
-                android:layout_height="wrap_content"
+                android:layout_height="37dp"
                 android:gravity="left"
                 android:text="이름"
                 android:textSize="14sp" />
@@ -47,20 +46,22 @@
                 android:textStyle="bold"/>
         </LinearLayout>
         <!--        <LinearLayout-->
-        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_width="wrap_content"-->
         <!--            android:layout_height="match_parent"-->
-        <!--            android:orientation="horizontal">-->
+        <!--            android:orientation="horizontal"-->
+        <!--            android:layout_marginLeft="4dp">-->
 
         <!--            <LinearLayout-->
-        <!--                android:layout_width="80dp"-->
-        <!--                android:layout_height="wrap_content">-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:orientation="horizontal">-->
 
         <!--                <RatingBar-->
         <!--                    android:id="@+id/reviewRating01"-->
         <!--                    style="@style/Widget.AppCompat.RatingBar.Small"-->
-        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_width="match_parent"-->
         <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:contentDescription="별점을 선택하세요"-->
+        <!--                    android:contentDescription="메인총점"-->
         <!--                    android:isIndicator="true"-->
         <!--                    android:max="5"-->
         <!--                    android:numStars="5"-->
@@ -68,25 +69,15 @@
         <!--                    android:rating="0"-->
         <!--                    android:stepSize="0.5" />-->
 
-        <!--                 <TextView-->
-        <!--                     android:id="@+id/star"-->
-        <!--                     android:layout_width="match_parent"-->
-        <!--                     android:layout_height="match_parent"-->
-        <!--                     android:text="평점놓을곳"-->
-        <!--                     android:gravity="left"-->
-        <!--                     android:textSize="12sp"/>-->
-        <!--            </LinearLayout>-->
-        <!--            <LinearLayout-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="match_parent">-->
         <!--                <TextView-->
-        <!--                    android:id="@+id/star_su"-->
+        <!--                    android:id="@+id/star"-->
         <!--                    android:layout_width="match_parent"-->
-        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_height="match_parent"-->
         <!--                    android:text="개수"-->
         <!--                    android:gravity="left"-->
-        <!--                    android:textSize="14sp"/>-->
+        <!--                    android:textSize="12sp"/>-->
         <!--            </LinearLayout>-->
+        <!--        </LinearLayout>-->
 
 
 

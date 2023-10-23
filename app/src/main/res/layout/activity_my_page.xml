@@ -74,6 +74,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:paddingBottom="20dp"
+                        android:paddingRight="4dp"
                         android:text="-씨드"
                         android:textAlignment="viewEnd"
                         android:textColor="@color/mainColor"
@@ -94,27 +95,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_margin="16dp">
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="8dp">
 
-                        <TextView
-                            android:layout_width="match_parent"
+                        <Button
+                            android:id="@+id/seed_move"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_gravity="center"
+                            android:gravity="left|center"
+                            android:background="@drawable/btn_mypage_white"
+                            android:textColor="@color/textgray"
                             android:text="씨드 내역"
                             android:textSize="16sp"
                             android:textStyle="bold" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#ffffff"
+                            android:layout_weight="1"/>
 
                         <ImageButton
                             android:id="@+id/pn_move"
                             android:layout_width="wrap_content"
+                            android:layout_gravity="right|center"
                             android:layout_height="wrap_content"
                             android:background="@drawable/baseline_arrow_forward_ios_24"
                             />
@@ -124,48 +133,68 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_margin="16dp">
-                        <TextView
-                            android:layout_width="match_parent"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="8dp">
+                        <Button
+                            android:id="@+id/order_move"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_gravity="center"
-                            android:text="주문내역"
+                            android:gravity="left|center"
+                            android:background="@drawable/btn_mypage_white"
+                            android:textColor="@color/textgray"
+                            android:text="주문 내역"
                             android:textSize="16sp"
                             android:textStyle="bold" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#ffffff"
+                            android:layout_weight="1"/>
                         <ImageButton
                             android:id="@+id/orderhistory_move"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="right|center"
                             android:background="@drawable/baseline_arrow_forward_ios_24" />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_margin="16dp">
-                        <TextView
-                            android:layout_width="match_parent"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp">
+
+                        <Button
+                            android:id="@+id/review_move"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_gravity="center"
+                            android:gravity="left|center"
+                            android:background="@drawable/btn_mypage_white"
+                            android:textColor="@color/textgray"
                             android:text="후기 내역"
                             android:textSize="16sp"
                             android:textStyle="bold" />
-
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#ffffff"
+                            android:layout_weight="1"/>
                         <ImageButton
                             android:id="@+id/hg_move"
+                            android:layout_gravity="right|center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/baseline_arrow_forward_ios_24" />
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
                         android:layout_height="2dp"
                         android:layout_centerInParent="true"
-                        android:background="#CCCCCC" />
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="16dp"
+                        android:background="#DADADA" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -173,26 +202,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="8dp" >                       >
+                        <Button
+                            android:id="@+id/check_move"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
+                            android:gravity="left|center"
+                            android:background="@drawable/btn_mypage_white"
+                            android:textColor="@color/textgray"
                             android:text="출석 체크"
                             android:textSize="16sp"
                             android:textStyle="bold" />
-
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#ffffff"
+                            android:layout_weight="1"/>
                         <ImageButton
                             android:id="@+id/cc_move"
+                            android:layout_gravity="right|center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/baseline_arrow_forward_ios_24" />
@@ -202,29 +237,40 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_margin="16dp">
-                        <TextView
-                            android:layout_width="match_parent"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp">
+
+                        <Button
+                            android:id="@+id/quiz_move"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_gravity="center"
+                            android:gravity="left|center"
+                            android:background="@drawable/btn_mypage_white"
+                            android:textColor="@color/textgray"
                             android:text="오늘의 퀴즈"
                             android:textSize="16sp"
                             android:textStyle="bold" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#ffffff"
+                            android:layout_weight="1"/>
 
                         <ImageButton
                             android:id="@+id/qz_move"
+                            android:layout_gravity="right|center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/baseline_arrow_forward_ios_24" />
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
                         android:layout_height="2dp"
                         android:layout_centerInParent="true"
-                        android:background="#CCCCCC" />
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="16dp"
+                        android:background="#DADADA" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -232,29 +278,37 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_margin="16dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="8dp" >                       >
+                        <Button
+                            android:id="@+id/change1_move"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_gravity="center"
+                            android:gravity="left|center"
+                            android:background="@drawable/btn_mypage_white"
+                            android:textColor="@color/textgray"
                             android:text="회원 정보 수정"
                             android:textSize="16sp"
                             android:textStyle="bold" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#ffffff"
+                            android:layout_weight="1"/>
 
                         <ImageButton
                             android:id="@+id/change_move"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/baseline_arrow_forward_ios_24" />
+                            android:background="@drawable/baseline_arrow_forward_ios_24"
+                            android:layout_gravity="right|center"
+                            />
 
                     </LinearLayout>
 
@@ -262,18 +316,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_margin="16dp">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="8dp" >                       >
+                        <Button
+                            android:id="@+id/logout_move"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_gravity="center"
-                            android:text="로그아웃"
+                            android:gravity="left|center"
+                            android:background="@drawable/btn_mypage_white"
+                            android:textColor="@color/textgray"
+                            android:text="로그 아웃"
                             android:textSize="16sp"
                             android:textStyle="bold" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#ffffff"
+                            android:layout_weight="1"/>
+
                         <ImageButton
+                            android:layout_gravity="right|center"
                             android:id="@+id/out_move"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -284,16 +346,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_margin="16dp">
-                        <TextView
-                            android:layout_width="match_parent"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp">
+                        <Button
+                            android:id="@+id/wdl_move"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_gravity="center"
+                            android:gravity="left|center"
+                            android:background="@drawable/btn_mypage_white"
+                            android:textColor="@color/textgray"
                             android:text="회원 탈퇴"
                             android:textSize="16sp"
                             android:textStyle="bold" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#ffffff"
+                            android:layout_weight="1"/>
                         <ImageButton
+                            android:layout_gravity="right|center"
                             android:id="@+id/tt_move"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -301,11 +373,11 @@
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
                         android:layout_height="2dp"
                         android:layout_centerInParent="true"
-                        android:background="#CCCCCC" />
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="16dp"
+                        android:background="#DADADA" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -322,6 +394,7 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
                         android:text="현재버전 1.0"
+                        android:textColor="#808080"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -333,7 +406,7 @@
                         android:layout_weight="1"
                         android:text="최신버전"
                         android:textAlignment="textEnd"
-                        android:textColor="@color/gray"
+                        android:textColor="#808080"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>

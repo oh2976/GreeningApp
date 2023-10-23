@@ -30,6 +30,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -58,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:background="@color/gray"
+        android:background="@color/back"
         app:layout_constraintTop_toBottomOf="@+id/ReviewHistoryToolbar"
         tools:layout_editor_absoluteX="0dp" />
 

@@ -10,7 +10,6 @@ public class Product implements Serializable {
     private int pid;
     private int stock;
     private int category;
-
     private String psay;
     private String psearch;
 

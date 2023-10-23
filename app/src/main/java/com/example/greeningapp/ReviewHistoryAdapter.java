@@ -1,5 +1,4 @@
 package com.example.greeningapp;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -179,8 +178,9 @@ public class ReviewHistoryAdapter extends RecyclerView.Adapter<ReviewHistoryAdap
         holder.recyclerEt.setText(String.valueOf(reviewhistoryList.get(position).getRcontent()));
         //holder.recyclerRating.setRating(reviewhistoryList.get(position).getRscore());
         holder.reviewdate.setText(String.valueOf(reviewhistoryList.get(position).getRdatetime()));
-        holder.ProductPrice.setText(String.valueOf(reviewhistoryList.get(position).getPprice()));
+        holder.ProductPrice.setText(String.valueOf(reviewhistoryList.get(position).getPprice()) + "원");
         holder.ProductName.setText(String.valueOf(reviewhistoryList.get(position).getPname()));
+        holder.TotalQ.setText(String.valueOf(reviewhistoryList.get(position).getTotalquantity())+ "개");
         Glide.with(holder.itemView).load(reviewhistoryList.get(position).getPimg()).into(holder.ProductImg);
 
     }
@@ -204,6 +204,7 @@ public class ReviewHistoryAdapter extends RecyclerView.Adapter<ReviewHistoryAdap
         private ImageView ProductImg;
 
         private TextView ProductPrice; //추가
+        private TextView TotalQ; //추가
 
         //private String username;
 
@@ -217,6 +218,7 @@ public class ReviewHistoryAdapter extends RecyclerView.Adapter<ReviewHistoryAdap
             this.ProductPrice = itemView.findViewById(R.id.reviewhistoryprice);
             this.ProductName = itemView.findViewById(R.id.reviewhistoryPn);
             this.ProductImg = itemView.findViewById(R.id.reviewhistoryPImg);
+            this.TotalQ = itemView.findViewById(R.id.reviewhistoryquantity);
 
         }
     }

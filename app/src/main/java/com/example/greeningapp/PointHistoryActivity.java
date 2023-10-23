@@ -1,18 +1,15 @@
 package com.example.greeningapp;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,6 +19,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.ArrayList;
 
 public class PointHistoryActivity extends AppCompatActivity {
@@ -29,7 +30,6 @@ public class PointHistoryActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
-
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private PointHistoryAdapter adapter;
@@ -58,10 +58,8 @@ public class PointHistoryActivity extends AppCompatActivity {
 
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser != null) {
-            // 현재 로그인된 사용자의 UID 가져오기
             String currentUserId = currentUser.getUid();
 
-            // MyPoint 노드에서 현재 사용자의 UID를 기반으로 데이터 조회
             databaseReference = firebaseDatabase.getReference("CurrentUser")
                     .child(currentUserId)
                     .child("MyPoint");
@@ -74,14 +72,30 @@ public class PointHistoryActivity extends AppCompatActivity {
                         MyPoint myPoint = dataSnapshot.getValue(MyPoint.class);
                         arrayList.add(myPoint);
                     }
+
+                    // 적립 데이터 불러올 때 날짜(pointDate)를 기준으로 내림차순 정렬
+                    Collections.sort(arrayList, new Comparator<MyPoint>() {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+                        @Override
+                        public int compare(MyPoint point1, MyPoint point2) {
+                            try {
+                                Date date1 = dateFormat.parse(point1.getPointDate());
+                                Date date2 = dateFormat.parse(point2.getPointDate());
+                                return date2.compareTo(date1);
+                            } catch (Exception e) {
+                                return 0;
+                            }
+                        }
+                    });
+
                     adapter = new PointHistoryAdapter(PointHistoryActivity.this, arrayList);
                     recyclerView.setAdapter(adapter);
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    // DB를 가져오던 중 에러 발생 시
-                    Log.e("PointHistoryActivity", String.valueOf(databaseError.toException()));    // 에러문 출력
+                    Log.e("PointHistoryActivity, 데이터 로드 오류", String.valueOf(databaseError.toException()));
                 }
             });
         }
@@ -91,7 +105,7 @@ public class PointHistoryActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == android.R.id.home) { //뒤로가기
+        if (itemId == android.R.id.home) {
             onBackPressed();
             return true;
         } else {

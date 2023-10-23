@@ -1,24 +1,16 @@
 package com.example.greeningapp;
 
 public class User {
-    private String idToken; //Firbase Uid(고유 토큰 정보)
-    private String emailId; // 이메일 아이디
-    private String password; // 비밀번호
-
+    private String idToken;
+    private String emailId;
+    private String password;
     private String username;
-
     private String phone;
-
     private String postcode;
-
     private String address;
-
     private int spoint;
-
     private int upoint;
-
     private String regdate;
-
     private String doquiz;
 
     public User() {
@@ -79,10 +71,6 @@ public class User {
     public void setRegdate(String regdate) {
         this.regdate = regdate;
     }
-
-
-
-
 
     public String getIdToken() {
         return idToken;

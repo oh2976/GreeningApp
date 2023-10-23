@@ -3,6 +3,7 @@ package com.example.greeningapp;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,12 +51,16 @@ public class OrderHistoryChildRcyAdapter extends RecyclerView.Adapter<OrderHisto
         holder.pro_price.setText(childModelArrayList.get(position).getProductPrice());
         holder.ordervalue.setText(childModelArrayList.get(position).getTotalQuantity() + "개");
 
+
+
         String isReviewCompleted = childModelArrayList.get(position).getDoReview();
 
         if ("No".equals(isReviewCompleted)) {
 
         } else if ("Yes".equals(isReviewCompleted)) {
-            holder.ordhreviewBtn.setText("작성 완료");
+            holder.ordhreviewBtn.setText("후기 작성완료");
+            holder.ordhreviewBtn.setBackgroundTintList(ColorStateList.valueOf(cxt.getResources().getColor(R.color.ordh_btn_click))); //버튼색변경
+            holder.ordhreviewBtn.setTextColor(cxt.getResources().getColor(R.color.white)); // 글자색 변경
             holder.ordhreviewBtn.setEnabled(false);
         }
 

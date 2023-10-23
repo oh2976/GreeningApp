@@ -32,7 +32,7 @@
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#EFEFEF">
+        android:background="@color/back">
 
         <TextView
             android:id="@+id/tv_attend"
@@ -74,6 +74,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:theme="@style/CalendarViewTheme"
+                    android:dateTextAppearance="@style/dateTextAppearance"
+                    android:weekDayTextAppearance="@style/CalendarWeekDatText"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

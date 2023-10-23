@@ -131,7 +131,7 @@ public class SearchActivity extends AppCompatActivity {
             return true;
         }
         else if (itemId == R.id.action_cart) {
-            Intent intent = new Intent(SearchActivity.this, MyPageActivity.class);
+            Intent intent = new Intent(SearchActivity.this, CartActivity.class);
             startActivity(intent);
             return true;
         }

@@ -32,4 +32,3 @@ public class Point {
         this.upoint = upoint;
     }
 }
-

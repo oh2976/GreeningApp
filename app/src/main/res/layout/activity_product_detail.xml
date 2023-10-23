@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="( 재고 : 0 )"
-                    android:textColor="#808080"
+                    android:textColor="@color/textGray"
                     android:textSize="13sp"
                     app:layout_constraintTop_toBottomOf="@+id/detail_price"
                     app:layout_constraintStart_toStartOf="@+id/detailed_name"/>

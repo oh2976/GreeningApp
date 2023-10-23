@@ -13,7 +13,6 @@ public class CalendarAdapter extends BaseAdapter {
     private Context context;
     private List<Calendar> calendarList;
 
-    // 생성자 - CalendarAdapter 객체를 생성할 때 호출, Context와 Calendar 데이터 리스트를 받아옴
     public CalendarAdapter(Context context, List<Calendar> calendarList) {
         this.context = context;
         this.calendarList = calendarList;
@@ -43,14 +42,13 @@ public class CalendarAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         Calendar calendarModel = calendarList.get(position);
-        holder.dayTextView.setText(String.valueOf(calendarModel.getDay()));
-
-        // 출석체크가 완료된 경우 텍스트 색상을 검정색으로, 완료되지 않은 경우 검정색으로 설정
-        if (calendarModel.isAttendanceCompleted()) {
-            holder.dayTextView.setTextColor(context.getResources().getColor(R.color.btn));
-        } else {
-            holder.dayTextView.setTextColor(context.getResources().getColor(R.color.black));
-        }
+//        holder.dayTextView.setText(String.valueOf(calendarModel.getDay()));
+//
+//        if (calendarModel.isAttendanceCompleted()) {
+//            holder.dayTextView.setTextColor(context.getResources().getColor(R.color.btn));
+//        } else {
+//            holder.dayTextView.setTextColor(context.getResources().getColor(R.color.black));
+//        }
 
         return convertView;
     }

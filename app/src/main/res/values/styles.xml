@@ -13,4 +13,29 @@
     <style name="bottomline">
         <item name="android:background">@drawable/bottom_line</item>
     </style>
+
+    <!--  선택된 날짜 백그라운드 스타일  -->
+    <style name="CalendarViewTheme" parent="TextAppearance.AppCompat.Button">
+        <item name="colorAccent">#205107</item>
+    </style>
+
+    <!--  요일 텍스트 스타일  -->
+    <style name="CalendarWeekDatText" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!--  날짜 숫자 텍스트 스타일  -->
+    <style name="dateTextAppearance" parent="TextAppearance.AppCompat.Button">
+        <item name="android:focusedMonthDateColor">#ffffff</item>
+        <item name="android:textColorHighlight">#ffffff</item>
+        <item name="android:textColor">#919191</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="selectedDateTextAppearance">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
 </resources>

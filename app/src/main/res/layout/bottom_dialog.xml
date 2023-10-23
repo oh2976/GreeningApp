@@ -38,6 +38,7 @@
         <EditText
             android:id="@+id/wannaDonatepoint"
             android:layout_width="180dp"
+            android:padding="8dp"
             android:textSize="14sp"
             android:hint="씨드를 입력해주세요."
             android:background="@drawable/square_box"

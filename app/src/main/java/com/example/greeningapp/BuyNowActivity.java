@@ -36,7 +36,7 @@ public class BuyNowActivity extends AppCompatActivity {
 
     long mNow;
     Date mDate;
-    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth firebaseAuth;

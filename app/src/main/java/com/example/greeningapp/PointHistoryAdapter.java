@@ -6,31 +6,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import android.content.Context;
 
 import java.text.DecimalFormat;
 import java.util.List;
 
 public class PointHistoryAdapter extends RecyclerView.Adapter<PointHistoryAdapter.PointHistoryViewHolder> {
-
     Context context;
     List<MyPoint> pointHistoryList;
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth firebaseAuth;
-    DatabaseReference databaseReference;
 
-    // 숫자에 콤마
     DecimalFormat decimalFormat = new DecimalFormat("###,###");
-
 
     public PointHistoryAdapter(Context context, List<MyPoint> pointHistoryList) {
         this.context = context;
@@ -59,7 +52,7 @@ public class PointHistoryAdapter extends RecyclerView.Adapter<PointHistoryAdapte
 
         String pointNameTextView = myPoint.getPointName();
         if (pointNameTextView.length() > 21) {
-            pointNameTextView = pointNameTextView.substring(0, 21) + "…";
+            pointNameTextView = pointNameTextView.substring(0, 27) + "…";
         }
 
         holder.pointNameTextView.setText(pointNameTextView);

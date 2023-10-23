@@ -18,7 +18,6 @@ public class ViewPagerTermsOfUseAdapter extends FragmentPagerAdapter {
         } else {
             return new TermsOfUseTwoFragment();
         }
-
     }
 
     @Override

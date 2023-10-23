@@ -9,13 +9,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.tabs.TabLayout;
 
 public class TermsOfUseActivity extends AppCompatActivity {
-
     TabLayout tab_termsofuse;
     ViewPager viewPager_termsofuse;
+    Button closeTab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,15 @@ public class TermsOfUseActivity extends AppCompatActivity {
 
         tab_termsofuse.setupWithViewPager(viewPager_termsofuse);
 
+        closeTab = findViewById(R.id.btn_closeTab);
+
+        closeTab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         Intent intent = getIntent();
         String selectedTab = intent.getStringExtra("selectedTab");
 
@@ -49,7 +59,10 @@ public class TermsOfUseActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == android.R.id.home) { //뒤로가기
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
+        } if (itemId == R.id.btn_closeTab) {
             onBackPressed();
             return true;
         } else {
