@@ -46,6 +46,7 @@ public class OrderActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     DatabaseReference databaseReference2;
     DatabaseReference databaseReferenceProduct;
+    DatabaseReference databaseReferenceAdmin;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -115,6 +116,7 @@ public class OrderActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference("CurrentUser");
         databaseReferenceProduct = FirebaseDatabase.getInstance().getReference("Product");
+        databaseReferenceAdmin = FirebaseDatabase.getInstance().getReference("Admin");
 
         String myOrderId = databaseReference.child("MyOrder").push().getKey();
 
@@ -146,6 +148,8 @@ public class OrderActivity extends AppCompatActivity {
                 Log.e("OrderActivity", String.valueOf(databaseError.toException())); // 에러문 출력
             }
         });
+
+
 
         databaseReference.child(firebaseUser.getUid()).child("AddToCart").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -238,12 +242,22 @@ public class OrderActivity extends AppCompatActivity {
                         cartMap.put("orderDate", getTime());
                         cartMap.put("doReview", "No");
                         cartMap.put("orderImg", model.getProductImg());
+                        cartMap.put("orderstate", "paid");
                         cartMap.put("eachOrderedId", eachOrderedId);
+                        cartMap.put("useridtoken", firebaseUser.getUid());
 
                         // 결제 된 재고만큼 기존 재고에서 변경한 값을 변수에 저장
                         int totalStock = model.getProductStock() - Integer.valueOf(model.getSelectedQuantity());
                         // 기존 회원 sPoint에 있는 값에 결제 후 추가될 씨드 더하여 변수에 저장
                         double changePoint = userSPoint + total * 0.01;
+
+                        databaseReferenceAdmin.child("UserOrder").child(eachOrderedId).setValue(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Log.d("OrderActivity", "Admin 계정에 추가 완료" + eachOrderedId);
+                            }
+                        });
+
 
                         // 결제 버튼을 누르면 데이터베이스에 MyOrder 테이블 생성 코드
                         // 데이터베이스 경로 변경됨.

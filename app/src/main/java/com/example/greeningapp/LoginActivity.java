@@ -125,9 +125,17 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.apply();
                             }
 
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
+                            if("test@gmail.com".equals(strEmail) && "123456".equals(strPwd)){
+                                Intent intent = new Intent(LoginActivity.this, ManagerMainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else{
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+
+
 
 
                         } else{

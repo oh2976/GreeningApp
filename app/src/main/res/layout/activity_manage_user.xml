@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ManageUserActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnManageMain_shop"
+            android:id="@+id/btnManageMain_User"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"

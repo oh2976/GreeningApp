@@ -1,6 +1,8 @@
 package com.example.greeningapp;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String idToken;
     private String emailId;
     private String password;

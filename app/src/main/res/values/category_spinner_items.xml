@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category_select_item">
+        <item>101-욕실주방용품</item>
+        <item>102-생활잡화</item>
+        <item>103-취미</item>
+    </string-array>
+</resources>

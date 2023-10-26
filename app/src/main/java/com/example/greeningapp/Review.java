@@ -14,6 +14,8 @@ public class Review {
 
     private int totalquantity;
 
+    private String reviewid;
+
     public Review() {
 
     }
@@ -93,5 +95,13 @@ public class Review {
 
     public void setTotalquantity(int totalquantity) {
         this.totalquantity = totalquantity;
+    }
+
+    public String getReviewid() {
+        return reviewid;
+    }
+
+    public void setReviewid(String reviewid) {
+        this.reviewid = reviewid;
     }
 }

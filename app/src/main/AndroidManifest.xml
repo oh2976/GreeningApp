@@ -16,6 +16,30 @@
         android:theme="@style/Theme.GreeningApp"
         tools:targetApi="31">
         <activity
+            android:name=".ManageUserOrderDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManageUserReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManageUserOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManageUserDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManageUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManageProductDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManageAddProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManagerMainActivity"
+            android:exported="false" />
+        <activity
             android:name=".TermsOfUseActivity"
             android:exported="false" />
         <activity
@@ -101,8 +125,7 @@
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />

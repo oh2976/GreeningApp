@@ -166,6 +166,7 @@ public class ReviewWriteActivity extends AppCompatActivity {
                 String reviewImage = (imageUri != null) ? imageUri.toString() : ""; // 이미지 URI가 null이 아닌지 확인
                 //String reviewImage = (imageUri != null) ? imageUri.toString() : null; // 이미지 URI가 null인지 확인하고 null인 경우 null로 처리
 
+
                 if (!fn.isEmpty())  //후기작성 내용이 비어있지않으면 업로드 진행,  주석: if (!fn.isEmpty() || reviewImage == null || reviewImage != null)
                 {
                     float rating = RatingBarEt.getRating();
@@ -174,6 +175,7 @@ public class ReviewWriteActivity extends AppCompatActivity {
                     String Pname = product.getProductName(); // 제품 이름을 String으로 저장
                     String Pimg = product.getOrderImg(); // 제품 이미지 URL을 String으로 저장
 
+                    String reviewId =  mRef.push().getKey();
                     // Create a HashMap to store the review data
                     HashMap<String, Object> reviewwriteMap = new HashMap<>();
                     reviewwriteMap.put("pid", product.getProductId());
@@ -186,6 +188,7 @@ public class ReviewWriteActivity extends AppCompatActivity {
                     reviewwriteMap.put("rcontent", fn);
                     reviewwriteMap.put("rscore", rating);
                     reviewwriteMap.put("rdatetime", reviewDate);
+                    reviewwriteMap.put("reviewid", reviewId);
 
                     Log.d("Review", "리뷰 작성 여부 " + product.getDoReview());
 
@@ -256,7 +259,7 @@ public class ReviewWriteActivity extends AppCompatActivity {
 //                    });
 
                     //mRef.push().child(pid).setValue(reviewwriteMap).addOnCompleteListener
-                    mRef.push().setValue(reviewwriteMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    mRef.child(reviewId).setValue(reviewwriteMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
 

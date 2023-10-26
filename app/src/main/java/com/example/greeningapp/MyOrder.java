@@ -23,6 +23,10 @@ public class MyOrder  implements Serializable {
 
     private String postcode;
 
+    private String useridtoken;
+
+    private String orderstate;
+
     private ArrayList<MyOrder> childModelArrayList;
 
     public MyOrder() {
@@ -164,5 +168,21 @@ public class MyOrder  implements Serializable {
 
     public void setChildModelArrayList(ArrayList<MyOrder> childModelArrayList) {
         this.childModelArrayList = childModelArrayList;
+    }
+
+    public String getUseridtoken() {
+        return useridtoken;
+    }
+
+    public void setUseridtoken(String useridtoken) {
+        this.useridtoken = useridtoken;
+    }
+
+    public String getOrderstate() {
+        return orderstate;
+    }
+
+    public void setOrderstate(String orderstate) {
+        this.orderstate = orderstate;
     }
 }
