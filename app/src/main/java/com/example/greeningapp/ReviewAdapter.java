@@ -35,6 +35,17 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.CustomView
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
+
+        if (dataList.get(position).getRimage() != null && !dataList.get(position).getRimage().isEmpty()) {
+            // 이미지가 있는 경우 표시
+            holder.inputimg.setVisibility(View.VISIBLE);
+            Glide.with(holder.itemView)
+                    .load(dataList.get(position).getRimage())
+                    .into(holder.inputimg);
+        } else {
+            // 이미지가 없는 경우 숨김
+            holder.inputimg.setVisibility(View.GONE);
+        }
         Glide.with(holder.itemView)
                 .load(dataList.get(position).getRimage())
                 .into(holder.inputimg);
@@ -42,6 +53,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.CustomView
         holder.userrating.setRating(dataList.get(position).getRscore());
         holder.reviewdate.setText(dataList.get(position).getRdatetime());
         holder.username.setText(dataList.get(position).getUsername());
+        holder.reviewproductname.setText(dataList.get(position).getPname());
 
     }
 
@@ -56,7 +68,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.CustomView
         RatingBar userrating;
         TextView username;
         TextView reviewdes;
-        TextView reviewdate;
+        TextView reviewdate, reviewproductname;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,6 +77,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.CustomView
             this.reviewdes = itemView.findViewById(R.id.reviewdes);
             this.userrating = itemView.findViewById(R.id.userrating);
             this.reviewdate = itemView.findViewById(R.id.reviewdate);
+            this.reviewproductname = itemView.findViewById(R.id.reviewproductname);
 
         }
     }

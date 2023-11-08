@@ -165,15 +165,20 @@ public class ReviewHistoryAdapter extends RecyclerView.Adapter<ReviewHistoryAdap
 
     @Override
     public void onBindViewHolder(@NonNull ReviewHistoryViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        //databaseReference = database.getReference("Review");
-        Glide.with(holder.itemView).load(reviewhistoryList.get(position).getRimage()).into(holder.recyclerImage);
-//        String reviewImage = reviewhistoryList.get(position).getRimage();
-//        if (reviewImage != null && !reviewImage.isEmpty()) {
-//            Glide.with(context).load(reviewImage).into(holder.recyclerImage);
-//        } else {
-//            // 이미지가 없을 때 이미지 없음 아이콘 표시
-//            //holder.recyclerImage.setImageResource(R.drawable.no_image); // 이미지 없음 아이콘 등록
-//        }
+
+        if (reviewhistoryList.get(position).getRimage() != null && !reviewhistoryList.get(position).getRimage().isEmpty()) {
+            // 이미지가 있는 경우 표시
+            holder.recyclerImage.setVisibility(View.VISIBLE);
+            Glide.with(holder.itemView)
+                    .load(reviewhistoryList.get(position).getRimage())
+                    .into(holder.recyclerImage);
+        } else {
+            // 이미지가 없는 경우 숨김
+            holder.recyclerImage.setVisibility(View.GONE);
+        }
+//
+//        Glide.with(holder.itemView).load(reviewhistoryList.get(position).getRimage()).into(holder.recyclerImage);
+
 
         holder.recyclerEt.setText(String.valueOf(reviewhistoryList.get(position).getRcontent()));
         //holder.recyclerRating.setRating(reviewhistoryList.get(position).getRscore());
@@ -182,6 +187,7 @@ public class ReviewHistoryAdapter extends RecyclerView.Adapter<ReviewHistoryAdap
         holder.ProductName.setText(String.valueOf(reviewhistoryList.get(position).getPname()));
         holder.TotalQ.setText(String.valueOf(reviewhistoryList.get(position).getTotalquantity())+ "개");
         Glide.with(holder.itemView).load(reviewhistoryList.get(position).getPimg()).into(holder.ProductImg);
+        holder.RHUserrating_review.setRating(reviewhistoryList.get(position).getRscore());
 
     }
 
@@ -205,6 +211,7 @@ public class ReviewHistoryAdapter extends RecyclerView.Adapter<ReviewHistoryAdap
 
         private TextView ProductPrice; //추가
         private TextView TotalQ; //추가
+        private RatingBar RHUserrating_review;
 
         //private String username;
 
@@ -219,6 +226,7 @@ public class ReviewHistoryAdapter extends RecyclerView.Adapter<ReviewHistoryAdap
             this.ProductName = itemView.findViewById(R.id.reviewhistoryPn);
             this.ProductImg = itemView.findViewById(R.id.reviewhistoryPImg);
             this.TotalQ = itemView.findViewById(R.id.reviewhistoryquantity);
+            this.RHUserrating_review = itemView.findViewById(R.id.RHUserrating_review);
 
         }
     }

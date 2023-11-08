@@ -69,17 +69,32 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/MGReviewUsername_review"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="user01"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="3dp"
-                />
+                android:orientation="vertical"
+                android:layout_marginLeft="12dp">
+
+                <TextView
+                    android:id="@+id/MGReviewUsername_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="user01"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="3dp"
+                    />
+
+                <TextView
+                    android:id="@+id/MGReviewProductName_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="상품명"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -100,7 +115,8 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="4dp">
 
             <RatingBar
                 android:id="@+id/MGReviewUserrating_review"
@@ -112,10 +128,7 @@
                 android:numStars="5"
                 android:progressTint="@android:color/holo_orange_light"
                 android:rating="4.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/username"
-                app:layout_constraintVertical_bias="1.0"
-                android:layout_marginLeft="11dp">
+                android:layout_marginLeft="12dp">
             </RatingBar>
         </LinearLayout>
 
@@ -132,8 +145,7 @@
                 <ImageView
                     android:id="@+id/MGReviewInputimg_review"
                     android:layout_width="100dp"
-                    android:layout_height="100dp">
-                </ImageView>
+                    android:layout_height="100dp"></ImageView>
             </LinearLayout>
 
             <LinearLayout

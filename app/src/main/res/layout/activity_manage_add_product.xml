@@ -5,19 +5,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".ManageAddProductActivity">
 
-    <TextView
-        android:id="@+id/textView3"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="상품 정보 추가"
-        android:gravity="center"
-        android:layout_marginTop="50dp"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@color/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="상품 정보 추가"
+            android:textColor="#000000"
+            android:textSize="18sp"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+<!--    <TextView-->
+<!--        android:id="@+id/textView3"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="상품 정보 추가"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:textSize="20dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <ScrollView
         android:id="@+id/scrollView3"
@@ -205,10 +224,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="상품 한줄 소개 : " />
+                    android:text="총 판매 량: " />
 
                 <EditText
-                    android:id="@+id/AddPsay"
+                    android:id="@+id/AddPPopulstock"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -227,13 +246,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="검색 단어 : " />
+                    android:text="상품 한줄 소개 : " />
 
                 <EditText
-                    android:id="@+id/AddPSearch"
+                    android:id="@+id/AddPsay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"

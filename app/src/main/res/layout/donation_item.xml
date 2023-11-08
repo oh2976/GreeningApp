@@ -50,13 +50,13 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="50dp"
+                    android:layout_width="45dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/round_filled_box"
                     android:gravity="center"
                     android:layout_gravity="center"
                     android:padding="2dp"
-                    android:text="진행 중"
+                    android:text="진행중"
                     android:layout_marginRight="8dp"
                     android:textColor="@color/white"
                     android:textSize="11sp" />

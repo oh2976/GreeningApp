@@ -2,12 +2,14 @@ package com.example.greeningapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -38,12 +40,12 @@ public class ManageAddProductActivity extends AppCompatActivity {
     private static final int GALLERY_REQUEST_1 = 1;
     private static final int GALLERY_REQUEST_2 = 2;
 
-    private EditText AddPid, AddCategoryId,  AddPname, AddPPrice, AddPsay, AddPSearch, AddStock;
+    private EditText AddPid, AddCategoryId,  AddPname, AddPPrice, AddPsay, AddStock, AddPopulstock;
 
 
-    private int strAddPid, strAddCategoryId, strAddPPrice, strAddStock;
+    private int strAddPid, strAddCategoryId, strAddPPrice, strAddStock, strAddPopulstock;
 
-    private String strAddPimg, strAddPDetailimg, strAddPname, strAddPsay, strAddPSearch, strAddService;
+    private String strAddPimg, strAddPDetailimg, strAddPname, strAddPsay;
 
     private ImageButton AddPimg, AddPDetailimg;
 
@@ -58,6 +60,13 @@ public class ManageAddProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_add_product);
 
+
+        Toolbar mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
+
+
         // Firebase Realtime Database 및 Firebase Storage에 대한 레퍼런스 생성
         databaseReference = FirebaseDatabase.getInstance().getReference("Product");
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -70,8 +79,8 @@ public class ManageAddProductActivity extends AppCompatActivity {
         AddPname = (EditText) findViewById(R.id.AddPname);
         AddPPrice = (EditText) findViewById(R.id.AddPPrice);
         AddPsay = (EditText) findViewById(R.id.AddPsay);
-        AddPSearch = (EditText) findViewById(R.id.AddPSearch);
         AddStock = (EditText) findViewById(R.id.AddStock);
+        AddPopulstock = (EditText) findViewById(R.id.AddPPopulstock);
 
         btnMGProductAdd = (Button) findViewById(R.id.btnMGProductAdd);
 
@@ -130,8 +139,8 @@ public class ManageAddProductActivity extends AppCompatActivity {
                 strAddPname = AddPname.getText().toString();
                 strAddPPrice = Integer.parseInt(AddPPrice.getText().toString());
                 strAddPsay = AddPsay.getText().toString();
-                strAddPSearch = AddPSearch.getText().toString();
                 strAddStock = Integer.parseInt(AddStock.getText().toString());
+                strAddPopulstock = Integer.parseInt(AddPopulstock.getText().toString());
 //
 //                final HashMap<String, Object> ProductAddMap = new HashMap<>();
 //
@@ -219,8 +228,8 @@ public class ManageAddProductActivity extends AppCompatActivity {
     // 이미지 업로드 및 데이터베이스 저장 처리
     private void uploadImagesAndSaveData() {
         if (imageUri1 != null && imageUri2 != null) {
-            StorageReference filePath1 = storageReference.child("images").child(imageUri1.getLastPathSegment());
-            StorageReference filePath2 = storageReference.child("images").child(imageUri2.getLastPathSegment());
+            StorageReference filePath1 = storageReference.child("ProductImages").child(imageUri1.getLastPathSegment());
+            StorageReference filePath2 = storageReference.child("ProductImages").child(imageUri2.getLastPathSegment());
 
             // 첫 번째 이미지를 Firebase Storage에 업로드
             filePath1.putFile(imageUri1).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
@@ -253,10 +262,14 @@ public class ManageAddProductActivity extends AppCompatActivity {
                                                     productRef.child("pname").setValue(strAddPname);
                                                     productRef.child("pprice").setValue(strAddPPrice);
                                                     productRef.child("psay").setValue(strAddPsay);
-                                                    productRef.child("psearch").setValue(strAddPSearch);
                                                     productRef.child("stock").setValue(strAddStock);
+                                                    productRef.child("populstock").setValue(strAddPopulstock);
 
                                                     Toast.makeText(ManageAddProductActivity.this, "상품이 추가되었습니다.", Toast.LENGTH_SHORT).show();
+
+                                                    Intent intent = new Intent(ManageAddProductActivity.this, ManagerMainActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
                                                 }
                                             });
                                         } else {
@@ -283,10 +296,23 @@ public class ManageAddProductActivity extends AppCompatActivity {
             productRef.child("pname").setValue(strAddPname);
             productRef.child("pprice").setValue(strAddPPrice);
             productRef.child("psay").setValue(strAddPsay);
-            productRef.child("psearch").setValue(strAddPSearch);
             productRef.child("stock").setValue(strAddStock);
+            productRef.child("populstock").setValue(strAddPopulstock);
 
             Toast.makeText(ManageAddProductActivity.this, "상품이 추가되었습니다.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(ManageAddProductActivity.this, ManagerMainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) { //뒤로가기
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 

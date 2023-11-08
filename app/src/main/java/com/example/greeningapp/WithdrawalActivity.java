@@ -24,15 +24,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-public class WithdrawalActivity extends AppCompatActivity {
+public class WithdrawalActivity extends AppCompatActivity{
 
     private FirebaseAuth mFirebaseAuth; // 파이어베이스 인증 처리
     private DatabaseReference mDatabaseRef; // 실시간 데이터베이스
     private RadioButton radioButton;
     private Button cancelButton, withdrawalButton;
     Toolbar toolbar;
-    Dialog dialog;
+    Dialog dialog, dialog2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,13 @@ public class WithdrawalActivity extends AppCompatActivity {
         dialog = new Dialog(WithdrawalActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.customdialog);
-        dialog.setContentView(R.layout.dialog_confirm);
+
+        dialog2 = new Dialog(WithdrawalActivity.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.setContentView(R.layout.dialog_confirm);
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("User");
 
 
         // XML 레이아웃의 요소와 연결
@@ -63,6 +70,7 @@ public class WithdrawalActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         // RadioButton 상태 변경 시
         radioButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,21 +95,23 @@ public class WithdrawalActivity extends AppCompatActivity {
             }
         });
     }
-    public void showFaildialog() {
-        dialog.show();
 
-        TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
+    public void showFaildialog() {
+        dialog2.show();
+
+        TextView confirmTextView = dialog2.findViewById(R.id.confirmTextView);
         confirmTextView.setText("유의사항 확인 후 동의하셔야 회원탈퇴가 가능합니다.");
 
-        Button btnOk = dialog.findViewById(R.id.btn_ok);
+        Button btnOk = dialog2.findViewById(R.id.btn_ok);
         btnOk.setText("확인");
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                dialog2.dismiss();
             }
         });
     }
+
     // 팝업 창 표시
     private void showConfirmationDialog() {
         dialog.show();
@@ -126,12 +136,11 @@ public class WithdrawalActivity extends AppCompatActivity {
         btnno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 dialog.dismiss();
             }
         });
     }
-//
+    //
 //        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 //        builder.setTitle("탈퇴 확인");
 //        builder.setMessage("정말로 이 앱을 탈퇴하시겠습니까?");
@@ -152,9 +161,7 @@ public class WithdrawalActivity extends AppCompatActivity {
 //        });
 //        builder.create().show();
 //    }
-
-
-    private void deleteAccount() {
+    private void deleteAccount () {
         mFirebaseAuth = mFirebaseAuth.getInstance();
 //        mFirebaseAuth = mFirebaseAuth.getCurrentUser();
         if (mFirebaseAuth != null) {
@@ -163,34 +170,45 @@ public class WithdrawalActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
+                                Intent intent = new Intent(WithdrawalActivity.this, LoginActivity.class);
+                                startActivity(intent);
                                 // 계정 삭제가 성공한 경우
-                                dialog.show();
+                                dialog2.show();
 
-                                TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
-                                confirmTextView.setText("계정이 성공적으로 삭제되었습니다..");
+                                TextView confirmTextView = dialog2.findViewById(R.id.confirmTextView);
+                                confirmTextView.setText("계정이 성공적으로 삭제되었습니다.");
 
-                                Button btnOk = dialog.findViewById(R.id.btn_ok);
+                                Button btnOk = dialog2.findViewById(R.id.btn_ok);
                                 btnOk.setText("확인");
                                 btnOk.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        dialog.dismiss();
+                                        dialog2.dismiss();
                                     }
                                 });
-                                Intent intent = new Intent(WithdrawalActivity.this, LoginActivity.class);
-                                startActivity(intent);
-
                                 finish();
                             } else {
                                 // 계정 삭제가 실패한 경우
-                                Toast.makeText(WithdrawalActivity.this, "계정 삭제에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                dialog2.show();
+
+                                TextView confirmTextView = dialog2.findViewById(R.id.confirmTextView);
+                                confirmTextView.setText("계정 삭제를 실패했습니다. 다시 시도해주세요");
+
+                                Button btnOk = dialog2.findViewById(R.id.btn_ok);
+                                btnOk.setText("확인");
+                                btnOk.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog2.dismiss();
+                                    }
+                                });
                             }
                         }
                     });
         }
     }
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected (MenuItem item){
         int itemId = item.getItemId();
         if (itemId == android.R.id.home) { //뒤로가기
             onBackPressed();

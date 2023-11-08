@@ -1,6 +1,7 @@
 package com.example.greeningapp;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -70,6 +71,7 @@ public class DonationAdapter extends RecyclerView.Adapter<DonationAdapter.Donati
                 Intent intent = new Intent(context, DonationDetailActivity.class);
                 intent.putExtra("donationDetail", donationList.get(position));
                 context.startActivity(intent);
+                ((Activity)context).finish();
             }
         });
 

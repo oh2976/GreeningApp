@@ -122,6 +122,7 @@ public class OrderCompleteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(OrderCompleteActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -140,18 +141,22 @@ public class OrderCompleteActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.tab_home) {
                     // Home 액티비티로 이동
                     startActivity(new Intent(OrderCompleteActivity.this, MainActivity.class));
+                    finish();
                     return true;
                 } else if (item.getItemId() == R.id.tab_shopping) {
                     // Category 액티비티로 이동
                     startActivity(new Intent(OrderCompleteActivity.this, CategoryActivity.class));
+                    finish();
                     return true;
                 } else if (item.getItemId() == R.id.tab_donation) {
                     // Donation 액티비티로 이동
                     startActivity(new Intent(OrderCompleteActivity.this, DonationMainActivity.class));
+                    finish();
                     return true;
                 } else if (item.getItemId() == R.id.tab_mypage) {
                     // My Page 액티비티로 이동
                     startActivity(new Intent(OrderCompleteActivity.this, MyPageActivity.class));
+                    finish();
                     return true;
                 }
                 return false;

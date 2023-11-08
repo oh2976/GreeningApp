@@ -9,7 +9,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:paddingRight="12dp"
+        android:paddingLeft="12dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="8dp"
         >
 
         <ImageView
@@ -21,37 +24,39 @@
 
         <TextView
             android:id="@+id/searchpname"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="8dp"
             android:layout_toRightOf="@id/searchpimg"
             android:text="This is P_Name"
             android:textColor="#000"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/searchpsay"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/searchpname"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="4dp"
             android:layout_toRightOf="@id/searchpimg"
             android:text="This is P_say"
-            android:textColor="#000"
+            android:textColor="@color/textColorGray"
             android:textSize="12sp" />
 
 
         <TextView
             android:id="@+id/searchpprice"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/searchpsay"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="12dp"
             android:layout_toRightOf="@id/searchpimg"
             android:text="This is P_price"
             android:textColor="#000"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
     </RelativeLayout>

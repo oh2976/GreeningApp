@@ -175,7 +175,8 @@
                 <ImageView
                     android:id="@+id/dodetail_longimg"
                     android:layout_width="match_parent"
-                    android:layout_height="1300dp"
+                    android:layout_height="1100dp"
+                    android:layout_marginTop="100dp"
                     android:layout_margin="16dp" />
 
 
@@ -190,6 +191,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginBottom="8dp"
             android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/custom_btn"
             android:text="기부하기"
             android:textColor="@color/white"

@@ -38,4 +38,5 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#ffffff</item>
     </style>
+
 </resources>

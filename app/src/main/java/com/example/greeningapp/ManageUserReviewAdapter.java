@@ -60,6 +60,7 @@ public class ManageUserReviewAdapter extends RecyclerView.Adapter<ManageUserRevi
         holder.MGReviewDate_review.setText(arrayList.get(position).getRdatetime());
         holder.MGReviewUsername_review.setText(arrayList.get(position).getUsername());
         holder.MGReviewReviewdes_review.setText(arrayList.get(position).getRcontent());
+        holder.MGReviewProductName_review.setText(arrayList.get(position).getPname());
 
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -132,7 +133,7 @@ public class ManageUserReviewAdapter extends RecyclerView.Adapter<ManageUserRevi
 
     public class ManageUserReviewViewHolder extends RecyclerView.ViewHolder {
         ImageView MGReviewInputimg_review;
-        TextView MGOrderID_order, MGReviewDate_review, MGReviewUsername_review, MGReviewReviewdes_review;
+        TextView MGOrderID_order, MGReviewDate_review, MGReviewUsername_review, MGReviewReviewdes_review, MGReviewProductName_review;
         Button MGRemoveReview_review;
         RatingBar MGReviewUserrating_review;
         public ManageUserReviewViewHolder(@NonNull View itemView) {
@@ -143,6 +144,7 @@ public class ManageUserReviewAdapter extends RecyclerView.Adapter<ManageUserRevi
             this.MGReviewDate_review = itemView.findViewById(R.id.MGReviewDate_review);
             this.MGReviewUsername_review = itemView.findViewById(R.id.MGReviewUsername_review);
             this.MGReviewReviewdes_review = itemView.findViewById(R.id.MGReviewReviewdes_review);
+            this.MGReviewProductName_review = itemView.findViewById(R.id.MGReviewProductName_review);
 
             this.MGRemoveReview_review = itemView.findViewById(R.id.MGRemoveReview_review);
             this.MGReviewUserrating_review = itemView.findViewById(R.id.MGReviewUserrating_review);

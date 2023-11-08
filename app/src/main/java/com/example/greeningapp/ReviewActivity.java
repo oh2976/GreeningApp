@@ -9,20 +9,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
+
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
+
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.greeningapp.DonationMainActivity;
-import com.example.greeningapp.OrderHistoryActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,20 +29,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 public class ReviewActivity extends AppCompatActivity {
-
-    //전체리뷰
     private RecyclerView fullreviewrecyclerView;
-    //    private RecyclerView.Adapter adapter;
     private ReviewAdapter reviewAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Review> dataList;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
-    private ImageButton back_review;
+    private DatabaseReference databasepp; //잠시추가
 
     private int pid;
-
 
     //하단바
     private BottomNavigationView bottomNavigationView;
@@ -65,16 +57,17 @@ public class ReviewActivity extends AppCompatActivity {
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        //전체리뷰
-        fullreviewrecyclerView = findViewById(R.id.fullrecyclerView); //어디연결
+        fullreviewrecyclerView = findViewById(R.id.fullrecyclerView); //연결
         fullreviewrecyclerView.setHasFixedSize(true); //리사이클뷰 성능강화
         layoutManager = new LinearLayoutManager(this);
         fullreviewrecyclerView.setLayoutManager(layoutManager);
         dataList = new ArrayList<>(); //Product객체를 담을 ArrayList(어댑터쪽으로)
 
-        database = FirebaseDatabase.getInstance(); //파이어베이스 연동
-        databaseReference = database.getReference("Review");//db데이터연결
+        databaseReference =FirebaseDatabase.getInstance().getReference("Review");
 
+        //잠시추가 10.19일
+        database = FirebaseDatabase.getInstance();
+        databasepp = database.getReference("Product");
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("pid")) {
@@ -89,29 +82,28 @@ public class ReviewActivity extends AppCompatActivity {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //파이어베이스 데이터베이스의 데이터를 받아오는곳
-                dataList.clear(); //기준 배열리스트가 존재하지않게 초기화(데이터가 쌓이기때문)
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) { //반복문으로 데이터리스트 추출
+                dataList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Review review = snapshot.getValue(Review.class);  //만들어뒀던 review객체에 데이터를 담는다( 리뷰작성시 )
                     Log.d("pid",review.getRcontent() +"가져왔음");
-                    dataList.add(review); //담은 데이터들을 배열리스트에 넣고 리사이클뷰로 보낼준비
+                    dataList.add(review);
                 }
-                reviewAdapter.notifyDataSetChanged(); //리스트저장 및 새로고침
+                reviewAdapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("ReviewActivity", String.valueOf(databaseError.toException())); //에러문출력
+                Log.e("ReviewActivity", String.valueOf(databaseError.toException()));
             }
         });
         reviewAdapter = new ReviewAdapter(dataList, this);
-        fullreviewrecyclerView.setAdapter(reviewAdapter);  //리사이클뷰에 어댑터연결
+        fullreviewrecyclerView.setAdapter(reviewAdapter);
 
-        // 파이어베이스 데이터베이스 참조 설정 (레이팅바 총점)
-        FirebaseDatabase mRef = FirebaseDatabase.getInstance();
-        DatabaseReference ratingsRef = mRef.getReference("Review");
+//        // 파이어베이스 데이터베이스 참조 설정 (레이팅바 총점)
+//        FirebaseDatabase mRef = FirebaseDatabase.getInstance();
+//        DatabaseReference ratingsRef = mRef.getReference("Review");
 
-        // 파이어베이스 데이터베이스에서 데이터 읽기(레이팅바 총점)
-        ratingsRef.addValueEventListener(new ValueEventListener() {
+        // 파이어베이스 레이팅바 총점
+        reviewQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 float totalRating = 0;
@@ -127,9 +119,9 @@ public class ReviewActivity extends AppCompatActivity {
                 if (ratingCount != 0) {
                     averageRating = totalRating / ratingCount;
                 }
+
                 //총점과 개수
                 String formattedRating = String.format("%.2f (%d)", averageRating , ratingCount);
-
                 TextView reviewRating = findViewById(R.id.value);
                 reviewRating.setText(formattedRating);
 
@@ -139,19 +131,18 @@ public class ReviewActivity extends AppCompatActivity {
                 ratingBar.setRating(scaledRating);
 
                 // ratingBar.setRating(averageRating);
+                //잠시추가 10.19
+//                DatabaseReference productReference = databasepp.child(String.valueOf(pid)).child("pscore");
+//                productReference.setValue(averageRating);
 
-                //잠시 메인엑티비티 총점시도로 추가해봄
-//                Intent intent = new Intent(ReviewActivity.this, MainActivity.class);
-//                intent.putExtra("averageRating", averageRating); // 평점
-//                intent.putExtra("ratingCount", ratingCount);     // 평점 수
-//                startActivity(intent);
-
-
+                //review-pid-psocre참조경로 10.22
+//                DatabaseReference reviewpid = databaseReference.child("pid").child(String.valueOf(pid)).child("pscore");
+//                reviewpid.setValue(averageRating);
 
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // 처리 오류가 발생한 경우에 대한 예외 처리를 수행할 수 있습니다.
+
             }
         });
 
@@ -167,18 +158,22 @@ public class ReviewActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.tab_home) {
                     // Home 액티비티로 이동
                     startActivity(new Intent(ReviewActivity.this, MainActivity.class));
+                    finish();
                     return true;
                 } else if (item.getItemId() == R.id.tab_shopping) {
                     // Category 액티비티로 이동
                     startActivity(new Intent(ReviewActivity.this, CategoryActivity.class));
+                    finish();
                     return true;
                 } else if (item.getItemId() == R.id.tab_donation) {
                     // Donation 액티비티로 이동
                     startActivity(new Intent(ReviewActivity.this, DonationMainActivity.class));
+                    finish();
                     return true;
                 } else if (item.getItemId() == R.id.tab_mypage) {
                     // My Page 액티비티로 이동
                     startActivity(new Intent(ReviewActivity.this, MyPageActivity.class));
+                    finish();
                     return true;
                 }
                 return false;

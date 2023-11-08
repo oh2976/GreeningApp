@@ -1,8 +1,10 @@
 package com.example.greeningapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 public class ManageUserDetailActivity extends AppCompatActivity {
@@ -15,6 +17,12 @@ public class ManageUserDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_user_detail);
+
+        Toolbar mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
+
 
         UserEmail = (TextView) findViewById(R.id.UserEmail);
         UserName = (TextView) findViewById(R.id.UserName);
@@ -46,5 +54,15 @@ public class ManageUserDetailActivity extends AppCompatActivity {
         UserRegdate.setText(user.getRegdate());
 
 
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) { //뒤로가기
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 }

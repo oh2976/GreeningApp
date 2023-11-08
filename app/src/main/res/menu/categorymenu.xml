@@ -12,5 +12,6 @@
         android:icon="@drawable/shopping_cart_logo_size"
         android:enabled="true"
         android:title="Cart"
-        app:showAsAction="always" />
+        app:showAsAction="always"/>
+
 </menu>

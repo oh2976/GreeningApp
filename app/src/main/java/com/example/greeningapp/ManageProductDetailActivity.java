@@ -2,17 +2,20 @@ package com.example.greeningapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,12 +28,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ManageProductDetailActivity extends AppCompatActivity {
 
-    private EditText ModifyPid, ModifyCategoryId, ModifyPimg, ModifyPDetailimg, ModifyPname, ModifyPPrice, ModifyPsay, ModifyPSearch, ModifyStock;
+    private EditText ModifyPid, ModifyCategoryId, ModifyPimg, ModifyPDetailimg, ModifyPname, ModifyPPrice, ModifyPsay, ModifyStock, ModifyPPopulstock;
 
 
-    private int strModifyPid, strModifyCategoryId, strModifyPPrice, strModifyStock;
+    private int strModifyPid, strModifyCategoryId, strModifyPPrice, strModifyStock, strModifyPPopulstock;
 
-    private String strModifyPimg, strModifyPDetailimg, strModifyPname, strModifyPsay, strModifyPSearch, strModifyService;
+    private String strModifyPimg, strModifyPDetailimg, strModifyPname, strModifyPsay;
 
     private Button MGRemoveProduct, MGModifiyProduct;
 
@@ -51,6 +54,12 @@ public class ManageProductDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_product_detail);
 
+        Toolbar mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
+
+
         ModifyPid = (EditText) findViewById(R.id.ModifyPid);
         ModifyCategoryId = (EditText) findViewById(R.id.ModifyCategoryId);
         ModifyPimg = (EditText) findViewById(R.id.ModifyPimg);
@@ -58,13 +67,14 @@ public class ManageProductDetailActivity extends AppCompatActivity {
         ModifyPname = (EditText) findViewById(R.id.ModifyPname);
         ModifyPPrice = (EditText) findViewById(R.id.ModifyPPrice);
         ModifyPsay = (EditText) findViewById(R.id.ModifyPsay);
-        ModifyPSearch = (EditText) findViewById(R.id.ModifyPSearch);
         ModifyStock = (EditText) findViewById(R.id.ModifyStock);
+        ModifyPPopulstock = (EditText) findViewById(R.id.ModifyPPopulstock);
 
         MGRemoveProduct = (Button) findViewById(R.id.MGRemoveProduct);
         MGModifiyProduct = (Button) findViewById(R.id.MGProductModify);
 
         final Object object = getIntent().getSerializableExtra("ManageProductDetail");
+
         if(object instanceof Product){
             product = (Product) object;
         }
@@ -89,8 +99,8 @@ public class ManageProductDetailActivity extends AppCompatActivity {
         ModifyPname.setText(String.valueOf(product.getPname()));
         ModifyPPrice.setText(String.valueOf(product.getPprice()));
         ModifyPsay.setText(String.valueOf(product.getPsay()));
-        ModifyPSearch.setText(String.valueOf(product.getPsearch()));
         ModifyStock.setText(String.valueOf(product.getStock()));
+        ModifyPPopulstock.setText(String.valueOf(product.getPopulstock()));
 
 
 
@@ -126,6 +136,7 @@ public class ManageProductDetailActivity extends AppCompatActivity {
                                 Log.d("ManageProductDetail", "상품 삭제 완료");
                                 Intent intent = new Intent(ManageProductDetailActivity.this, ShoppingMainActivity.class);
                                 startActivity(intent);
+                                finish();
 
                             }
                         });
@@ -165,8 +176,8 @@ public class ManageProductDetailActivity extends AppCompatActivity {
                         strModifyPname = ModifyPname.getText().toString().trim();
                         strModifyPPrice = Integer.parseInt(ModifyPPrice.getText().toString().trim());
                         strModifyPsay = ModifyPsay.getText().toString().trim();
-                        strModifyPSearch = ModifyPSearch.getText().toString().trim();
                         strModifyStock = Integer.parseInt(ModifyStock.getText().toString().trim());
+                        strModifyPPopulstock = Integer.parseInt(ModifyPPopulstock.getText().toString().trim());
 
 
                         databaseReference.child(String.valueOf(product.getPid())).child("pid").setValue(strModifyPid);
@@ -176,8 +187,8 @@ public class ManageProductDetailActivity extends AppCompatActivity {
                         databaseReference.child(String.valueOf(product.getPid())).child("pname").setValue(strModifyPname);
                         databaseReference.child(String.valueOf(product.getPid())).child("pprice").setValue(strModifyPPrice);
                         databaseReference.child(String.valueOf(product.getPid())).child("psay").setValue(strModifyPsay);
-                        databaseReference.child(String.valueOf(product.getPid())).child("psearch").setValue(strModifyPSearch);
                         databaseReference.child(String.valueOf(product.getPid())).child("stock").setValue(strModifyStock);
+                        databaseReference.child(String.valueOf(product.getPid())).child("populstock").setValue(strModifyPPopulstock);
 
                         Log.d("ManageProductDetail", "상품 수정 완료" + strModifyStock + strModifyStock);
 
@@ -204,6 +215,7 @@ public class ManageProductDetailActivity extends AppCompatActivity {
                                 Intent intent = new Intent(ManageProductDetailActivity.this, ManageProductDetailActivity.class);
                                 intent.putExtra("ManageProductDetail", updatedProduct);
                                 startActivity(intent);
+                                Toast.makeText(ManageProductDetailActivity.this, "상품 수정이 되었습니다.", Toast.LENGTH_SHORT).show();
                                 finish(); // 현재 액티비티를 종료
                             }
 
@@ -219,6 +231,16 @@ public class ManageProductDetailActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) { //뒤로가기
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
 }

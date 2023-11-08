@@ -1,7 +1,6 @@
 package com.example.greeningapp;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -10,11 +9,9 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -27,6 +24,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
+
 public class MyPageActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView Tv_my_name, myPageSeed;
@@ -35,6 +34,8 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
     Toolbar toolbar;
     Dialog dialog;
     private BottomNavigationView bottomNavigationView;
+
+    DecimalFormat decimalFormat = new DecimalFormat("###,###");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,18 +69,22 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
                 if (item.getItemId() == R.id.tab_home) {
                     // Home 액티비티로 이동
                     startActivity(new Intent(MyPageActivity.this, MainActivity.class));
+                    finish();
                     return true;
                 } else if (item.getItemId() == R.id.tab_shopping) {
                     // Category 액티비티로 이동
                     startActivity(new Intent(MyPageActivity.this, CategoryActivity.class));
+                    finish();
                     return true;
                 } else if (item.getItemId() == R.id.tab_donation) {
                     // Donation 액티비티로 이동
                     startActivity(new Intent(MyPageActivity.this, DonationMainActivity.class));
+                    finish();
                     return true;
                 } else if (item.getItemId() == R.id.tab_mypage) {
                     // My Page 액티비티로 이동
                     startActivity(new Intent(MyPageActivity.this, MyPageActivity.class));
+                    finish();
                     return true;
                 }
                 return false;
@@ -97,7 +102,7 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
                     if (dataSnapshot.exists()) {
                         String name = dataSnapshot.child("username").getValue(String.class) + "님" ; // "님"을 추가하여 표시 이름 생성;
                         Tv_my_name.setText(name);
-                        String Seed = String.valueOf(dataSnapshot.child("spoint").getValue()) + "씨드";
+                        String Seed = String.valueOf(decimalFormat.format(dataSnapshot.child("spoint").getValue())) + "씨드";
                         myPageSeed.setText(Seed);
                     }
                 }

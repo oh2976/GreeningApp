@@ -158,6 +158,7 @@ public class ChangeActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     Intent intent = new Intent(ChangeActivity.this, MyPageActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             });
             builder.show();

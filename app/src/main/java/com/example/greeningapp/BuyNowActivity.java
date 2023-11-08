@@ -16,6 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.greeningapp.Product;
+import com.example.greeningapp.CategoryActivity;
+import com.example.greeningapp.DonationMainActivity;
+import com.example.greeningapp.MainActivity;
+import com.example.greeningapp.MyPageActivity;
+import com.example.greeningapp.R;
+import com.example.greeningapp.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -25,6 +32,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
@@ -36,7 +45,7 @@ public class BuyNowActivity extends AppCompatActivity {
 
     long mNow;
     Date mDate;
-    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth firebaseAuth;
@@ -110,7 +119,7 @@ public class BuyNowActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // 파이어베이스 데이터베이스의 데이터를 받아오는 곳
-                // arrayList.clear(); //기존 배열 리스트가 존재하지 않게 남아 있는 데이터 초기화
+//                arrayList.clear(); //기존 배열 리스트가 존재하지 않게 남아 있는 데이터 초기화
                 // 반복문으로 데이터 List를 추출해냄
 
                 User user = dataSnapshot.getValue(User.class); //  만들어 뒀던 Product 객체에 데이터를 담는다.
@@ -200,6 +209,7 @@ public class BuyNowActivity extends AppCompatActivity {
                 int totalStock = productStock - Integer.valueOf(selectedQuantity);
                 double changePoint = userSPoint + totalPrice * 0.01;
 
+
                 databaseReferenceAdmin.child("UserOrder").child(orderId).setValue(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -213,14 +223,52 @@ public class BuyNowActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
 //                        Toast.makeText(BuyNowActivity.this, "주문완료", Toast.LENGTH_SHORT).show();
 
+                        //메인홈 인기순_.
+                        databaseReference.child(firebaseUser.getUid()).child("MyOrder").child(myOrderId).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                int totalSelQuantity = 0;
+
+                                // "totalQuantity" 값 누적시킴.
+                                for (DataSnapshot orderSnapshot : dataSnapshot.getChildren()) {
+                                    int orderQuantity = orderSnapshot.child("totalQuantity").getValue(Integer.class);
+                                    totalSelQuantity += orderQuantity;
+                                }
+                                databaseReferenceProduct.child(String.valueOf(pId)).child("populstock").runTransaction(new Transaction.Handler() {
+                                    @Override
+                                    public Transaction.Result doTransaction(MutableData mutableData) {
+                                        Integer previousSelStock = mutableData.getValue(Integer.class);
+                                        if (previousSelStock == null) {
+                                            previousSelStock = 0;
+                                        }
+
+                                        int updatedSelStock = previousSelStock + Integer.valueOf(selectedQuantity);
+                                        mutableData.setValue(updatedSelStock);
+                                        return Transaction.success(mutableData);
+                                    }
+
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
+                                        if (databaseError != null) {
+                                        } else if (committed) {
+                                        } else {
+                                        }
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                // 오류 처리 코드 추가
+                            }
+                        });
+
                         databaseReferenceProduct.child(String.valueOf(pId)).child("stock").setValue(totalStock).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
 //                                            Toast.makeText(OrderActivity.this, "재고 변동 완료", Toast.LENGTH_SHORT).show();
                             }
                         });
-
-
 
                         // 구매한 후 씨드 변경
                         databaseReference2.child(firebaseUser.getUid()).child("spoint").setValue(changePoint).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -267,6 +315,7 @@ public class BuyNowActivity extends AppCompatActivity {
                 intent.putExtra("myOrderId", myOrderId);
 
                 startActivity(intent);
+                finish();
             }
 
 
@@ -284,18 +333,22 @@ public class BuyNowActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.tab_home) {
                     // Home 액티비티로 이동
                     startActivity(new Intent(BuyNowActivity.this, MainActivity.class));
+                    finish();
                     return true;
                 } else if (item.getItemId() == R.id.tab_shopping) {
                     // Category 액티비티로 이동
                     startActivity(new Intent(BuyNowActivity.this, CategoryActivity.class));
+                    finish();
                     return true;
                 } else if (item.getItemId() == R.id.tab_donation) {
                     // Donation 액티비티로 이동
                     startActivity(new Intent(BuyNowActivity.this, DonationMainActivity.class));
+                    finish();
                     return true;
                 } else if (item.getItemId() == R.id.tab_mypage) {
                     // My Page 액티비티로 이동
                     startActivity(new Intent(BuyNowActivity.this, MyPageActivity.class));
+                    finish();
                     return true;
                 }
                 return false;

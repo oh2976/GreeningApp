@@ -1,6 +1,7 @@
 package com.example.greeningapp;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -80,6 +81,8 @@ public class OrderHistoryChildRcyAdapter extends RecyclerView.Adapter<OrderHisto
                     intent.putExtra("product", childModelArrayList.get(position));
 //                    Log.d("myOrderId", String.valueOf(childModelArrayList.get(position)+"가져왔음"));
                     cxt.startActivity(intent);
+                    ((Activity)cxt).finish();
+
                 } else if ("Yes".equals(isReviewCompleted)) {
 
                 }

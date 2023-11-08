@@ -2,8 +2,9 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="135dp"
-    android:layout_height="210dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
+    <!--    android:layout_height="210dp"-->
 
     <ImageView
         android:id="@+id/iv_pimg"
@@ -45,6 +46,27 @@
                 android:textSize="14sp"
                 android:textStyle="bold"/>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="4dp">
+
+            <TextView
+                android:id="@+id/tv_reviewQ"
+                android:layout_width="122dp"
+                android:layout_height="wrap_content"
+                android:text="후기"
+                android:gravity="left"
+                android:textColor="@color/textColorGray"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="8dp"/>
+
+        </LinearLayout>
+
+
         <!--        <LinearLayout-->
         <!--            android:layout_width="wrap_content"-->
         <!--            android:layout_height="match_parent"-->

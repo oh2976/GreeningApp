@@ -1,5 +1,7 @@
 package com.example.greeningapp;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -12,39 +14,55 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.List;
 
-public class SearchAdapter extends FirebaseRecyclerAdapter<Product, SearchAdapter.myviewholder> {
-    private ArrayList<Product> arrayList;
-    private Context context;
-
+public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.myviewholder> {
+    private List<Product> searchResults;
+    Context context;
     DecimalFormat decimalFormat = new DecimalFormat("###,###");
-    public SearchAdapter(@NonNull FirebaseRecyclerOptions<Product> options) {
-        super(options);
-    }
-
-    @Override
-    protected void onBindViewHolder(@NonNull myviewholder holder, int position, @NonNull Product product) {
-        holder.pname.setText(getItem(position).getPname());
-        holder.psay.setText(getItem(position).getPsay());
-        holder.pprice.setText(String.valueOf(decimalFormat.format(getItem(position).getPprice())) + "원");
-        Glide.with(holder.pimg.getContext()).load(getItem(position).getPimg()).into(holder.pimg);
+    public SearchAdapter(List<Product> searchResults) {
+        this.searchResults = searchResults;
     }
 
     @NonNull
     @Override
     public myviewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_item, parent, false);
-        return new myviewholder(view);
+        myviewholder holder = new myviewholder(view);
+
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull myviewholder holder, @SuppressLint("RecyclerView") int position) {
+        Glide.with(holder.itemView)
+                .load(searchResults.get(position).getPimg())
+                .into(holder.pimg);
+        holder.pname.setText(searchResults.get(position).getPname());
+        holder.psay.setText(searchResults.get(position).getPsay());
+        holder.pprice.setText(String.valueOf(decimalFormat.format(searchResults.get(position).getPprice())) + "원");
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ProductDetailActivity.class);
+                intent.putExtra("detail", searchResults.get(position));
+                v.getContext().startActivity(intent);
+                ((Activity)context).finish();
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return searchResults.size();
     }
 
     class myviewholder extends RecyclerView.ViewHolder {
         ImageView pimg;
-        TextView pname, psay, pprice;
+        TextView pname, pprice, psay;
 
         public myviewholder(@NonNull View itemView) {
             super(itemView);
@@ -53,20 +71,6 @@ public class SearchAdapter extends FirebaseRecyclerAdapter<Product, SearchAdapte
             psay = itemView.findViewById(R.id.searchpsay);
             pprice = itemView.findViewById(R.id.searchpprice);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        Product product = getItem(position);
-                        if (product != null) {
-                            Intent intent = new Intent(itemView.getContext(), ProductDetailActivity.class);
-                            intent.putExtra("detail", product);
-                            itemView.getContext().startActivity(intent);
-                        }
-                    }
-                }
-            });
         }
     }
 }

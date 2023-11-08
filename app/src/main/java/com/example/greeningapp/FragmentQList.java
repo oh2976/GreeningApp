@@ -245,6 +245,7 @@ public class FragmentQList extends Fragment {
                 dialog.dismiss();
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
     }
@@ -266,6 +267,7 @@ public class FragmentQList extends Fragment {
                 dialog.dismiss();
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
     }

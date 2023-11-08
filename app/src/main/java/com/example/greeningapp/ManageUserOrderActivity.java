@@ -2,12 +2,14 @@ package com.example.greeningapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,7 +22,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 
 public class ManageUserOrderActivity extends AppCompatActivity {
 
@@ -40,6 +46,12 @@ public class ManageUserOrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_user_order);
+
+        Toolbar mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
+
 
         recyclerView = findViewById(R.id.recyclerView); //아디 연결
         recyclerView.setHasFixedSize(true); //리사이클러뷰 기존 성능 강화
@@ -69,6 +81,21 @@ public class ManageUserOrderActivity extends AppCompatActivity {
                     Log.d("ManageUserActivity", snapshot.getKey()+"");
 
                 }
+
+                Collections.sort(arrayList, new Comparator<MyOrder>() {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+                    @Override
+                    public int compare(MyOrder myOrder1, MyOrder myOrder2) {
+                        try {
+                            Date date1 = dateFormat.parse(myOrder1.getOrderDate());
+                            Date date2 = dateFormat.parse(myOrder2.getOrderDate());
+                            return date2.compareTo(date1);
+                        } catch (Exception e) {
+                            return 0;
+                        }
+                    }
+                });
                 adapter.notifyDataSetChanged(); // 리스트 저장 및 새로고침
 
             }
@@ -91,7 +118,18 @@ public class ManageUserOrderActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ManageUserOrderActivity.this, ManagerMainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) { //뒤로가기
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 }

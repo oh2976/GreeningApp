@@ -19,13 +19,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <ImageView
             android:id="@+id/logo_image"
-            android:layout_width="93dp"
-            android:layout_height="23dp"
+            android:layout_width="120dp"
+            android:layout_height="54dp"
             android:layout_gravity="center"
-            android:background="@drawable/greening_"
+            android:background="@drawable/greening_logo"
             tools:layout_editor_absoluteX="16dp" />
 
     </androidx.appcompat.widget.Toolbar>
@@ -57,15 +56,15 @@
 
                         <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="415dp"
-                            android:background="@drawable/viewpager_border"
+                            android:layout_height="450dp"
                             android:layout_gravity="center">
+                            <!--                            android:background="@drawable/viewpager_border"-->
                             <!--                            android:layout_marginBottom="10dp"-->
 
                             <androidx.viewpager2.widget.ViewPager2
                                 android:id="@+id/viewpager"
                                 android:layout_width="match_parent"
-                                android:layout_height="415dp"
+                                android:layout_height="450dp"
                                 android:layout_marginBottom="10dp"
                                 android:clipChildren="true"
                                 android:clipToPadding="false"
@@ -79,24 +78,23 @@
                                 android:layout_marginBottom="2dp"
                                 app:ci_drawable="@drawable/main_ad_blue_circle"/>
                         </FrameLayout>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_centerInParent="true"
-                            android:background="#DADADA" />
+                        <!--                        <View-->
+                        <!--                            android:layout_width="match_parent"-->
+                        <!--                            android:layout_height="1dp"-->
+                        <!--                            android:layout_centerInParent="true"-->
+                        <!--                            android:background="#DADADA" />-->
 
                         <!-- 슬라이드2화면 -->
 
                         <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="150dp"
-                            android:layout_marginTop="53dp"
-                            android:background="@drawable/viewpager_border">
+                            android:layout_height="155dp"
+                            android:layout_marginTop="53dp">
 
                             <androidx.viewpager2.widget.ViewPager2
                                 android:id="@+id/viewpager01"
                                 android:layout_width="match_parent"
-                                android:layout_height="150dp"
+                                android:layout_height="155dp"
                                 android:layout_marginBottom="10dp"
                                 android:clipChildren="false"
                                 android:clipToPadding="false"
@@ -110,17 +108,17 @@
                                 android:layout_marginBottom="2dp"
                                 app:ci_drawable="@drawable/main_ad_blue_circle"/>
 
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_centerInParent="true"
-                                android:background="#DADADA"/>
+<!--                            <View-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="1dp"-->
+<!--                                android:layout_centerInParent="true"-->
+<!--                                android:background="#DADADA"/>-->
                         </FrameLayout>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_centerInParent="true"
-                            android:background="#DADADA"/>
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="1dp"-->
+<!--                            android:layout_centerInParent="true"-->
+<!--                            android:background="#DADADA"/>-->
 
                     </LinearLayout>
 
@@ -130,6 +128,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:background="@color/white"
+                        android:layout_marginBottom="40dp"
                         android:layout_marginTop="39dp">
 
                         <LinearLayout
@@ -153,7 +152,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="쇼핑 상품"
+                                        android:text="인기 쇼핑 상품"
                                         android:textStyle="bold"
                                         android:gravity="left"
                                         android:textSize="16sp"
@@ -180,12 +179,45 @@
                                     android:id="@+id/main_addbtn"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginRight="10dp"
+                                    android:layout_marginRight="18dp"
                                     android:text="상품 더보기>"
                                     android:textSize="14sp" />
                             </LinearLayout>
-
                         </LinearLayout>
+
+                        <!--                        <LinearLayout-->
+                        <!--                            android:layout_width="match_parent"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_marginTop="3dp">-->
+
+                        <!--                            <LinearLayout-->
+                        <!--                                android:layout_width="wrap_content"-->
+                        <!--                                android:layout_height="wrap_content"-->
+                        <!--                                android:layout_marginTop="4dp">-->
+
+                        <!--                                <TextView-->
+                        <!--                                    android:id="@+id/oss"-->
+                        <!--                                    android:layout_width="wrap_content"-->
+                        <!--                                    android:layout_height="wrap_content"-->
+                        <!--                                    android:text="최신순"-->
+                        <!--                                    android:textSize="16sp" />-->
+                        <!--                            </LinearLayout>-->
+
+                        <!--                            <LinearLayout-->
+                        <!--                                android:layout_width="wrap_content"-->
+                        <!--                                android:layout_height="wrap_content"-->
+                        <!--                                android:layout_marginTop="4dp">-->
+
+                        <!--                                <TextView-->
+                        <!--                                    android:id="@+id/best"-->
+                        <!--                                    android:layout_width="wrap_content"-->
+                        <!--                                    android:layout_height="wrap_content"-->
+                        <!--                                    android:text=" | 인기순 "-->
+                        <!--                                    android:textSize="16sp" />-->
+                        <!--                            </LinearLayout>-->
+                        <!--                        </LinearLayout>-->
+
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -204,10 +236,6 @@
                                 app:layout_constraintTop_toBottomOf="@+id/textView"
                                 app:layout_constraintVertical_bias="0.0" />
                         </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp">
                     </LinearLayout>
 
 

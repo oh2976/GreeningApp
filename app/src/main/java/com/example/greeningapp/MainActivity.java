@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.greeningapp.Product;
 import com.example.greeningapp.DonationMainActivity;
@@ -33,26 +34,32 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends FragmentActivity {
 
-    private ViewPager2 mPager;
-    private ViewPager2 mPager01;   //01붙은거는 슬라이드2변수
+    private long backpressedTime = 0;
+
+    private ViewPager2 mPager;     //큰 광고
+    private ViewPager2 mPager01;   //작은 광고
     //광고 타이머
     private int currentPage = 0;
     private int currentPage01 = 0;
-    private final long DELAY_MS = 3000; // 광고를 자동으로 넘길 시간 간격 (3초)
-    private final long PERIOD_MS = 3000; // 타이머 주기 (3초)
+    private final long DELAY_MS = 3000; // 광고 자동 넘길 시간 간격(3초)
+    private final long PERIOD_MS = 3000; // 타이머(3초)
 
     private FragmentStateAdapter pagerAdapter;
     private FragmentStateAdapter pagerAdapter01;
-    private final int num_page = 3;    //viewpager2에 4개의 페이지가 표시됨.
+    private final int num_page = 3;    //큰 슬라이드 3개만.
     private final int num_page01 = 3;
     private CircleIndicator3 mIndicator;
     private CircleIndicator3 mIndicator01;
@@ -63,14 +70,20 @@ public class MainActivity extends FragmentActivity {
     private ArrayList<Product> arrayList;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private DatabaseReference dreviewReference; //리뷰연동
+
+
     private TextView main_addbtn;
 
     //하단바
     private BottomNavigationView bottomNavigationView;
 
+    //총점
 
 
-    //슬라이드1 화면
+    int pid;
+
+    //큰 광고
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,9 +116,9 @@ public class MainActivity extends FragmentActivity {
         mPager01.setCurrentItem(1000);           // 시작 지점
         mPager01.setOffscreenPageLimit(2);
 
-        // 광고 타이머 설정(베너1)
+        // 타이머 설정(큰광고)
         final Handler handler = new Handler(Looper.getMainLooper());
-        //베너 01 타이머
+        //큰광고 타이머
         final Runnable update = new Runnable() {
             public void run() {
                 if (currentPage == pagerAdapter.getItemCount()) {
@@ -122,9 +135,9 @@ public class MainActivity extends FragmentActivity {
             }
         }, DELAY_MS, PERIOD_MS);
 
-        // 광고 타이머 설정(베너1)
+        // 타이머 설정(작은 광고)
         final Handler handler01 = new Handler(Looper.getMainLooper());
-        //베너 02 타이머
+        //작은광고 타이머
         final Runnable update01 = new Runnable() {
             public void run() {
                 if (currentPage01 == pagerAdapter01.getItemCount()) {
@@ -150,20 +163,92 @@ public class MainActivity extends FragmentActivity {
         recyclerView.setLayoutManager(layoutManager);
         arrayList = new ArrayList<>(); //Product객체를 담을 ArrayList(어댑터쪽으로)
 
-        database = FirebaseDatabase.getInstance(); //파이어베이스 연동
+        database = FirebaseDatabase.getInstance();
 
-        databaseReference = database.getReference("Product");//db데이터연결
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference = database.getReference("Product");
+
+        dreviewReference =FirebaseDatabase.getInstance().getReference("Review");
+        Query query = databaseReference.orderByChild("populstock").limitToLast(10); // populstock 내림차순 최대 10개상품가져옴
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //파이어베이스 데이터베이스의 데이터를 받아오는곳
                 arrayList.clear(); //기준 배열리스트가 존재하지않게 초기화
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) { //반복문으로 데이터리스트 추출
-                    Product product = snapshot.getValue(Product.class);  //만들어뒀던 Product에 데이터를 담음
-                    arrayList.add(product); //담은 데이터들을 배열리스트에 넣고 리사이클뷰로 보낼준비
-//                    tv_pprice.setText(String.valueOf(decimalFormat.format(product.getPprice())) + "원");
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Product product = snapshot.getValue(Product.class);
+                    arrayList.add(product);
+
+//                    pid = product.getPid();
+//                    Log.d("MainActivity", "pid = " + pid);
+
+                    //arrayList를 populstock 내림차순 정렬, 값 없는건 pid순
+                    Collections.sort(arrayList, new Comparator<Product>() {
+                        @Override
+                        public int compare(Product product1, Product product2) {
+                            return Integer.compare(product2.getPopulstock(), product1.getPopulstock());
+                        }
+                    });
+
+
+
+                    //인텐트코드 잠시추가 10.22
+//                    Intent intent = getIntent();
+//                    if (intent != null && intent.hasExtra("pid")) {
+//                        pid = intent.getIntExtra("pid", 0);
+//                        Log.d("pid02",pid +"가져왔음");
+//                    }
+//
+//                    // pid가 일치하는 상품 평점만 가져오기
+//                    Query mainscoreQuery = dreviewReference.orderByChild("pid").equalTo(pid);
+//                    mainscoreQuery.addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                            float totalRating = 0;
+//                            int ratingCount = 0;
+//
+//                            Log.d("MainActivity", pid + " = " + dataSnapshot);
+//
+//                            for (DataSnapshot ratingSnapshot : dataSnapshot.getChildren()) {
+//                                float rating = ratingSnapshot.child("rscore").getValue(Float.class);
+////                                Review review = new Review();
+////                                float rscore = review.getRscore();
+////                                Log.d("rscore " + pid, "rscore: " + rscore);
+//                                totalRating += rating;
+//                                ratingCount++;
+//                            }
+//
+//                            float averageRating = 0;
+//                            if (ratingCount != 0) {
+//                                averageRating = totalRating / ratingCount;
+//                            }
+//
+//                            //총점 개수
+//                            String formattedRating = String.format("(%d)",  ratingCount);
+//
+//                            TextView mainRating = findViewById(R.id.star);
+//                            mainRating.setText(formattedRating);
+//
+//                            // 계산된 평점 값을 레이팅바에 표시
+//                            RatingBar ratingBar = findViewById(R.id.reviewRating01);
+//                            float scaledRating = Math.round(averageRating * 5 / 5.0f);  // 평점 값을 5로 스케일링하고 소수점 자리 반올림
+//                            ratingBar.setRating(scaledRating);
+//
+//
+//                            DatabaseReference reviewpid = dreviewReference.child(String.valueOf(pid)).child("pscore");
+//                            reviewpid.setValue(averageRating);
+//
+//                        }
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError databaseError) {
+//                            // 처리 오류가 발생한 경우에 대한 예외 처리를 수행할 수 있습니다.
+//                        }
+//                    });
+
 
                 }
+
                 adapter.notifyDataSetChanged(); //리스트저장 및 새로고침
                 //db가져오던중 에러발생시
             }
@@ -173,23 +258,10 @@ public class MainActivity extends FragmentActivity {
             }
         });
         adapter = new MainProductAdapter(arrayList, this);
-//        adapter = new ProductAdapter(arrayList, this);
-        recyclerView.setAdapter(adapter);  //리사이클뷰에 어댑터연결
+        recyclerView.setAdapter(adapter);
 
 
-
-        // 리뷰엑티비티 인텐트 잠시 시도 (레이팅바 총점)
-//        float averageRating = getIntent().getFloatExtra("averageRating", 0);
-//        int ratingCount = getIntent().getIntExtra("ratingCount", 0);
-
-
-
-
-
-
-
-
-        //페이지 변경 이벤트 리스너 등록
+        //큰 광고
         mPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -206,7 +278,7 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
-        //슬라이드2
+        //작은 광고
         mPager01.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -263,4 +335,19 @@ public class MainActivity extends FragmentActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+
+        if (System.currentTimeMillis() > backpressedTime + 2000) {
+            backpressedTime = System.currentTimeMillis();
+            Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+        } else if (System.currentTimeMillis() <= backpressedTime + 2000) {
+            finish();
+        }
+
+    }
+
+
+
 }

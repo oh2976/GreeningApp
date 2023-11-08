@@ -2,12 +2,14 @@ package com.example.greeningapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,7 +22,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 
 public class ManageUserReviewActivity extends AppCompatActivity {
 
@@ -39,6 +45,12 @@ public class ManageUserReviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_user_review);
+
+        Toolbar mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
+
 
         recyclerView = findViewById(R.id.recyclerView); //아디 연결
         recyclerView.setHasFixedSize(true); //리사이클러뷰 기존 성능 강화
@@ -66,6 +78,21 @@ public class ManageUserReviewActivity extends AppCompatActivity {
                     Log.d("ManageUserReviewActivity", snapshot.getKey()+"");
 
                 }
+
+                Collections.sort(arrayList, new Comparator<Review>() {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+                    @Override
+                    public int compare(Review review1, Review review2) {
+                        try {
+                            Date date1 = dateFormat.parse(review1.getRdatetime());
+                            Date date2 = dateFormat.parse(review2.getRdatetime());
+                            return date2.compareTo(date1);
+                        } catch (Exception e) {
+                            return 0;
+                        }
+                    }
+                });
                 adapter.notifyDataSetChanged(); // 리스트 저장 및 새로고침
 
             }
@@ -86,8 +113,19 @@ public class ManageUserReviewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ManageUserReviewActivity.this, ManagerMainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) { //뒤로가기
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 }

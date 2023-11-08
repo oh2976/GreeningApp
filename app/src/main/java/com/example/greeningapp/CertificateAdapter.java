@@ -1,6 +1,7 @@
 package com.example.greeningapp;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -54,6 +55,7 @@ public class CertificateAdapter extends RecyclerView.Adapter<CertificateAdapter.
                 Intent intent = new Intent(context, DoCertificateDetailActivity.class);
                 intent.putExtra("CertificateDetail", donationArrayList.get(position));
                 context.startActivity(intent);
+                ((Activity)context).finish();
             }
         });
     }
