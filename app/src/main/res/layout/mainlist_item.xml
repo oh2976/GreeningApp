@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="135dp"
-    android:layout_height="wrap_content"
+    android:layout_height="220dp"
     android:orientation="vertical">
     <!--    android:layout_height="210dp"-->
 
@@ -48,58 +48,40 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginTop="2dp"
+            android:orientation="horizontal"
             android:layout_marginLeft="4dp">
 
-            <TextView
-                android:id="@+id/tv_reviewQ"
-                android:layout_width="122dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="후기"
-                android:gravity="left"
-                android:textColor="@color/textColorGray"
-                android:textSize="12sp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
 
+                <RatingBar
+                    android:id="@+id/reviewRating01"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="메인총점"
+                    android:isIndicator="true"
+                    android:max="5"
+                    android:numStars="5"
+                    android:progressTint="@android:color/holo_orange_light"
+                    android:rating="0"
+                    android:stepSize="0.5" />
+
+                <TextView
+                    android:id="@+id/tv_reviewQ"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="(개수)"
+                    android:textColor="@color/textColorGray"
+                    android:gravity="left"
+                    android:textSize="12sp"/>
+            </LinearLayout>
         </LinearLayout>
-
-
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            android:orientation="horizontal"-->
-        <!--            android:layout_marginLeft="4dp">-->
-
-        <!--            <LinearLayout-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:orientation="horizontal">-->
-
-        <!--                <RatingBar-->
-        <!--                    android:id="@+id/reviewRating01"-->
-        <!--                    style="@style/Widget.AppCompat.RatingBar.Small"-->
-        <!--                    android:layout_width="match_parent"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:contentDescription="메인총점"-->
-        <!--                    android:isIndicator="true"-->
-        <!--                    android:max="5"-->
-        <!--                    android:numStars="5"-->
-        <!--                    android:progressTint="@android:color/holo_orange_light"-->
-        <!--                    android:rating="0"-->
-        <!--                    android:stepSize="0.5" />-->
-
-        <!--                <TextView-->
-        <!--                    android:id="@+id/star"-->
-        <!--                    android:layout_width="match_parent"-->
-        <!--                    android:layout_height="match_parent"-->
-        <!--                    android:text="개수"-->
-        <!--                    android:gravity="left"-->
-        <!--                    android:textSize="12sp"/>-->
-        <!--            </LinearLayout>-->
-        <!--        </LinearLayout>-->
 
 
 

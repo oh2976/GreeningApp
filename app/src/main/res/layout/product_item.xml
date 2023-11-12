@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:src="@drawable/greening_main_logo"/>
 
@@ -49,6 +49,15 @@
                     android:text="수량"
                     android:layout_marginTop="4dp"
                     android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/textPopulstock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="총 판매량"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:textSize="16sp"/>
 
             </LinearLayout>
 

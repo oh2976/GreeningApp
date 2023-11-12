@@ -44,6 +44,7 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.Product
         holder.textName.setText("상품명 :" + arrayList.get(position).getPname());
         holder.textPrice.setText("가격 : " + String.valueOf(arrayList.get(position).getPprice()));
         holder.textStock.setText("재고수량 : " + String.valueOf(arrayList.get(position).getStock()));
+        holder.textPopulstock.setText("총 판매량 : " + String.valueOf(arrayList.get(position).getPopulstock()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +72,8 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.Product
         TextView textStock;
         ImageView detailImg;
 
+        TextView textPopulstock;
+
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             this.textName = itemView.findViewById(R.id.textName);
@@ -78,6 +81,7 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.Product
             this.imageView = itemView.findViewById(R.id.imageView);
             this.textStock = itemView.findViewById(R.id.textStock);
             this.detailImg = imageView.findViewById(R.id.detail_longimg);
+            this.textPopulstock = itemView.findViewById(R.id.textPopulstock);
         }
     }
 }

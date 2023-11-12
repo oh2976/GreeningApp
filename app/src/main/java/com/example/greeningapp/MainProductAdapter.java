@@ -1,7 +1,6 @@
 package com.example.greeningapp;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -27,8 +26,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class MainProductAdapter  extends RecyclerView.Adapter<MainProductAdapter.CustomViewHolder> {
     private ArrayList<Product> arrayList;
@@ -40,7 +37,6 @@ public class MainProductAdapter  extends RecyclerView.Adapter<MainProductAdapter
     private DatabaseReference databaseReferenceReview;
 
     private int QuantityReview;
-
 
 
     DecimalFormat decimalFormat = new DecimalFormat("###,###");
@@ -64,19 +60,17 @@ public class MainProductAdapter  extends RecyclerView.Adapter<MainProductAdapter
 
         databaseReferenceReview = FirebaseDatabase.getInstance().getReference("Review");
         Query reviewQuery = databaseReferenceReview.orderByChild("pid").equalTo(arrayList.get(position).getPid()); // populstock 내림차순 최대 10개상품가져옴
-
-
         reviewQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 QuantityReview = 0;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) { //반복문으로 데이터리스트 추출
-                    Review review = snapshot.getValue(Review.class);  //만들어뒀던 review객체에 데이터를 담는다( 리뷰작성시 )
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Review review = snapshot.getValue(Review.class);
                     Log.d("pid",review.getRcontent() +"가져왔음");
-                    QuantityReview += 1;
+                    QuantityReview += 1;     //총점개수
                 }
-                holder.tv_reviewQ.setText("후기("+QuantityReview+")");
+                holder.tv_reviewQ.setText("("+QuantityReview+")");
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -84,11 +78,36 @@ public class MainProductAdapter  extends RecyclerView.Adapter<MainProductAdapter
             }
         });
 
+        reviewQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                float totalRating = 0;
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    float rating = snapshot.child("rscore").getValue(Float.class);
+                    totalRating += rating;             //총점
+                }
+                float averageRating = 0;
+                if (QuantityReview != 0) {
+                    averageRating = totalRating / QuantityReview;
+                }
+                float TotalReview = Math.round(averageRating * 5 / 5.0f);    //총점 반올림 o
+//                float TotalReview = averageRating * 5 / 5.0f;           //반올림 x
+
+                holder.reviewRating01.setRating(TotalReview);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // 오류 처리 코드를 추가하세요.
+            }
+        });
+
         Glide.with(holder.itemView)
                 .load(arrayList.get(position).getPimg())
                 .into(holder.iv_pimg);
         holder.pname.setText(arrayList.get(position).getPname());
-//        holder.tv_pprice.setText(String.valueOf(arrayList.get(position).getPprice()));
         holder.tv_pprice.setText(String.valueOf(decimalFormat.format(arrayList.get(position).getPprice())) + "원");
 
 
@@ -100,13 +119,12 @@ public class MainProductAdapter  extends RecyclerView.Adapter<MainProductAdapter
                 context.startActivity(intent);
             }
         });
+
     }
 
     @Override
     public int getItemCount() {
-        //삼합연산자
-//        return (arrayList !=null ? arrayList.size() :0);
-        return Math.min(arrayList.size(), 6); //가로 3개 총 6개
+        return Math.min(arrayList.size(), 6); //가로 3 총 6개
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
@@ -114,7 +132,7 @@ public class MainProductAdapter  extends RecyclerView.Adapter<MainProductAdapter
         TextView pname;
         TextView tv_pprice, tv_reviewQ;
 
-//        RatingBar reviewRating01;
+        RatingBar reviewRating01; //총점
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -122,7 +140,7 @@ public class MainProductAdapter  extends RecyclerView.Adapter<MainProductAdapter
             this.pname = itemView.findViewById(R.id.pname);
             this.tv_pprice = itemView.findViewById(R.id.tv_pprice);
             this.tv_reviewQ = itemView.findViewById(R.id.tv_reviewQ);
-//            this.reviewRating01 = itemView.findViewById(R.id.reviewRating01);
+            this.reviewRating01 = itemView.findViewById(R.id.reviewRating01);
         }
     }
 }

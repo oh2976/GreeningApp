@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -19,8 +21,10 @@ public class ManagerMainActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth; // 파이어베이스 인증 처리
 
 
-    Button ProductManage, AddProduct, UserManage, UserOrderManage, UserReviewManage, Logout, AppMain;
+//    Button ProductManage, AddProduct, UserManage, UserOrderManage, UserReviewManage, Logout, AppMain, DataStatistics;
 
+    TextView LogoutTxt;
+    Button Btn_ManageProduct, Btn_AddProduct, Btn_ManageUser, Btn_ManageOrder, Btn_ManageReview, Btn_GoToShoppingMall, Btn_DataStatistics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +37,8 @@ public class ManagerMainActivity extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.customdialog);
 
-        ProductManage = (Button) findViewById(R.id.ProductManage);
-        ProductManage.setOnClickListener(new View.OnClickListener() {
+        Btn_ManageProduct = (Button) findViewById(R.id.Btn_ManageProduct);
+        Btn_ManageProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ManagerMainActivity.this, ShoppingMainActivity.class);
@@ -43,8 +47,8 @@ public class ManagerMainActivity extends AppCompatActivity {
         });
 
 
-        AddProduct = (Button) findViewById(R.id.AddProduct);
-        AddProduct.setOnClickListener(new View.OnClickListener() {
+        Btn_AddProduct = (Button) findViewById(R.id.Btn_AddProduct);
+        Btn_AddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ManagerMainActivity.this, ManageAddProductActivity.class);
@@ -53,8 +57,8 @@ public class ManagerMainActivity extends AppCompatActivity {
             }
         });
 
-        UserManage = (Button) findViewById(R.id.UserManage);
-        UserManage.setOnClickListener(new View.OnClickListener() {
+        Btn_ManageUser = (Button) findViewById(R.id.Btn_ManageUser);
+        Btn_ManageUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ManagerMainActivity.this, ManageUserActivity.class);
@@ -63,8 +67,8 @@ public class ManagerMainActivity extends AppCompatActivity {
             }
         });
 
-        UserOrderManage = (Button) findViewById(R.id.UserOrderManage);
-        UserOrderManage.setOnClickListener(new View.OnClickListener() {
+        Btn_ManageOrder = (Button) findViewById(R.id.Btn_ManageOrder);
+        Btn_ManageOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -74,8 +78,8 @@ public class ManagerMainActivity extends AppCompatActivity {
             }
         });
 
-        UserReviewManage = (Button) findViewById(R.id.UserReviewManage);
-        UserReviewManage.setOnClickListener(new View.OnClickListener() {
+        Btn_ManageReview = (Button) findViewById(R.id.Btn_ManageReview);
+        Btn_ManageReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ManagerMainActivity.this, ManageUserReviewActivity.class);
@@ -83,8 +87,8 @@ public class ManagerMainActivity extends AppCompatActivity {
             }
         });
 
-        AppMain = (Button) findViewById(R.id.AppMain);
-        AppMain.setOnClickListener(new View.OnClickListener() {
+        Btn_GoToShoppingMall = (Button) findViewById(R.id.Btn_GoToShoppingMall);
+        Btn_GoToShoppingMall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ManagerMainActivity.this, MainActivity.class);
@@ -92,15 +96,28 @@ public class ManagerMainActivity extends AppCompatActivity {
             }
         });
 
-        Logout = (Button) findViewById(R.id.Logout);
-        Logout.setOnClickListener(new View.OnClickListener() {
+        LogoutTxt = (TextView) findViewById(R.id.LogoutTxt);
+
+        String mystring = LogoutTxt.getText().toString();
+        SpannableString content = new SpannableString(mystring);
+        content.setSpan(new UnderlineSpan(), 0, mystring.length(), 0);
+        LogoutTxt.setText(content);
+
+        LogoutTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showLogoutConfirmationDialog();
             }
         });
 
-
+        Btn_DataStatistics = (Button) findViewById(R.id.Btn_DataStatistics);
+        Btn_DataStatistics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ManagerMainActivity.this, ManageDataStatisticsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     //로그아웃 확인
@@ -124,6 +141,7 @@ public class ManagerMainActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+
         btnno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,6 +156,4 @@ public class ManagerMainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-
 }

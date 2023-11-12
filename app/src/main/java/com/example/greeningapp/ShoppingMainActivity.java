@@ -17,9 +17,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ShoppingMainActivity extends AppCompatActivity {
 
@@ -53,28 +56,63 @@ public class ShoppingMainActivity extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
         databaseReference = database.getReference("Product"); //DB 연결 성공
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        Query query = databaseReference.orderByChild("populstock"); // populstock 내림차순
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // 파이어베이스 데이터베이스의 데이터를 받아오는 곳
-                arrayList.clear(); //기존 배열 리스트가 존재하지 않게 남아 있는 데이터 초기화
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    // 반복문으로 데이터 List를 추출해냄
-                    Product product = snapshot.getValue(Product.class); //  만들어 뒀던 Product 객체에 데이터를 담는다.
-                    arrayList.add(product); // 담은 데이터들을 배열 리스트에 넣고 리사이클러뷰로 보낼 준비
-                    Log.d("ShoppingMainActivity", snapshot.getKey()+"");
+                //파이어베이스 데이터베이스의 데이터를 받아오는곳
+                arrayList.clear(); //기준 배열리스트가 존재하지않게 초기화
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Product product = snapshot.getValue(Product.class);
+                    arrayList.add(product);
+
+//                    pid = product.getPid();
+//                    Log.d("MainActivity", "pid = " + pid);
+
+                    //arrayList를 populstock 내림차순 정렬, 값 없는건 pid순
+                    Collections.sort(arrayList, new Comparator<Product>() {
+                        @Override
+                        public int compare(Product product1, Product product2) {
+                            return Integer.compare(product2.getPopulstock(), product1.getPopulstock());
+                        }
+                    });
 
                 }
-                adapter.notifyDataSetChanged(); // 리스트 저장 및 새로고침
 
+                adapter.notifyDataSetChanged(); //리스트저장 및 새로고침
+                //db가져오던중 에러발생시
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // 디비를 가져오던 중 에러 발생 시
-                Log.e("ShoppingMainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
+                Log.e("ShoppingMainActivity", String.valueOf(databaseError.toException()));
             }
         });
+
+//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                // 파이어베이스 데이터베이스의 데이터를 받아오는 곳
+//                arrayList.clear(); //기존 배열 리스트가 존재하지 않게 남아 있는 데이터 초기화
+//                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+//                    // 반복문으로 데이터 List를 추출해냄
+//                    Product product = snapshot.getValue(Product.class); //  만들어 뒀던 Product 객체에 데이터를 담는다.
+//                    arrayList.add(product); // 담은 데이터들을 배열 리스트에 넣고 리사이클러뷰로 보낼 준비
+//                    Log.d("ShoppingMainActivity", snapshot.getKey()+"");
+//
+//                }
+//                adapter.notifyDataSetChanged(); // 리스트 저장 및 새로고침
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                // 디비를 가져오던 중 에러 발생 시
+//                Log.e("ShoppingMainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
+//            }
+//        });
 
         adapter = new ProductAdapter(arrayList, this);
         recyclerView.setAdapter(adapter); //리사이클러뷰에 어댑터 연결
