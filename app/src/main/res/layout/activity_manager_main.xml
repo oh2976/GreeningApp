@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:layout_marginStart="34dp"
+        android:layout_marginStart="32dp"
         android:text="관리자 페이지입니다."
         android:textSize="18sp"
         android:textStyle="bold"
@@ -27,7 +27,7 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp"
         android:background="@color/white"
-        android:layout_marginEnd="34dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintTop_toTopOf="@+id/textView2"
         app:layout_constraintBottom_toBottomOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -44,39 +44,39 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/Btn_ManageProduct"
-            android:layout_width="105dp"
-            android:layout_height="105dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
-            android:paddingTop="18dp"
-            android:paddingBottom="18dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
             android:text="상품 관리"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:background="@drawable/custom_btn_graystroke"
             android:drawableTop="@drawable/btn_manageproduct_resize" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/Btn_AddProduct"
-            android:layout_width="105dp"
-            android:layout_height="105dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginStart="18dp"
             android:layout_gravity="center_horizontal"
-            android:paddingTop="18dp"
-            android:paddingBottom="18dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
             android:text="상품 추가"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:background="@drawable/custom_btn_graystroke"
             android:drawableTop="@drawable/btn_addproduct_resize" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/Btn_ManageUser"
-            android:layout_width="105dp"
-            android:layout_height="105dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginStart="18dp"
             android:layout_gravity="center_horizontal"
-            android:paddingTop="18dp"
-            android:paddingBottom="18dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
             android:text="회원 관리"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:background="@drawable/custom_btn_graystroke"
             android:drawableTop="@drawable/btn_manageuser_resize" />
 
@@ -94,39 +94,39 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/Btn_ManageOrder"
-            android:layout_width="105dp"
-            android:layout_height="105dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
-            android:paddingTop="18dp"
-            android:paddingBottom="18dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
             android:text="회원 주문 관리"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:background="@drawable/custom_btn_graystroke"
             android:drawableTop="@drawable/btn_manageorder_resize" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/Btn_ManageReview"
-            android:layout_width="105dp"
-            android:layout_height="105dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginStart="18dp"
             android:layout_gravity="center_horizontal"
-            android:paddingTop="18dp"
-            android:paddingBottom="18dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
             android:text="회원 후기 관리"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:background="@drawable/custom_btn_graystroke"
             android:drawableTop="@drawable/btn_managereview_resize" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/Btn_GoToShoppingMall"
-            android:layout_width="105dp"
-            android:layout_height="105dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginStart="18dp"
             android:layout_gravity="center_horizontal"
-            android:paddingTop="18dp"
-            android:paddingBottom="18dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
             android:text="쇼핑몰 이동"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:background="@drawable/custom_btn_graystroke"
             android:drawableTop="@drawable/btn_gotoshoppingmall_resize" />
 
@@ -144,28 +144,28 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/Btn_DataStatistics"
-            android:layout_width="105dp"
-            android:layout_height="105dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
-            android:paddingTop="18dp"
-            android:paddingBottom="18dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
             android:text="실시간 통계"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:background="@drawable/custom_btn_graystroke"
             android:drawableTop="@drawable/btn_datastatistics_resize" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/Btn_none1"
-            android:layout_width="105dp"
-            android:layout_height="105dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:visibility="invisible"
             android:layout_marginStart="18dp"
             android:layout_gravity="center_horizontal" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/Btn_none2"
-            android:layout_width="105dp"
-            android:layout_height="105dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:visibility="invisible"
             android:layout_marginStart="18dp"
             android:layout_gravity="center_horizontal" />

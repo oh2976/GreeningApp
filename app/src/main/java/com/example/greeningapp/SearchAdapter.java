@@ -50,7 +50,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.myviewhold
                 Intent intent = new Intent(v.getContext(), ProductDetailActivity.class);
                 intent.putExtra("detail", searchResults.get(position));
                 v.getContext().startActivity(intent);
-                ((Activity)context).finish();
             }
         });
     }

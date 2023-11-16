@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -15,13 +14,13 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.collection.LLRBNode;
 
 import java.util.ArrayList;
 
@@ -42,11 +41,10 @@ public class ManageDataStatisticsActivity extends AppCompatActivity {
 
         BarChart barChart = findViewById(R.id.barChart);
 
-        // 파이어베이스에서 데이터 가져오기
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Product");
 
-        databaseReference.limitToFirst(20).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<BarEntry> productEntries = new ArrayList<>();
@@ -55,35 +53,55 @@ public class ManageDataStatisticsActivity extends AppCompatActivity {
                 int index = 0;
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    // Product 테이블의 populstock를 BarEntry에 추가
                     int populstock = snapshot.child("populstock").getValue(Integer.class);
                     productEntries.add(new BarEntry(index, populstock));
 
-                    // Product 테이블의 pname을 리스트에 추가
                     String pname = snapshot.child("pname").getValue(String.class);
                     productNames.add(pname);
 
                     index++;
                 }
 
-                BarDataSet barDataSet = new BarDataSet(productEntries, "Product Popularity");
+                BarDataSet barDataSet = new BarDataSet(productEntries, "실시간 판매량(개)");
                 barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
                 barDataSet.setValueTextColor(getResources().getColor(R.color.black));
-                barDataSet.setValueTextSize(16f);
+                barDataSet.setValueTextSize(14f);
+
+                barDataSet.setValueFormatter(new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        return String.valueOf((int) value) + "개";
+                    }
+                });
 
                 BarData barData = new BarData(barDataSet);
+                barData.setValueTextSize(14f);
 
-                BarChart barChart = findViewById(R.id.barChart);
+                barChart.getAxisLeft().setValueFormatter(new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        return String.valueOf((int) value) + "개";
+                    }
+                });
 
-                // X축 설정
-                barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(productNames));
-                barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-                barChart.getXAxis().setGranularity(1f);
+                XAxis xAxis = barChart.getXAxis();
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(productNames));
+                xAxis.setDrawGridLines(false);
+                xAxis.setDrawAxisLine(false);
+                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                xAxis.setTextSize(14f);
+                xAxis.setGranularity(0.1f);
+                xAxis.setLabelCount(productNames.size());
 
-                barChart.setFitBars(true);
                 barChart.setData(barData);
-                barChart.getDescription().setText("Product Popularity Chart");
+                barChart.setExtraTopOffset(15f);
+                barChart.setExtraBottomOffset(10f);
+                barChart.getBarData().setBarWidth(0.6f);
+                barChart.getAxisLeft().setEnabled(false);
+                barChart.getAxisRight().setEnabled(false);
                 barChart.animateY(2000);
+                barChart.getDescription().setText("그리닝 상품별 실시간 판매량 차트");
+                barChart.getDescription().setTextSize(14f);
             }
 
             @Override
