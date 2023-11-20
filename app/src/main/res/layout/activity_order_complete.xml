@@ -10,8 +10,8 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
         android:background="@color/toolbar"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme">
@@ -227,23 +227,23 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="주소"
-                            android:textSize="14sp"
-                            />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="주소"
+                                android:textSize="14sp"
+                                />
 
-                        <TextView
-                            android:id="@+id/cmp_postcode"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="8dp"
-                            android:text="우편번호"
-                            android:gravity="right"
-                            android:textSize="14sp"/>
+                            <TextView
+                                android:id="@+id/cmp_postcode"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="8dp"
+                                android:text="우편번호"
+                                android:gravity="right"
+                                android:textSize="14sp"/>
 
-                    </LinearLayout>
+                        </LinearLayout>
 
                         <TextView
                             android:id="@+id/cmp_address"

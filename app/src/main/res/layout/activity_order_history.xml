@@ -12,7 +12,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/ordh_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="65dp"
         android:background="@color/toolbar"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,13 +27,6 @@
             android:textSize="18sp" />
 
     </androidx.appcompat.widget.Toolbar>
-
-    <!--    <View-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="1dp"-->
-    <!--        android:layout_centerInParent="true"-->
-    <!--        android:background="#27231919"/>-->
-
 
     <!-- 하단 네비게이션 바 -->
     <ScrollView
@@ -65,12 +58,6 @@
 
         </LinearLayout>
     </ScrollView>
-
-    <!--    <View-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="1dp"-->
-    <!--        android:layout_centerInParent="true"-->
-    <!--        android:background="#27231919"/>-->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation_orderhistory"

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.greeningapp.CategoryActivity;
+import com.example.greeningapp.DonationMainActivity;
+import com.example.greeningapp.MainActivity;
+import com.example.greeningapp.MyPageActivity;
+import com.example.greeningapp.BuyNowActivity;
+import com.example.greeningapp.R;
+import com.example.greeningapp.Review;
+import com.example.greeningapp.ReviewActivity;
+import com.example.greeningapp.ReviewAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -38,7 +48,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ProductDetailActivity extends AppCompatActivity {
-
     TextView quantity;
     int totalQuantity = 1;
     int totalPrice = 0;
@@ -92,6 +101,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("CurrentUser");
         String cartID = databaseReference.push().getKey();
+
+
 
         auth = FirebaseAuth.getInstance();
         //상품 리스트에서 상품 상세 페이지로 데이터 가져오기
@@ -191,6 +202,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     Review review = snapshot.getValue(Review.class);
                     arrayList.add(review);
                     count++;    // 데이터 개수 증가
+
                 }
                 adapter.notifyDataSetChanged();    // 어댑터에 데이터 변경 알림
             }
@@ -201,7 +213,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
 
-        adapter = new ReviewAdapter(arrayList, this);
+
+        adapter = new ReviewAdapter(arrayList, FirebaseAuth.getInstance(), FirebaseDatabase.getInstance().getReference("User"));
         recyclerView.setAdapter(adapter);
 
         // 더 많은 리뷰 보기 버튼 클릭 시
@@ -256,7 +269,6 @@ public class ProductDetailActivity extends AppCompatActivity {
 
                 if(getstock > 0){
                     Intent intent = new Intent(ProductDetailActivity.this, BuyNowActivity.class);
-
 
 
                     Bundle bundle = new Bundle();

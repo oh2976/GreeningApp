@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +20,13 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.greeningapp.DonationMainActivity;
+import com.example.greeningapp.MyOrder;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,10 +40,7 @@ public class ReviewActivity extends AppCompatActivity {
     private ReviewAdapter reviewAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Review> dataList;
-    private FirebaseDatabase database;
     private DatabaseReference databaseReference;
-
-    private DatabaseReference databasepp; //잠시추가
 
     private int pid;
 
@@ -57,17 +61,13 @@ public class ReviewActivity extends AppCompatActivity {
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        fullreviewrecyclerView = findViewById(R.id.fullrecyclerView); //연결
-        fullreviewrecyclerView.setHasFixedSize(true); //리사이클뷰 성능강화
+        fullreviewrecyclerView = findViewById(R.id.fullrecyclerView);
+        fullreviewrecyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         fullreviewrecyclerView.setLayoutManager(layoutManager);
-        dataList = new ArrayList<>(); //Product객체를 담을 ArrayList(어댑터쪽으로)
+        dataList = new ArrayList<>();
 
         databaseReference =FirebaseDatabase.getInstance().getReference("Review");
-
-        //잠시추가 10.19일
-        database = FirebaseDatabase.getInstance();
-        databasepp = database.getReference("Product");
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("pid")) {
@@ -75,32 +75,30 @@ public class ReviewActivity extends AppCompatActivity {
             Log.d("pid",pid +"가져왔음");
         }
 
-        // pid가 일치하는 상품 리뷰만 가져오기
-        Query reviewQuery = databaseReference.orderByChild("pid").equalTo(pid);
 
+        Query reviewQuery = databaseReference.orderByChild("pid").equalTo(pid);
         reviewQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 dataList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Review review = snapshot.getValue(Review.class);  //만들어뒀던 review객체에 데이터를 담는다( 리뷰작성시 )
-                    Log.d("pid",review.getRcontent() +"가져왔음");
+                    Review review = snapshot.getValue(Review.class);
                     dataList.add(review);
+
                 }
+
                 reviewAdapter.notifyDataSetChanged();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("ReviewActivity", String.valueOf(databaseError.toException()));
+                Log.e("ReviewActivity", "데이터 가져오기 실패: " + databaseError.getMessage());
             }
         });
-        reviewAdapter = new ReviewAdapter(dataList, this);
+
+        reviewAdapter = new ReviewAdapter(dataList, FirebaseAuth.getInstance(), FirebaseDatabase.getInstance().getReference("User"));
         fullreviewrecyclerView.setAdapter(reviewAdapter);
 
-//        // 파이어베이스 데이터베이스 참조 설정 (레이팅바 총점)
-//        FirebaseDatabase mRef = FirebaseDatabase.getInstance();
-//        DatabaseReference ratingsRef = mRef.getReference("Review");
 
         // 파이어베이스 레이팅바 총점
         reviewQuery.addValueEventListener(new ValueEventListener() {
@@ -130,14 +128,6 @@ public class ReviewActivity extends AppCompatActivity {
                 float scaledRating = Math.round(averageRating * 5 / 5.0f);  // 평점 값을 5로 스케일링하고 소수점 자리 반올림
                 ratingBar.setRating(scaledRating);
 
-                // ratingBar.setRating(averageRating);
-                //잠시추가 10.19
-//                DatabaseReference productReference = databasepp.child(String.valueOf(pid)).child("pscore");
-//                productReference.setValue(averageRating);
-
-                //review-pid-psocre참조경로 10.22
-//                DatabaseReference reviewpid = databaseReference.child("pid").child(String.valueOf(pid)).child("pscore");
-//                reviewpid.setValue(averageRating);
 
             }
             @Override

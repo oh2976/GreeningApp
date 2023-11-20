@@ -25,6 +25,8 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.example.greeningapp.DonationMainActivity;
+import com.example.greeningapp.MyOrder;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -340,6 +342,8 @@ public class ReviewWriteActivity extends AppCompatActivity {
         productRef.child("rscore").setValue(rating);
         productRef.child("rdatetime").setValue(getTime());
         productRef.child("reviewid").setValue(reviewId);
+        productRef.child("idToken").setValue(product.getUseridtoken());
+
     }
 
     private String getTime(){
@@ -407,7 +411,4 @@ public class ReviewWriteActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 }

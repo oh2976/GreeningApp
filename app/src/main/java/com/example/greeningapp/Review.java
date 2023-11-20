@@ -16,11 +16,23 @@ public class Review {
 
     private String reviewid;
 
+    private String idToken;
+    private User user;
+
+    private double similarity;
+
     public Review() {
 
     }
 
 
+    public double getSimilarity() {
+        return similarity;
+    }
+
+    public void setSimilarity(double similarity) {
+        this.similarity = similarity;
+    }
 
     public String getRimage() {
         return rimage;
@@ -103,5 +115,17 @@ public class Review {
 
     public void setReviewid(String reviewid) {
         this.reviewid = reviewid;
+    }
+
+    public String getIdToken() { return idToken; }
+
+    public void setIdToken(String idToken) { this.idToken = idToken; }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

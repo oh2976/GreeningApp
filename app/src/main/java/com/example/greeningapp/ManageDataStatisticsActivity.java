@@ -100,8 +100,7 @@ public class ManageDataStatisticsActivity extends AppCompatActivity {
                 barChart.getAxisLeft().setEnabled(false);
                 barChart.getAxisRight().setEnabled(false);
                 barChart.animateY(2000);
-                barChart.getDescription().setText("그리닝 상품별 실시간 판매량 차트");
-                barChart.getDescription().setTextSize(14f);
+                barChart.getDescription().setEnabled(false);
             }
 
             @Override
