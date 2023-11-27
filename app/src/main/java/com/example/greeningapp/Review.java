@@ -9,29 +9,14 @@ public class Review {
     private  String pimg;
     private String rdatetime;
     private String username;
-
     private String pprice;
-
     private int totalquantity;
-
     private String reviewid;
-
     private String idToken;
     private User user;
 
-    private double similarity;
-
     public Review() {
 
-    }
-
-
-    public double getSimilarity() {
-        return similarity;
-    }
-
-    public void setSimilarity(double similarity) {
-        this.similarity = similarity;
     }
 
     public String getRimage() {

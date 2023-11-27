@@ -38,7 +38,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private FragmentQList fragmentQList;
 
-    private FragmentEnd fragmentEnd;
+//    private FragmentEnd fragmentEnd;
     public Button btnDoQuiz;
 
     private String quizResult;
@@ -82,7 +82,7 @@ public class QuizActivity extends AppCompatActivity {
 
         fragmentStart = new FragmentStart();
         fragmentQuestion = new FragmentQuestion();
-        fragmentEnd = new FragmentEnd();
+//        fragmentEnd = new FragmentEnd();
         fragmentQList = new FragmentQList();
 
         dialog = new Dialog(QuizActivity.this);

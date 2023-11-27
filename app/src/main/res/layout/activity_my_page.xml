@@ -398,7 +398,7 @@
                         android:layout_weight="1"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
-                        android:text="현재버전 1.0"
+                        android:text="현재버전 2.0"
                         android:textColor="#808080"
                         android:textSize="16sp"
                         android:textStyle="bold" />

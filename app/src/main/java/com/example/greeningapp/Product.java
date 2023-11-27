@@ -11,11 +11,11 @@ public class Product implements Serializable {
     private int stock;
     private int category;
     int pscore;
-
     private String psay;
-
-    //    private float rscore;
     private int populstock;
+
+    public Product(){
+    }
 
     public String getPsay() {
         return psay;
@@ -23,9 +23,6 @@ public class Product implements Serializable {
 
     public void setPsay(String psay) {
         this.psay = psay;
-    }
-
-    public Product(){
     }
 
     public String getPimg() {
@@ -84,7 +81,6 @@ public class Product implements Serializable {
         this.category = category;
     }
 
-
     public int getPopulstock() {
         return populstock;
     }
@@ -92,7 +88,6 @@ public class Product implements Serializable {
     public void setPopulstock(int populstock) {
         this.populstock = populstock;
     }
-
 
     public int getPscore() {
         return pscore;

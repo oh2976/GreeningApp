@@ -13,10 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-
-import org.w3c.dom.Text;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder>{
@@ -71,7 +67,6 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.Product
         TextView textPrice;
         TextView textStock;
         ImageView detailImg;
-
         TextView textPopulstock;
 
         public ProductViewHolder(@NonNull View itemView) {

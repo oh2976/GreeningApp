@@ -1,7 +1,6 @@
 package com.example.greeningapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
@@ -44,7 +43,7 @@ public class AttendanceActivity extends AppCompatActivity {
     DatabaseReference databaseReference2;
     long mNow;
     Date mDate;
-    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     private String idToken;
     private int userSPoint;
 
@@ -233,13 +232,12 @@ public class AttendanceActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    // 선택한 날짜가 현재 날짜와 다른 경우에 대한 처리
                 }
             }
         });
     }
 
-    // 지정한 형식으로 날짜 포맷을 변환하는 함수
+    // 날짜 포맷 변환 메서드
     private String formatDate(int year, int month, int dayOfMonth) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, dayOfMonth);
@@ -286,14 +284,6 @@ public class AttendanceActivity extends AppCompatActivity {
                 Log.e("AttendanceActivity, 출석체크 씨드 적립 오류", String.valueOf(error.toException()));
             }
         });
-    }
-
-    // 현재 날짜인지 확인하는 함수
-    private boolean isToday(String date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date currentDate = new Date();
-        String today = dateFormat.format(currentDate);
-        return today.equals(date);
     }
 
     private String getTime() {

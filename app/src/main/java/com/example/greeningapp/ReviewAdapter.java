@@ -68,7 +68,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.CustomView
         // 사용자 이름 업데이트
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
         if (user != null) {
-            String uid = user.getUid();
+            String uid = dataList.get(position).getIdToken();
             DatabaseReference userRef = mDatabaseRef.child(uid);
             userRef.addValueEventListener(new ValueEventListener() {
                 @Override

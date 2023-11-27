@@ -53,9 +53,20 @@ public class ManageUserReviewAdapter extends RecyclerView.Adapter<ManageUserRevi
 
     @Override
     public void onBindViewHolder(@NonNull ManageUserReviewAdapter.ManageUserReviewViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Glide.with(holder.itemView)
-                .load(arrayList.get(position).getRimage())
-                .into(holder.MGReviewInputimg_review);
+
+        if (arrayList.get(position).getRimage() != null && !arrayList.get(position).getRimage().isEmpty()) {
+            // 이미지가 있는 경우 표시
+            holder.MGReviewInputimg_review.setVisibility(View.VISIBLE);
+            Glide.with(holder.itemView)
+                    .load(arrayList.get(position).getRimage())
+                    .into(holder.MGReviewInputimg_review);
+        } else {
+            // 이미지가 없는 경우 숨김
+            holder.MGReviewInputimg_review.setVisibility(View.GONE);
+        }
+//        Glide.with(holder.itemView)
+//                .load(arrayList.get(position).getRimage())
+//                .into(holder.MGReviewInputimg_review);
         holder.MGOrderID_order.setText(arrayList.get(position).getReviewid());
         holder.MGReviewDate_review.setText(arrayList.get(position).getRdatetime());
         holder.MGReviewUsername_review.setText(arrayList.get(position).getUsername());
