@@ -66,47 +66,4 @@
         app:itemTextColor="@drawable/menu_selector_color"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottommenu" />
-
-    <!--    <LinearLayout-->
-    <!--        android:id="@+id/bottomNavigation"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="64dp"-->
-    <!--        android:layout_gravity="bottom"-->
-    <!--        android:orientation="horizontal"-->
-    <!--        android:background="@color/white">-->
-
-    <!--        <ImageButton-->
-    <!--            android:id="@+id/navMain_doMain"-->
-    <!--            android:layout_width="0dp"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:layout_weight="1"-->
-    <!--            android:src="@drawable/home_logo_size"-->
-    <!--            android:background="@android:color/transparent"/>-->
-
-    <!--        <ImageButton-->
-    <!--            android:id="@+id/navCategory_doMain"-->
-    <!--            android:layout_width="0dp"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:layout_weight="1"-->
-    <!--            android:src="@drawable/shopping_logo_size"-->
-    <!--            android:background="@android:color/transparent"/>-->
-
-    <!--        <ImageButton-->
-    <!--            android:id="@+id/navDonation_doMain"-->
-    <!--            android:layout_width="0dp"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:layout_weight="1"-->
-    <!--            android:src="@drawable/donation_logo_size"-->
-    <!--            android:background="@android:color/transparent"/>-->
-
-    <!--        <ImageButton-->
-    <!--            android:id="@+id/navMypage_doMain"-->
-    <!--            android:layout_width="0dp"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:layout_weight="1"-->
-    <!--            android:src="@drawable/user_logo_size"-->
-    <!--            android:background="@android:color/transparent"/>-->
-
-    <!--    </LinearLayout>-->
-
 </LinearLayout>

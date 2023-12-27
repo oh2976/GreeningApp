@@ -26,15 +26,6 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-<!--    <TextView-->
-<!--        android:id="@+id/textView3"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="회원 주문 상세 정보"-->
-<!--        android:gravity="center"-->
-<!--        android:layout_marginTop="50dp"-->
-<!--        android:textSize="20dp" />-->
-
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"

@@ -2,11 +2,8 @@ package com.example.greeningapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,13 +17,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.appcompat.widget.Toolbar;
-
 import com.bumptech.glide.Glide;
-import com.example.greeningapp.DonationMainActivity;
-import com.example.greeningapp.MyOrder;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -41,80 +33,53 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
 public class ReviewWriteActivity extends AppCompatActivity {
-
-    String fn;
-    String reviewImage;
-
+    private String fn;
+    private String reviewImage;
     private static final int Gallery_Code=1;
-    FirebaseUser firebaseUser;
-    FirebaseDatabase mDatabase;
-    DatabaseReference mRef;
-
+    private FirebaseUser firebaseUser;
+    private FirebaseDatabase mDatabase;
     private FirebaseAuth firebaseAuth;
-    private DatabaseReference databaseReference;
-
-    private DatabaseReference databaseReference2;
-    private DatabaseReference databaseReference3;
-    //DatabaseReference databaseReference2; //잠시 추가 -> //MyOrder
-
+    private DatabaseReference mRef, databaseReference, databaseReference2, databaseReference3;
     private BottomNavigationView bottomNavigationView;
-
-    private ImageButton navMain, navCategory, navDonation, navMypage;
-
     StorageReference storageReference;
     ImageView uploadImage;
     Button uploadBtn;
     RatingBar RatingBarEt;
     Uri imageUri=null;
-    //ImageButton cancelBtn;
     EditText reviewEt;
     MyOrder product = null;
     TextView Pname;
-    //TextView Pprice;
     ImageView Pimg;
-    TextView mDate;  //날짜
-
-    Dialog Reviewdialog;
-
-    private String orderId,myOrderId, eachOrderedId;
     private int userSPoint;
-
     Toolbar rtoolbar;
     Dialog dialog;
     Dialog dialog2;
     String reviewId;
-
     long mNow;
     Date mDate2;
+    TextView mDate;
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_write);
 
-
-
+        // 툴바
         rtoolbar = findViewById(R.id.toolbar_reviewwrite);
         setSupportActionBar(rtoolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowCustomEnabled(true); //커스터마이징 하기 위해 필요
-        actionBar.setDisplayShowTitleEnabled(false);//기본 제목 삭제.
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_24);
 
-
-
+        // 다이얼로그 객체 생성
         dialog = new Dialog(ReviewWriteActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_confirm2);
@@ -123,48 +88,42 @@ public class ReviewWriteActivity extends AppCompatActivity {
         dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog2.setContentView(R.layout.dialog_confirm);
 
+        // 파이어베이스 경로 설정
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("CurrentUser").child(firebaseUser.getUid()).child("MyOrder");
         databaseReference2 = FirebaseDatabase.getInstance().getReference("User");
         databaseReference3 = FirebaseDatabase.getInstance().getReference("CurrentUser");
-
-        uploadBtn = findViewById(R.id.writeUploadBtn);
-        //Button uploadBtn = findViewById(R.id.writeUploadBtn);
-        uploadImage = findViewById(R.id.writeUploadImage);
-        reviewEt = findViewById(R.id.writeReviewEt);
-        //cancelBtn = findViewById(R.id.writeCancelBtn);
-        RatingBarEt = findViewById(R.id.writeRatingBar);
-
         mDatabase=FirebaseDatabase.getInstance();
         mRef=mDatabase.getReference().child("Review");
         storageReference=FirebaseStorage.getInstance().getReference();
-        //날짜 표시
-        mDate = findViewById(R.id.reviewDate);
 
+        // 레이아웃 요소 설정 초기화
         uploadBtn = findViewById(R.id.writeUploadBtn);
-
-
+        uploadImage = findViewById(R.id.writeUploadImage);
+        reviewEt = findViewById(R.id.writeReviewEt);
+        RatingBarEt = findViewById(R.id.writeRatingBar);
+        mDate = findViewById(R.id.reviewDate);
+        uploadBtn = findViewById(R.id.writeUploadBtn);
         Pname = findViewById(R.id.writePname);
         Pimg = (ImageView) findViewById(R.id.writePImg);
 
-
-
-
-
+        // Object 객체에 OrderHistoryChildRcyAdapter에서 받은 주문한 상품 정보 담기
         final Object object = getIntent().getSerializableExtra("product");
 
+        // Object 객체를 MyOrder 객체로 형변환
         if(object instanceof MyOrder){
             product = (MyOrder) object;
             Log.d("ReviewWriteActivity", product+"");
         }
 
+        // 객체가 null이 아니라면 레이아웃에 데이터 담기
         if (product != null) {
             Pname.setText(product.getProductName());
             Glide.with(getApplicationContext()).load(product.getOrderImg()).into(Pimg);
-
         }
 
+        // 이미지 업로드 버튼 클릭
         uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,7 +132,6 @@ public class ReviewWriteActivity extends AppCompatActivity {
                 startActivityForResult(intent,Gallery_Code);
             }
         });
-
 
         // 하단바 구현
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigation_ReviewWrite);
@@ -212,7 +170,6 @@ public class ReviewWriteActivity extends AppCompatActivity {
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 fn = reviewEt.getText().toString().trim();
 
                 if (!fn.isEmpty()) {
@@ -233,7 +190,6 @@ public class ReviewWriteActivity extends AppCompatActivity {
                         databaseReference2.child(firebaseUser.getUid()).child("spoint").setValue(changePoint).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-//                                Toast.makeText(ReviewWriteActivity.this, "포인트 지급 성공", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -260,7 +216,6 @@ public class ReviewWriteActivity extends AppCompatActivity {
                         databaseReference3.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-//                                Toast.makeText(ReviewWriteActivity.this, "포인트 데이터 저장 성공", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -271,22 +226,19 @@ public class ReviewWriteActivity extends AppCompatActivity {
                     }
                 });
 
+                // 해당 주문에 대해 리뷰 작성 완료 처리
                 databaseReference.child(product.getOrderId()).child(product.getEachOrderedId()).child("doReview").setValue("Yes").addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("Myreview", "myOrderId: " + myOrderId);
-                        Log.d("eachorderid", "eachOrderedId: " + eachOrderedId);
-
                     }
                 });
 
+                // 리뷰 작성 완료 다이얼로그 생성
                 showDialog();
             }
         });
 
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
@@ -312,8 +264,7 @@ public class ReviewWriteActivity extends AppCompatActivity {
                             reviewImage = imageUri.toString();
                             saveReviewData(rating);
                         } else {
-//                            Toast.makeText(ReviewWriteActivity.this, "이미지 업로드 실패", Toast.LENGTH_SHORT).show();
-                            Log.e("Image Upload", "Image upload failed: " + task.getException().getMessage());
+                            Log.e("ReviewWriteActivity", "이미지 업로드 실패" + task.getException().getMessage());
                         }
                     }
                 });
@@ -343,7 +294,6 @@ public class ReviewWriteActivity extends AppCompatActivity {
         productRef.child("rdatetime").setValue(getTime());
         productRef.child("reviewid").setValue(reviewId);
         productRef.child("idToken").setValue(product.getUseridtoken());
-
     }
 
     private String getTime(){
@@ -401,13 +351,10 @@ public class ReviewWriteActivity extends AppCompatActivity {
         Button btnOk = dialog2.findViewById(R.id.btn_ok);
         btnOk.setText("확인");
 
-
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog2.dismiss();
-//                Intent intent = new Intent(ProductDetailActivity.this, MainActivity.class);
-//                startActivity(intent);
             }
         });
     }

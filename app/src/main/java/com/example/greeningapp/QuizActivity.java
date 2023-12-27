@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +14,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,28 +22,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
 public class QuizActivity extends AppCompatActivity {
-
-    private long timeUntilMidnight; // 자정까지 남은 시간을 저장할 변수
-
     DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
-
     private FragmentStart fragmentStart;
     private FragmentQuestion fragmentQuestion;
-
     private FragmentQList fragmentQList;
-
-//    private FragmentEnd fragmentEnd;
     public Button btnDoQuiz;
-
     private String quizResult;
-
-    private long quizTimestamp;
-
     ImageView alreayDoImage;
-
     Dialog dialog;
 
     @Override
@@ -54,24 +38,25 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
+        // 파이어베이스 경로 설정
         firebaseAuth =  FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference("User");
 
+        // 툴바
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("User");
-
+        // 회원 데이터 가져오기
         databaseReference.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // 파이어베이스 데이터베이스의 데이터를 받아오는 곳
-                User user = dataSnapshot.getValue(User.class); //  만들어 뒀던 Product 객체에 데이터를 담는다.
+                User user = dataSnapshot.getValue(User.class); //  만들어 뒀던 User 객체에 데이터를 담는다.
+                // 회원 테이블에 있는 금일 퀴즈 참여 유무 데이터를 담고 있는 doquiz에 대한 값 담기
                 quizResult = user.getDoquiz();
-//                quizTimestamp = userAccount.getQuiztimestamp();
-//                checkQuizStatus();
             }
 
             @Override
@@ -80,51 +65,45 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
+        // 프레그먼트 객체 생성
         fragmentStart = new FragmentStart();
         fragmentQuestion = new FragmentQuestion();
-//        fragmentEnd = new FragmentEnd();
         fragmentQList = new FragmentQList();
 
+        // 다이얼로그 객체 생성
         dialog = new Dialog(QuizActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_confirm3);
 
         alreayDoImage = (ImageView) dialog.findViewById(R.id.image);
 
-
-
+        // 퀴즈 액티비티 시작 시 FragmentStart 데이터 가져오기(퀴즈 풀기 공지 화면 띄우기)
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragmentFrame2, fragmentStart);
         fragmentTransaction.commit();
 
+        // 퀴즈 풀기 버튼 레이아웃 초기화
         btnDoQuiz = (Button) findViewById(R.id.btnDoQuiz);
 
+        // 퀴즈 풀기 버튼 클릭시
         btnDoQuiz.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-//                Toast.makeText(QuizActivity.this, "버튼을 눌렀습니다." + quizResult, Toast.LENGTH_SHORT).show();
-
+                // 금일 퀴즈를 풀지 않았으면
                 if("No".equals(quizResult)){
-                    FragmentManager fm2 = getSupportFragmentManager();
+                    // 퀴즈 질문 가져오기
                     FragmentTransaction ft2 = fragmentManager.beginTransaction();
                     ft2.replace(R.id.fragmentFrame1, fragmentQuestion);
                     ft2.commit();
 
-                    FragmentManager fm4 = getSupportFragmentManager();
+                    // 퀴즈 사지선다 요소 가져오기
                     FragmentTransaction ft4 = fragmentManager.beginTransaction();
                     ft4.replace(R.id.fragmentFrame2, fragmentQList);
                     ft4.commit();
-
-//                    btnDoQuiz.setVisibility(View.INVISIBLE);
-
                 } else if("Yes".equals(quizResult)){
-//                    FragmentManager fm3 = getSupportFragmentManager();
-//                    FragmentTransaction ft3 = fragmentManager.beginTransaction();
-//                    ft3.replace(R.id.fragmentFrame1, fragmentEnd);
-//                    ft3.commit();
+                    // 금일 퀴즈에 이미 참여했다면 다이얼로그 띄우기
                     showDialog();
                 }
 
@@ -133,13 +112,7 @@ public class QuizActivity extends AppCompatActivity {
 
     }
 
-    // FragmentQList를 숨기는 메서드
-    public void hideFragmentQList() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.remove(fragmentQList);
-        ft.commit();
-    }
-
+    // 금일 퀴즈에 이미 참여했다는 다이얼로그 생성
     public void showDialog() {
         dialog.show();
 

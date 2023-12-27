@@ -5,18 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,7 +19,6 @@ import java.util.Date;
 import java.util.Locale;
 
 public class DonationCertificateActivity extends AppCompatActivity {
-
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -37,38 +31,24 @@ public class DonationCertificateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donation_certificate);
 
+        // 툴바
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
 
+        // 기부 증명서 내역 리사이클러뷰 설정
         recyclerView = (RecyclerView) findViewById(R.id.doCertiRecyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        // 기부 프로젝트 정보 list 객체 생성
         donationArrayList = new ArrayList<>();
 
+        // 파이어베이스 경로 설정
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Donation");
-
-//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-//                donationArrayList.clear();
-//                for(DataSnapshot snapshot : datasnapshot.getChildren()){
-//                    Donation donation = snapshot.getValue(Donation.class);
-//                    donationArrayList.add(donation);
-//
-//                }
-//                adapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.d("DonationCertificateActivity", String.valueOf(error.toException()));
-//            }
-//        });
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -111,6 +91,7 @@ public class DonationCertificateActivity extends AppCompatActivity {
             }
         });
 
+        // 기부 증명서 어댑터 생성 후 리사이클러뷰에 어댑터 연결
         adapter = new CertificateAdapter(donationArrayList, this);
         recyclerView.setAdapter(adapter);
     }

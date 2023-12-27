@@ -123,9 +123,6 @@
 
     </LinearLayout>
 
-
-
-
     <!-- 하단 네비게이션 바 -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation_cart"
@@ -139,9 +136,5 @@
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottommenu" />
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

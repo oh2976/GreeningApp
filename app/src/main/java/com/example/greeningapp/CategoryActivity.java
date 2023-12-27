@@ -3,16 +3,12 @@ package com.example.greeningapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -20,7 +16,6 @@ public class CategoryActivity extends AppCompatActivity{
     TabLayout tab;
     ViewPager viewPager;
     Toolbar toolbar;
-
     private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -28,25 +23,30 @@ public class CategoryActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
 
+        // 툴바 초기화 및 설정
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);//기본 제목 삭제.
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        // 탭과 뷰페이저 초기화
         tab = findViewById(R.id.tab);
         viewPager = findViewById(R.id.viewPager);
 
+        // ViewPager에 어댑터 설정
         ViewPagerCategoryAdapter adapter = new ViewPagerCategoryAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
+        // TabLayout과 ViewPager를 연동
         tab.setupWithViewPager(viewPager);
 
         // 하단바 구현
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigation);
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
 
         // 초기 선택 항목 설정
         bottomNavigationView.setSelectedItemId(R.id.tab_shopping);
+
 
         // BottomNavigationView의 아이템 클릭 리스너 설정
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -78,15 +78,14 @@ public class CategoryActivity extends AppCompatActivity{
         });
     }
 
-
+    // 옵션 메뉴 생성
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.categorymenu,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    //onCreateOptionMenu : 옵션메뉴들을 생성해주는 메소드
-    //onOptionsItemSelected : MenuItem item을 매개변수로 받아 해당하는 case의 코드를 실행
+    // 옵션 메뉴 아이템 선택 이벤트 처리
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
@@ -94,9 +93,11 @@ public class CategoryActivity extends AppCompatActivity{
             onBackPressed();
             return true;
         } else if (itemId == R.id.action_search) {
+            // Search 액티비티로 이동
             startActivity(new Intent(this, SearchActivity.class));
             return true;
         } else if (itemId == R.id.action_cart) {
+            // Cart 액티비티로 이동
             startActivity(new Intent(this, CartActivity.class));
             return true;
         }

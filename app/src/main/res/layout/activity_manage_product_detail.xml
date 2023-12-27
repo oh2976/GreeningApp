@@ -26,15 +26,6 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-<!--    <TextView-->
-<!--        android:id="@+id/textView3"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="상품 정보 수정"-->
-<!--        android:gravity="center"-->
-<!--        android:layout_marginTop="50dp"-->
-<!--        android:textSize="20dp" />-->
-
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
@@ -223,25 +214,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="16dp"-->
-
-<!--                android:gravity="center"-->
-<!--                android:orientation="horizontal">-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="서비스 상태 : " />-->
-
-<!--                <EditText-->
-<!--                    android:id="@+id/ModifyService"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content" />-->
-<!--            </LinearLayout>-->
 
         </LinearLayout>
 

@@ -26,19 +26,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!--            <TextView-->
-                <!--                android:id="@+id/reviewTool"-->
-                <!--                android:layout_width="match_parent"-->
-                <!--                android:layout_height="50dp"-->
-                <!--                android:layout_gravity="center"-->
-                <!--                android:gravity="center"-->
-                <!--                android:textSize="20dp"-->
-                <!--                android:text="후기작성"/>-->
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar_reviewwrite"
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
+                    android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:minHeight="?attr/actionBarSize"
                     android:theme="?attr/actionBarTheme"
@@ -110,12 +102,10 @@
                     android:text="리뷰 작성하기"/>
 
                 <EditText
-                    android:layout_marginTop="8dp"
                     android:id="@+id/writeReviewEt"
                     android:layout_width="match_parent"
                     android:layout_height="170dp"
                     android:gravity="top"
-                    android:padding="4dp"
                     android:background="@drawable/reviewwritestroke"
                     android:hint=" 후기를 작성해주세요"
                     android:inputType="textMultiLine"
@@ -126,7 +116,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginBottom="16dp"
-                    android:scrollbars="vertical" />
+                    android:scrollbars="vertical"
+                    android:privateImeOptions="defaultInputmode=korean"/>
 
                 <TextView
                     android:layout_width="match_parent"

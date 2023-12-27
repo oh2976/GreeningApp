@@ -3,49 +3,48 @@ package com.example.greeningapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class DoCertificateDetailActivity extends AppCompatActivity {
-
     private ImageView CERTdetailed_img, CERTdetail_longimg;
     private TextView CERTdetailed_name, CERTdetail_start, CERTdetail_end;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
-
     Donation donation;
-
     private BottomNavigationView bottomNavigationView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_do_certificate_detail);
 
+        // 파이어베이스 경로 설정
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Donation");
 
+        // CertificateAdapter.java 파일에서 보낸 데이터 받음
         final Object object = getIntent().getSerializableExtra("CertificateDetail");
+        // 받은 데이터를 Donation 객체로 형변환
         if(object instanceof Donation){
             donation = (Donation) object;
         }
 
+        // 레이아웃 요소 설정
         CERTdetailed_img = (ImageView) findViewById(R.id.CERTdetailed_img);
         CERTdetail_longimg = (ImageView) findViewById(R.id.CERTdetail_longimg);
         CERTdetailed_name = (TextView) findViewById(R.id.CERTdetailed_name);
         CERTdetail_start = (TextView) findViewById(R.id.CERTdetail_start);
         CERTdetail_end = (TextView) findViewById(R.id.CERTdetail_end);
 
+        // 객체가 null이 아니라면 레이아웃에 데이터 넣기
         if(donation != null) {
             Glide.with(getApplicationContext()).load(donation.getDonationimg()).into(CERTdetailed_img);
             Glide.with(getApplicationContext()).load(donation.getDonationdetailimg()).into(CERTdetail_longimg);
@@ -54,6 +53,7 @@ public class DoCertificateDetailActivity extends AppCompatActivity {
             CERTdetail_end.setText(donation.getDonationend());
         }
 
+        // 툴바
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);

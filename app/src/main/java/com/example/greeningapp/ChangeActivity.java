@@ -9,16 +9,12 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,7 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class ChangeActivity extends AppCompatActivity {
-
     private FirebaseAuth mFirebaseAuth; // 파이어베이스 인증 처리
     private DatabaseReference mDatabaseRef; // 실시간 데이터베이스
     private EditText mEtName, mEtPostcode, mEtAddress, mEtEmail, mEtPhone;
@@ -42,16 +37,19 @@ public class ChangeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change);
 
+        // 액션바 및 툴바 설정
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);//기본 제목 삭제.
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        // 비밀번호 재설정 다이얼로그
         dialog = new Dialog(ChangeActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.customdialog);
 
+        // 비밀번호 재설정 버튼 설정 및 클릭 리스너 등록
         Button resetPwButton = findViewById(R.id.btnPassword);
         resetPwButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +80,7 @@ public class ChangeActivity extends AppCompatActivity {
             }
         });
 
-
+        // 파이어베이스 인증 및 데이터베이스 초기화
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("User");
 
@@ -118,11 +116,9 @@ public class ChangeActivity extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(ChangeActivity.this, "회원정보를 불러오는데에 실패했습니다.", Toast.LENGTH_SHORT).show();
                 }
             });
         }
-
 
         // 저장 버튼 클릭 이벤트 처리
         mBtnSave.setOnClickListener(new View.OnClickListener() {
@@ -133,6 +129,7 @@ public class ChangeActivity extends AppCompatActivity {
         });
     }
 
+    // 변경된 정보를 저장
     private void saveChanges() {
         // 변경된 정보 가져오기
         String name = mEtName.getText().toString().trim();
@@ -165,8 +162,6 @@ public class ChangeActivity extends AppCompatActivity {
         }
     }
 
-
-
     // 비밀번호 재설정 이메일 보내기
     private void sendEmailForPasswordUpdate() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -180,8 +175,6 @@ public class ChangeActivity extends AppCompatActivity {
                     Snackbar.make(getWindow().getDecorView().getRootView(), "이메일 전송 실패", Snackbar.LENGTH_LONG).show();
                 }
             });
-        } else {
-            Snackbar.make(getWindow().getDecorView().getRootView(), "해당 이메일이 존재하지 않습니다", Snackbar.LENGTH_LONG).show();
         }
     }
 

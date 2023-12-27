@@ -2,9 +2,7 @@ package com.example.greeningapp;
 
 public class Order {
     private String productName;
-
     private String dataId;
-
     private int productId;
     private int overTotalPrice;
     private String productPrice;

@@ -8,14 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
-public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder>{
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder>{
     private ArrayList<Product> arrayList;
     private Context context;
 
@@ -27,7 +25,9 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.Product
     @NonNull
     @Override
     public ProductAdapter.ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // 뷰에 레이아웃 연결
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_item, parent, false);
+        // 뷰 홀더 객체 생성 및 반환
         ProductViewHolder holder = new ProductViewHolder(view);
         return holder;
     }
@@ -54,6 +54,7 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.Product
 
     @Override
     public int getItemCount() {
+        // 목록이 비어 있지 않으면 목록의 크기 반환, 비어 있으면 0 반환
         if (arrayList != null) {
             return arrayList.size();
         }
@@ -61,7 +62,6 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.Product
     }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder {
-
         ImageView imageView;
         TextView textName;
         TextView textPrice;

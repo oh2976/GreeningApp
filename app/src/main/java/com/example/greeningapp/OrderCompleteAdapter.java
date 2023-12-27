@@ -1,44 +1,27 @@
 package com.example.greeningapp;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.text.DecimalFormat;
 import java.util.List;
 
 public class OrderCompleteAdapter extends RecyclerView.Adapter<OrderCompleteAdapter.OrderCompleteViewHolder>{
-
     Context context;
     List<MyOrder> myOrderList;
-
-    FirebaseDatabase firebaseDatabase;
-    FirebaseAuth firebaseAuth;
-    DatabaseReference databaseReference;
-
-    int totalPrice = 0;
-
+    // 화폐 단위 형식 객체 생성
     DecimalFormat decimalFormat = new DecimalFormat("###,###");
-
 
     public OrderCompleteAdapter(Context context, List<MyOrder> myOrderList){
         this.context = context;
         this.myOrderList = myOrderList;
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
+
     }
 
     @NonNull
@@ -49,9 +32,7 @@ public class OrderCompleteAdapter extends RecyclerView.Adapter<OrderCompleteAdap
 
     @Override
     public void onBindViewHolder(@NonNull OrderCompleteAdapter.OrderCompleteViewHolder holder, int position) {
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference("CurrentUser");
-
+        // 뷰에 데이터 바인딩 + 화폐 단위 처리
         Glide.with(holder.itemView)
                 .load(myOrderList.get(position).getOrderImg())
                 .into(holder.pimg_orderitem);
@@ -62,6 +43,7 @@ public class OrderCompleteAdapter extends RecyclerView.Adapter<OrderCompleteAdap
 
     @Override
     public int getItemCount() {
+        // 목록이 비어 있지 않으면 목록의 크기 반환, 비어 있으면 0 반환
         if(myOrderList != null){
             return myOrderList.size();
         }
@@ -71,6 +53,8 @@ public class OrderCompleteAdapter extends RecyclerView.Adapter<OrderCompleteAdap
     public class OrderCompleteViewHolder extends RecyclerView.ViewHolder {
         ImageView pimg_orderitem;
         TextView pName_orderitem, pPrice_orderitem, pQauntity_orderitem;
+
+        // 뷰에 대한 참조
         public OrderCompleteViewHolder(@NonNull View itemView) {
             super(itemView);
 

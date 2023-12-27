@@ -4,18 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,13 +29,14 @@ public class DonationTwoFragment extends Fragment{
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_donation_two, container, false);
+
         recyclerView_donation_two = view.findViewById(R.id.recyclerView_donation_two); //아이디 연결
         recyclerView_donation_two.setHasFixedSize(true); //리사이클러뷰 기존 성능 강화
-
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView_donation_two.setLayoutManager(layoutManager);
         donationArrayList_two = new ArrayList<>(); //item_list 담을 어레이 리스트 (어댑터 쪽으로)
 
+        // 파이어베이스 경로 설정
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Donation");
 
@@ -83,6 +81,7 @@ public class DonationTwoFragment extends Fragment{
             }
         });
 
+        // 기부 프로젝트 어댑터 생성 후 리사이클러뷰에 어댑터 연결
         doantionAdapter_two = new CertificateAdapter(donationArrayList_two, getActivity());
         recyclerView_donation_two.setAdapter(doantionAdapter_two);
 

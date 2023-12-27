@@ -2,7 +2,6 @@ package com.example.greeningapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +18,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -44,13 +42,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // 파이어베이스 초기화
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("User");
 
+        // 레이아웃 요소
         mEtEmail = findViewById(R.id.et_email);
         mEtPwd = findViewById(R.id.et_pwd);
         mCheckBoxSaveId = findViewById(R.id.checkbox_saveId);
 
+        // 체크박스 색상 설정
         ColorStateList colorStateList = new ColorStateList(
                 new int[][] {
                         new int[] { android.R.attr.state_checked },
@@ -64,37 +65,46 @@ public class LoginActivity extends AppCompatActivity {
 
         mCheckBoxSaveId.setButtonTintList(colorStateList);
 
+        // sharedPreferences 초기화
         sharedPreferences = getSharedPreferences("login_prefs", Context.MODE_PRIVATE);
 
+        // 자동 로그인 설정
         boolean autoLoginEnabled = sharedPreferences.getBoolean("save_id", false);
         mCheckBoxSaveId.setChecked(autoLoginEnabled);
 
+        // 저장된 이메일 아이디가 있다면 입력 필드에 설정
         String savedEmail = sharedPreferences.getString("email", "");
         if (!TextUtils.isEmpty(savedEmail)) {
             mEtEmail.setText(savedEmail);
         }
 
+        // 다이얼로그 설정
         dialog = new Dialog(LoginActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_confirm);
 
+        // 회원가입 후 가입된 이메일 아이디 전달 받아 입력 필드에 설정
         Intent receivedIntent = getIntent();
         if (receivedIntent != null && receivedIntent.hasExtra("userEmail")) {
             strEmail = receivedIntent.getStringExtra("userEmail");
             mEtEmail.setText(strEmail);
         }
 
+        // 로그인 버튼 클릭 이벤트 설정
         Button btn_login = findViewById(R.id.btn_login);
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 입력 값 확인
                 strEmail = mEtEmail.getText().toString();
                 String strPwd = mEtPwd.getText().toString();
 
+                // 파이어베이스로 로그인 시도
                 mFirebaseAuth.signInWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+                            // 자동 로그인 체크박스 체크 시 이메일 아이디 저장
                             if (mCheckBoxSaveId.isChecked()) {
                                 String uid = mFirebaseAuth.getCurrentUser().getUid();
                                 mDatabaseRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -111,16 +121,19 @@ public class LoginActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
+                                        // 로그인 오류 시 에러 메세지 출력
                                         Log.e("LoginActivity, 로그인 오류", String.valueOf(error.toException()));
                                     }
                                 });
                             } else {
+                                // 자동 로그인 체크박스 미체크 시 저장된 정보 제거
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.remove("email");
                                 editor.remove("save_id");
                                 editor.apply();
                             }
 
+                            // 관리자 계정 로그인 처리
                             if("test@gmail.com".equals(strEmail) && "123456".equals(strPwd)){
                                 Intent intent = new Intent(LoginActivity.this, ManagerMainActivity.class);
                                 startActivity(intent);
@@ -132,19 +145,23 @@ public class LoginActivity extends AppCompatActivity {
                             }
 
                         } else{
-                            showDialog();
+                            // 로그인 실패 시
+                            showDialog();  // 다이얼로그 생성
                         }
                     }
                 });
             }
         });
 
+        // 회원가입 텍스트뷰에 밑출 추가
         TextView txtRegister = (TextView) findViewById(R.id.LoginTxtRegister);
 
         String mystring = txtRegister.getText().toString();
         SpannableString content = new SpannableString(mystring);
         content.setSpan(new UnderlineSpan(), 0, mystring.length(), 0);
         txtRegister.setText(content);
+
+        // 회원가입 버튼 클릭 이벤트 설정
         txtRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -292,9 +292,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottommenu" />
 
-
-
-
-
-
 </LinearLayout>

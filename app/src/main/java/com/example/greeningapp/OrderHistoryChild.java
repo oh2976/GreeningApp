@@ -8,23 +8,13 @@ public class OrderHistoryChild {
     private String totalQuantity;
     private  String orderImg;
 
+    public OrderHistoryChild() {
 
-    public OrderHistoryChild() { }
-
-
-    public OrderHistoryChild(String orderId, int productId, String productName, String productPrice, String totalQuantity, String orderImg) {
-        this.orderId = orderId;
-        this.productId = productId;
-        this.productName = productName;
-        this.productPrice = productPrice;
-        this.totalQuantity = totalQuantity;
-        this.orderImg = orderImg;
     }
 
     public String getOrderId() { return orderId; }
 
     public void setOrderId(String orderId) { this.orderId = orderId; }
-
 
     public int getProductId() { return productId; }
 

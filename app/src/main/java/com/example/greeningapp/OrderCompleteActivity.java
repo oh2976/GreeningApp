@@ -5,16 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,31 +20,21 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderCompleteActivity extends AppCompatActivity {
-
     private String orderId, myOrderId;
-
     private TextView cmpOrderId, cmpOrderDate, cmp_totalPrice, cmp_name, cmp_phone, cmp_address, cmp_postcode;
-
     private Button btnGoMain;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
-
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView recyclerView;
-
     private OrderCompleteAdapter orderCompleteAdapter;
     private List<MyOrder> myOrderList;
-
-    private ImageButton navMain, navCategory, navDonation, navMypage;
-
     private BottomNavigationView bottomNavigationView;
-
     DecimalFormat decimalFormat = new DecimalFormat("###,###");
 
     @Override
@@ -55,6 +42,7 @@ public class OrderCompleteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_complete);
 
+        // 툴바
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -71,11 +59,13 @@ public class OrderCompleteActivity extends AppCompatActivity {
         myOrderId = intent.getStringExtra("myOrderId");
         Log.d("OrderCompleteActivity", orderId);
 
+        // 리사이클러뷰 레이아웃 설정 초기화
         recyclerView = findViewById(R.id.recyclerView_orderComplete);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        // 레이아웃 설정 초기화
         cmpOrderId = findViewById(R.id.cmpOrderId);
         cmpOrderDate = findViewById(R.id.cmpOrderDate);
         cmp_totalPrice = findViewById(R.id.cmp_totalPrice);
@@ -84,7 +74,7 @@ public class OrderCompleteActivity extends AppCompatActivity {
         cmp_address = findViewById(R.id.cmp_address);
         cmp_postcode = (TextView) findViewById(R.id.cmp_postcode);
 
-        myOrderList = new ArrayList<>();
+        myOrderList = new ArrayList<>(); // MyOrder 객체를 담을 리스트 초기화
 
         // MyOrder에 있는 결제 정보 데이터베이스 가져와서 화면에 뿌리기
         databaseReference.child(firebaseUser.getUid()).child("MyOrder").child(myOrderId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -126,8 +116,6 @@ public class OrderCompleteActivity extends AppCompatActivity {
             }
         });
 
-
-
         // 하단바 구현
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigation_ordercp);
 
@@ -162,8 +150,6 @@ public class OrderCompleteActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

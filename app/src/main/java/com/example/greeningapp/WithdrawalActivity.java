@@ -1,25 +1,18 @@
 package com.example.greeningapp;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,7 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class WithdrawalActivity extends AppCompatActivity{
-
     private FirebaseAuth mFirebaseAuth; // 파이어베이스 인증 처리
     private DatabaseReference mDatabaseRef; // 실시간 데이터베이스
     private RadioButton radioButton;
@@ -55,15 +47,16 @@ public class WithdrawalActivity extends AppCompatActivity{
         dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog2.setContentView(R.layout.dialog_confirm);
 
+        // 파이어베이스 초기화
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("User");
-
 
         // XML 레이아웃의 요소와 연결
         radioButton = findViewById(R.id.radioButton);
         cancelButton = findViewById(R.id.wbtn1);
         withdrawalButton = findViewById(R.id.wbtn2);
 
+        // 취소하기 버튼 클릭
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +76,7 @@ public class WithdrawalActivity extends AppCompatActivity{
             }
         });
 
-        // 탈퇴하기 버튼 클릭 시
+        // 탈퇴하기 버튼 클릭
         withdrawalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,6 +89,7 @@ public class WithdrawalActivity extends AppCompatActivity{
         });
     }
 
+    // 실패 다이얼로그 표시
     public void showFaildialog() {
         dialog2.show();
 
@@ -112,7 +106,7 @@ public class WithdrawalActivity extends AppCompatActivity{
         });
     }
 
-    // 팝업 창 표시
+    // 확인 다이얼로그 표시
     private void showConfirmationDialog() {
         dialog.show();
 
@@ -127,7 +121,7 @@ public class WithdrawalActivity extends AppCompatActivity{
         btnok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 사용자 계정 삭제
+                // 사용자 계정 삭제 함수 호출
                 deleteAccount();
                 dialog.dismiss();
             }
@@ -140,30 +134,8 @@ public class WithdrawalActivity extends AppCompatActivity{
             }
         });
     }
-    //
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("탈퇴 확인");
-//        builder.setMessage("정말로 이 앱을 탈퇴하시겠습니까?");
-//        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                // 사용자 계정 삭제
-//                deleteAccount();
-//
-//            }
-//        });
-//
-//        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.dismiss();
-//            }
-//        });
-//        builder.create().show();
-//    }
     private void deleteAccount () {
         mFirebaseAuth = mFirebaseAuth.getInstance();
-//        mFirebaseAuth = mFirebaseAuth.getCurrentUser();
         if (mFirebaseAuth != null) {
             mFirebaseAuth.getCurrentUser().delete()
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -207,6 +179,8 @@ public class WithdrawalActivity extends AppCompatActivity{
                     });
         }
     }
+
+    // 옵션 메뉴 아이템 선택 이벤트 처리
     @Override
     public boolean onOptionsItemSelected (MenuItem item){
         int itemId = item.getItemId();

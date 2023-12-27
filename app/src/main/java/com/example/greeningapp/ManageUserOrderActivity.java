@@ -5,23 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,46 +23,36 @@ import java.util.Comparator;
 import java.util.Date;
 
 public class ManageUserOrderActivity extends AppCompatActivity {
-
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<MyOrder> arrayList;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
-
     private Button btnManageMain;
-
-    ImageView MGProductImg_order;
-    TextView MGOrderID_order, MGOrderDate_order, MGProductName_order, MGOrderPrice_order, MGOrderStock_order, MGOrderState_order;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_user_order);
 
+        //  툴바
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
 
-
-        recyclerView = findViewById(R.id.recyclerView); //아디 연결
+        recyclerView = findViewById(R.id.recyclerView); // 리사이클러뷰 레이아웃 연결
         recyclerView.setHasFixedSize(true); //리사이클러뷰 기존 성능 강화
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        arrayList = new ArrayList<>(); // Product 객체를 담을 어레이리스트(어댑터 쪽으로 날릴 거임)
+        arrayList = new ArrayList<>(); // MyOrder 객체를 담을 어레이리스트(어댑터 쪽으로 날릴 거임)
 
+        // 파이어베이스 경로 설정
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("Admin");
 
-        firebaseDatabase = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
-        databaseReference = firebaseDatabase.getReference("Admin"); //DB 연결 성공
-
-//        arrayList.clear();
-//        adapter.notifyDataSetChanged(); // 리스트 저장 및 새로고침
-//        MyOrder myOrder = orderSnapshot.getValue(MyOrder.class);
-//        arrayList.add(myOrder);
-
+        // 관리자 주문 데이터 가져오기
         databaseReference.child("UserOrder").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -76,12 +60,12 @@ public class ManageUserOrderActivity extends AppCompatActivity {
                 arrayList.clear(); //기존 배열 리스트가 존재하지 않게 남아 있는 데이터 초기화
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     // 반복문으로 데이터 List를 추출해냄
-                    MyOrder myOrder = snapshot.getValue(MyOrder.class); //  만들어 뒀던 Product 객체에 데이터를 담는다.
+                    MyOrder myOrder = snapshot.getValue(MyOrder.class); //  만들어 뒀던 MyOrder 객체에 데이터를 담는다.
                     arrayList.add(myOrder); // 담은 데이터들을 배열 리스트에 넣고 리사이클러뷰로 보낼 준비
                     Log.d("ManageUserActivity", snapshot.getKey()+"");
-
                 }
 
+                // 주문 일자가 최신순으로 데이터 정렬
                 Collections.sort(arrayList, new Comparator<MyOrder>() {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -97,7 +81,6 @@ public class ManageUserOrderActivity extends AppCompatActivity {
                     }
                 });
                 adapter.notifyDataSetChanged(); // 리스트 저장 및 새로고침
-
             }
 
             @Override
@@ -107,11 +90,11 @@ public class ManageUserOrderActivity extends AppCompatActivity {
             }
         });
 
+        // 관리자 회원 주문 어댑터 생성 후 리사이클러뷰에 어댑터 연결
         adapter = new ManageUserOrderAdapter(arrayList, this);
-        recyclerView.setAdapter(adapter); //리사이클러뷰에 어댑터 연결
+        recyclerView.setAdapter(adapter);
 
-
-
+        // 관리자 메인으로 이동
         btnManageMain = (Button) findViewById(R.id.btnManageMain_Order);
         btnManageMain.setOnClickListener(new View.OnClickListener() {
             @Override

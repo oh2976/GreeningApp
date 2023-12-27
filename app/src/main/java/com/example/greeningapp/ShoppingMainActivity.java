@@ -5,35 +5,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class ShoppingMainActivity extends AppCompatActivity {
-
-
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Product> arrayList;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
-
     private Button btnManageMain;
 
     @Override
@@ -41,23 +35,26 @@ public class ShoppingMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_main);
 
+        // 툴바
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
 
 
-        recyclerView = findViewById(R.id.recyclerView); //아디 연결
+        recyclerView = findViewById(R.id.recyclerView); // 리사이클러 레이아웃 연결
         recyclerView.setHasFixedSize(true); //리사이클러뷰 기존 성능 강화
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
         arrayList = new ArrayList<>(); // Product 객체를 담을 어레이리스트(어댑터 쪽으로 날릴 거임)
 
-        database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
-        databaseReference = database.getReference("Product"); //DB 연결 성공
+        // 파이어베이스 경로 설정
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference("Product");
 
-        Query query = databaseReference.orderByChild("populstock"); // populstock 내림차순
+        // 상품 데이터 중 populstock을 기준으로 데이터를 가져오는 쿼리
+        Query query = databaseReference.orderByChild("populstock");
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -69,10 +66,7 @@ public class ShoppingMainActivity extends AppCompatActivity {
                     Product product = snapshot.getValue(Product.class);
                     arrayList.add(product);
 
-//                    pid = product.getPid();
-//                    Log.d("MainActivity", "pid = " + pid);
-
-                    //arrayList를 populstock 내림차순 정렬, 값 없는건 pid순
+                    //arrayList를 populstock 내림차순 정렬, 값 없는건 pid순 정렬
                     Collections.sort(arrayList, new Comparator<Product>() {
                         @Override
                         public int compare(Product product1, Product product2) {
@@ -83,7 +77,7 @@ public class ShoppingMainActivity extends AppCompatActivity {
                 }
 
                 adapter.notifyDataSetChanged(); //리스트저장 및 새로고침
-                //db가져오던중 에러발생시
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -91,34 +85,11 @@ public class ShoppingMainActivity extends AppCompatActivity {
             }
         });
 
-//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                // 파이어베이스 데이터베이스의 데이터를 받아오는 곳
-//                arrayList.clear(); //기존 배열 리스트가 존재하지 않게 남아 있는 데이터 초기화
-//                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-//                    // 반복문으로 데이터 List를 추출해냄
-//                    Product product = snapshot.getValue(Product.class); //  만들어 뒀던 Product 객체에 데이터를 담는다.
-//                    arrayList.add(product); // 담은 데이터들을 배열 리스트에 넣고 리사이클러뷰로 보낼 준비
-//                    Log.d("ShoppingMainActivity", snapshot.getKey()+"");
-//
-//                }
-//                adapter.notifyDataSetChanged(); // 리스트 저장 및 새로고침
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                // 디비를 가져오던 중 에러 발생 시
-//                Log.e("ShoppingMainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
-//            }
-//        });
-
+        // 상품 어댑터 생성 후 리사이클러뷰에 어댑터 연결
         adapter = new ProductAdapter(arrayList, this);
         recyclerView.setAdapter(adapter); //리사이클러뷰에 어댑터 연결
 
-
-
+        // 관리자 메인 페이지로 이동
         btnManageMain = (Button) findViewById(R.id.btnManageMain_shop);
         btnManageMain.setOnClickListener(new View.OnClickListener() {
             @Override

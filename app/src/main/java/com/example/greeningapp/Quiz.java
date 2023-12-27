@@ -1,6 +1,5 @@
 package com.example.greeningapp;
 
-
 public class Quiz {
     private int qid;
     private String qlist1;

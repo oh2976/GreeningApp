@@ -2,7 +2,6 @@ package com.example.greeningapp;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
 public class MyOrder  implements Serializable {
     private String address;
     private String orderId;
@@ -17,16 +16,11 @@ public class MyOrder  implements Serializable {
     private String userName;
     private String orderDate;
     private String doReview;
-
     private  String orderImg;
     private  String dataId;
-
     private String postcode;
-
     private String useridtoken;
-
     private String orderstate;
-
     private ArrayList<MyOrder> childModelArrayList;
 
     public MyOrder() {

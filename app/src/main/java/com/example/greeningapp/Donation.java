@@ -3,17 +3,13 @@ package com.example.greeningapp;
 import java.io.Serializable;
 
 public class Donation implements Serializable {
-
     private int donationid;
     private String donationname;
     private String donationstart;
     private String donationend;
-
     private String donationimg;
     private String donationdetailimg;
-
     private int point;
-
 
     public Donation() {
 

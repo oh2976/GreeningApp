@@ -1,6 +1,5 @@
 package com.example.greeningapp;
 
-
 import java.io.Serializable;
 
 public class Cart implements Serializable {
@@ -10,11 +9,8 @@ public class Cart implements Serializable {
     private int selectedQuantity;
     private int pId;
     private String productImg;
-
     private String dataId;
-
     private int productStock;
-
 
     public Cart() {
     }

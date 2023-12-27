@@ -1,6 +1,5 @@
 package com.example.greeningapp;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,23 +11,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,20 +31,19 @@ public class SearchActivity extends AppCompatActivity {
     private RecyclerView resultsListView;
     private SearchAdapter adapter;
     private List<Product> searchResults = new ArrayList<>(); // 검색 결과를 저장할 리스트
-
     Toolbar toolbar;
     private BottomNavigationView bottomNavigationView;
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        // 툴바 설정
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);//기본 제목 삭제.
+        actionBar.setDisplayShowTitleEnabled(false); // 기본 제목 삭제.
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         // 하단바 구현
@@ -66,22 +59,18 @@ public class SearchActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.tab_home) {
                     // Home 액티비티로 이동
                     startActivity(new Intent(SearchActivity.this, MainActivity.class));
-                    finish();
                     return true;
                 } else if (item.getItemId() == R.id.tab_shopping) {
                     // Category 액티비티로 이동
                     startActivity(new Intent(SearchActivity.this, CategoryActivity.class));
-                    finish();
                     return true;
                 } else if (item.getItemId() == R.id.tab_donation) {
                     // Donation 액티비티로 이동
                     startActivity(new Intent(SearchActivity.this, DonationMainActivity.class));
-                    finish();
                     return true;
                 } else if (item.getItemId() == R.id.tab_mypage) {
                     // My Page 액티비티로 이동
                     startActivity(new Intent(SearchActivity.this, MyPageActivity.class));
-                    finish();
                     return true;
                 }
                 return false;
@@ -95,7 +84,7 @@ public class SearchActivity extends AppCompatActivity {
         adapter = new SearchAdapter(searchResults);
         resultsListView.setAdapter(adapter);
 
-        // // RecyclerView 터치 이벤트 처리
+        // RecyclerView 터치 이벤트 처리
         resultsListView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -103,7 +92,8 @@ public class SearchActivity extends AppCompatActivity {
                 return false;
             }
         });
-        //키보드 활성화
+
+        // 검색어 입력 상자에 포커스 설정 및 키보드 활성화
         searchEditText.setEnabled(true);
         searchEditText.requestFocus();
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -114,7 +104,6 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String searchText = charSequence.toString().toLowerCase();
@@ -141,7 +130,6 @@ public class SearchActivity extends AppCompatActivity {
 
         // Firebase 데이터베이스에서 데이터를 가져와서 검색 결과를 업데이트
         databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 searchResults.clear(); // 검색 결과 초기화
@@ -154,23 +142,22 @@ public class SearchActivity extends AppCompatActivity {
                         searchResults.add(product); // Product 객체 추가
                     }
                 }
-
                 adapter.notifyDataSetChanged(); // 검색 결과를 ListView에 업데이트
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // 검색 중 오류가 발생했을 때의 처리 코드
             }
         });
     }
 
+    // 옵션 메뉴 생성
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.searchmenu, menu);
         return true;
     }
 
+    // 옵션 메뉴 아이템 선택 이벤트 처리
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
@@ -178,7 +165,7 @@ public class SearchActivity extends AppCompatActivity {
             onBackPressed();
             return true;
         } else if (itemId == R.id.action_search) {
-            searchEditText.requestFocus(); // EditText에 포커스를 주어 클릭한 것처럼 만듭니다.
+            searchEditText.requestFocus();
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(searchEditText, InputMethodManager.SHOW_IMPLICIT); // 키보드를 나타나게 합니다.
             return true;

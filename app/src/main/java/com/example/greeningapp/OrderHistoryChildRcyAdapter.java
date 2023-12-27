@@ -5,32 +5,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
-import com.example.greeningapp.R;
-import com.example.greeningapp.ReviewActivity;
-import com.example.greeningapp.ReviewWriteActivity;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 
 public class OrderHistoryChildRcyAdapter extends RecyclerView.Adapter<OrderHistoryChildRcyAdapter.ChildViewHolder> {
 
     public ArrayList<MyOrder> childModelArrayList;
     Context cxt;
-    private String isReviewCompleted ;
 
     public OrderHistoryChildRcyAdapter(ArrayList<MyOrder> childModelArrayList, Context mContext) {
         this.cxt = mContext;
@@ -54,6 +43,7 @@ public class OrderHistoryChildRcyAdapter extends RecyclerView.Adapter<OrderHisto
 
         String state = childModelArrayList.get(position).getOrderstate();
 
+        //주문 상태에 따라 상태 처리 표시설정
         if("paid".equals(state)){
             holder.OrderState_orderhistory.setText("결제 완료");
             holder.ordhreviewBtn.setVisibility(View.INVISIBLE);
@@ -64,9 +54,11 @@ public class OrderHistoryChildRcyAdapter extends RecyclerView.Adapter<OrderHisto
 
         String isReviewCompleted = childModelArrayList.get(position).getDoReview();
 
+        // 후기 작성 여부에 따라 버튼 설정
         if ("No".equals(isReviewCompleted)) {
 
         } else if ("Yes".equals(isReviewCompleted)) {
+            //후기 작성 완료시 처리
             holder.ordhreviewBtn.setText("후기 작성완료");
             holder.ordhreviewBtn.setBackgroundTintList(ColorStateList.valueOf(cxt.getResources().getColor(R.color.ordh_btn_click))); //버튼색변경
             holder.ordhreviewBtn.setTextColor(cxt.getResources().getColor(R.color.white)); // 글자색 변경
@@ -77,9 +69,9 @@ public class OrderHistoryChildRcyAdapter extends RecyclerView.Adapter<OrderHisto
             @Override
             public void onClick(View v) {
                 if ("No".equals(isReviewCompleted)) {
+                    // 후기 작성이 안된 경우 이동할 엑티비티 설정
                     Intent intent = new Intent(cxt, ReviewWriteActivity.class);
                     intent.putExtra("product", childModelArrayList.get(position));
-//                    Log.d("myOrderId", String.valueOf(childModelArrayList.get(position)+"가져왔음"));
                     cxt.startActivity(intent);
                     ((Activity)cxt).finish();
 
@@ -102,9 +94,7 @@ public class OrderHistoryChildRcyAdapter extends RecyclerView.Adapter<OrderHisto
     public class ChildViewHolder extends RecyclerView.ViewHolder {
         public ImageView orderhistory_img;
         public TextView pro_name, pro_price, ordervalue;
-
         TextView OrderState_orderhistory;
-
         AppCompatButton ordhreviewBtn;
 
         public ChildViewHolder(View itemView) {

@@ -3,12 +3,10 @@ package com.example.greeningapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -19,40 +17,26 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.HashMap;
-import java.util.function.Consumer;
-
 public class ManageAddProductActivity extends AppCompatActivity {
-
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
     private static final int GALLERY_REQUEST_1 = 1;
     private static final int GALLERY_REQUEST_2 = 2;
-
-    private EditText AddPid, AddCategoryId,  AddPname, AddPPrice, AddPsay, AddStock, AddPopulstock;
-
-
+    private EditText AddPid,  AddPname, AddPPrice, AddPsay, AddStock, AddPopulstock;
     private int strAddPid, strAddCategoryId, strAddPPrice, strAddStock, strAddPopulstock;
-
-    private String strAddPimg, strAddPDetailimg, strAddPname, strAddPsay;
-
+    private String strAddPname, strAddPsay;
     private ImageButton AddPimg, AddPDetailimg;
-
     private Uri imageUri1, imageUri2;
     private Button btnMGProductAdd;
-
-
     Dialog dialog;
 
     @Override
@@ -60,20 +44,18 @@ public class ManageAddProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_add_product);
 
-
+        // 툴바
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
 
-
-        // Firebase Realtime Database 및 Firebase Storage에 대한 레퍼런스 생성
+        // 파이어베이스 경로 설정
         databaseReference = FirebaseDatabase.getInstance().getReference("Product");
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        // UI 요소 초기화
+        // 레이아웃 요소 초기화
         AddPid = (EditText) findViewById(R.id.AddPid);
-//        AddCategoryId = (EditText) findViewById(R.id.AddCategoryId);
         AddPimg = (ImageButton) findViewById(R.id.AddPImg);
         AddPDetailimg = (ImageButton) findViewById(R.id.AddPDetailimg);
         AddPname = (EditText) findViewById(R.id.AddPname);
@@ -81,9 +63,9 @@ public class ManageAddProductActivity extends AppCompatActivity {
         AddPsay = (EditText) findViewById(R.id.AddPsay);
         AddStock = (EditText) findViewById(R.id.AddStock);
         AddPopulstock = (EditText) findViewById(R.id.AddPPopulstock);
-
         btnMGProductAdd = (Button) findViewById(R.id.btnMGProductAdd);
 
+        // 다이얼로그 객체 생성
         dialog = new Dialog(ManageAddProductActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_confirm2);
@@ -108,56 +90,33 @@ public class ManageAddProductActivity extends AppCompatActivity {
             }
         });
 
+        // 카테고리 드롭다운 메뉴 생성
         Spinner spinner = findViewById(R.id.category_spinner);
-
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this,
-
-                // R.array.gender_array는 2번에서 설정한 string-array 태그의 name 입니다.
                 R.array.category_select_item,
-
-                // android.R.layout.simple_spinner_dropdown_item은 android에서 기본 제공
-                // 되는 layout 입니다. 이 부분은 "선택된 item" 부분의 layout을 결정합니다.
                 android.R.layout.simple_spinner_dropdown_item
         );
 
-        // android.R.layout.simple_spinner_dropdown_item도 android에서 기본 제공
-        // 되는 layout 입니다. 이 부분은 "선택할 item 목록" 부분의 layout을 결정합니다.
+        // 안드로이드에서 기본으로 제공하는 adapter 생성 후 spinner에 적용
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-
-
-
+        // 상품 추가 버튼 클릭 시
         btnMGProductAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 변수에 각각의 레이아웃에서 데이터 가져와서 담기
                 strAddPid = Integer.parseInt(AddPid.getText().toString());
-//                strAddCategoryId = Integer.parseInt(AddCategoryId.getText().toString());
-//                strAddPimg = AddPimg.getText().toString();
-//                strAddPDetailimg = AddPDetailimg.getText().toString();
                 strAddPname = AddPname.getText().toString();
                 strAddPPrice = Integer.parseInt(AddPPrice.getText().toString());
                 strAddPsay = AddPsay.getText().toString();
                 strAddStock = Integer.parseInt(AddStock.getText().toString());
                 strAddPopulstock = Integer.parseInt(AddPopulstock.getText().toString());
-//
-//                final HashMap<String, Object> ProductAddMap = new HashMap<>();
-//
-//                ProductAddMap.put("pid", strAddPid);
-//                ProductAddMap.put("category", strAddCategoryId);
-//                ProductAddMap.put("pdetailimg", strAddPDetailimg);
-//                ProductAddMap.put("pimg", strAddPimg);
-//                ProductAddMap.put("pname", strAddPname);
-//                ProductAddMap.put("pprice", strAddPPrice);
-//                ProductAddMap.put("psay", strAddPsay);
-//                ProductAddMap.put("psearch", strAddPSearch);
-//                ProductAddMap.put("stock", strAddStock);
 
                 String selectedCategory = spinner.getSelectedItem().toString();
 
-                // 선택된 아이템에 따라 값을 설정
-
+                // 선택된 아이템에 따라 값이 다르게 설정
                 if (selectedCategory.equals("101-욕실주방용품")) {
                     strAddCategoryId = 101;
                 } else if (selectedCategory.equals("102-생활잡화")) {
@@ -165,12 +124,12 @@ public class ManageAddProductActivity extends AppCompatActivity {
                 } else if (selectedCategory.equals("103-취미")) {
                     strAddCategoryId = 103;
                 } else {
-                    // 기본값 설정 (선택 사항)
                     strAddCategoryId = 102;
                 }
-//
+
                 dialog.show();
 
+                // 상품 추가 시 방어적으로 다시 한 번 물어보는 다이얼로그 생성
                 TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
                 confirmTextView.setText("상품을 추가하시겠습니까?\n삭제 후에는 작업을 되돌릴 수 없습니다.");
 
@@ -191,24 +150,10 @@ public class ManageAddProductActivity extends AppCompatActivity {
                         // 이미지 업로드 후 데이터베이스에 저장
                         dialog.dismiss();
                         uploadImagesAndSaveData();
-
-//                        databaseReference.child(String.valueOf(strAddPid)).setValue(ProductAddMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<Void> task) {
-//                                Log.d("ManageAddProductActivity", strAddPid + strAddCategoryId + strAddPPrice + strAddStock + strAddPimg + strAddPDetailimg + strAddPname + strAddPsay + strAddPSearch);
-//                            }
-//                        });
                     }
                 });
-
-
-
-
-
             }
         });
-
-
     }
 
     // 이미지 선택 다이얼로그에서 이미지를 선택한 후 호출되는 메서드
@@ -225,7 +170,7 @@ public class ManageAddProductActivity extends AppCompatActivity {
         }
     }
 
-    // 이미지 업로드 및 데이터베이스 저장 처리
+    // 이미지 데이터 저장 및 데이터베이스 저장
     private void uploadImagesAndSaveData() {
         if (imageUri1 != null && imageUri2 != null) {
             StorageReference filePath1 = storageReference.child("ProductImages").child(imageUri1.getLastPathSegment());
@@ -247,13 +192,13 @@ public class ManageAddProductActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task2) {
                                         if (task2.isSuccessful()) {
-                                            // 두 번째 이미지의 다운로드 URL을 가져옵니다.
+                                            // 두 번째 이미지의 다운로드 URL을 가져오기
                                             filePath2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                                 @Override
                                                 public void onSuccess(Uri uri2) {
                                                     String imageUrl2 = uri2.toString();
 
-                                                    // 나머지 데이터를 Firebase Realtime Database에 저장
+                                                    // 나머지 데이터를 데이터베이스에 저장
                                                     DatabaseReference productRef = databaseReference.child(String.valueOf(strAddPid));
                                                     productRef.child("pimg").setValue(imageUrl1);
                                                     productRef.child("pdetailimg").setValue(imageUrl2);
@@ -287,7 +232,7 @@ public class ManageAddProductActivity extends AppCompatActivity {
                 }
             });
         }else {
-            // 이미지가 선택되지 않았을 경우에 대한 처리
+            // 이미지가 선택되지 않았을 경우 이미지 url은 빈 문자열로 처리해 데이터 저장
             DatabaseReference productRef = databaseReference.child(String.valueOf(strAddPid));
             productRef.child("pimg").setValue("");
             productRef.child("pdetailimg").setValue("");

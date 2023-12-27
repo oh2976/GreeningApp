@@ -51,11 +51,7 @@
         </LinearLayout>
     </ScrollView>
 
-
-
-
-
-
+    <!--  하단바  -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation_reviewhistory"
         style="@style/BottomNavigationViewNoRipple"

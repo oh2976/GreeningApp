@@ -11,14 +11,6 @@ public class MyPoint {
 
     }
 
-    public MyPoint(String userName, String pointName, int point, String pointDate, String type) {
-        this.userName = userName;
-        this.pointName = pointName;
-        this.point = point;
-        this.pointDate = pointDate;
-        this.type = type;
-    }
-
     public String getUserName() {
         return userName;
     }

@@ -1,8 +1,6 @@
 package com.example.greeningapp;
 
 import java.util.ArrayList;
-import java.util.List;
-
 public class OrderHistoryParent {
     private String orderDate;
     private ArrayList<OrderHistoryChild> orderHistoryChildList;

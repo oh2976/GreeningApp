@@ -3,7 +3,6 @@ package com.example.greeningapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,11 +14,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,78 +28,66 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
-
 public class DonationDetailActivity extends AppCompatActivity {
-
     long mNow;
     Date mDate;
-
     Dialog dialog2;
-
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-    ImageView dodetailImg;
-    ImageView dodetailLongImg;
+    ImageView dodetailImg, dodetailLongImg;
     TextView dodetailName, dodetailStart, dodetailEnd, dodetailuPoint, dodetatilallPoint;
-
     Button doDonate;
     BottomSheetDialog dialog;
-
     Donation donation = null;
-
-    private DatabaseReference databaseReference2;
-    private DatabaseReference databaseReference3;
-    private DatabaseReference databaseReference4;
+    private DatabaseReference databaseReference, databaseReference2, databaseReference3, databaseReference4;
     private FirebaseAuth firebaseAuth;
-
+    private FirebaseUser firebaseUser;
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference;
-
-    private Point point;
-
     private int spoint = 0;
     private int upoint = 0;
     private int allDoPoint = 0;
-
     private int donationId = 0;
-
     private String donationName = "";
-
     private String userAccountName = "";
-
-    private ImageButton navMain, navCategory, navDonation, navMypage;
-
     private BottomNavigationView bottomNavigationView;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donation_detail);
 
+        // 툴바
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_donation);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
 
-        // 숫자에 콤마 표시
+        // 화폐 단위 형식 객체 생성
         DecimalFormat decimalFormat = new DecimalFormat("###,###");
 
+        // 파이어베이스 경로 지정
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Donation");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Point");
+        databaseReference2 = FirebaseDatabase.getInstance().getReference("User");
+        databaseReference3 = FirebaseDatabase.getInstance().getReference("Donation");
+        databaseReference4 = FirebaseDatabase.getInstance().getReference("CurrentUser");
 
+
+        // DonationAdapter.java 에서 보낸 데이터 받기
         final Object object = getIntent().getSerializableExtra("donationDetail");
+        // 받은 데이터를 Donation 객체로 형변환
         if(object instanceof Donation){
             donation = (Donation) object;
         }
 
+        // 레이아웃 요소 설정
         dialog2 = new Dialog(DonationDetailActivity.this);
         dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog2.setContentView(R.layout.dialog_confirm);
@@ -115,7 +99,9 @@ public class DonationDetailActivity extends AppCompatActivity {
         dodetailEnd = findViewById(R.id.dodetail_end);
         dodetatilallPoint = findViewById(R.id.dodetail_point);
         dodetailuPoint = findViewById(R.id.detail_point);
+        doDonate = (Button) findViewById(R.id.doDonate);
 
+        // 객체가 null이 아니라면 레이아웃에 데이터 넣기
         if(donation != null){
             Glide.with(getApplicationContext()).load(donation.getDonationimg()).into(dodetailImg);
             dodetailName.setText(donation.getDonationname());
@@ -128,25 +114,12 @@ public class DonationDetailActivity extends AppCompatActivity {
             donationName = donation.getDonationname();
         }
 
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("Point");
-
-        databaseReference2 = FirebaseDatabase.getInstance().getReference("User");
-
-        databaseReference3 = FirebaseDatabase.getInstance().getReference("Donation");
-
-        databaseReference4 = FirebaseDatabase.getInstance().getReference("CurrentUser");
-
-
-
+        // 회원 테이블 데이터 불러오기
         databaseReference2.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                User user = dataSnapshot.getValue(User.class);; //  만들어 뒀던 Product 객체에 데이터를 담는다.
+                // User 객체에 데이터 담기, 포인트 데이터 넣기
+                User user = dataSnapshot.getValue(User.class);
                 dodetailuPoint.setText(decimalFormat.format(user.getSpoint()) + " 씨드");
 
             }
@@ -157,23 +130,21 @@ public class DonationDetailActivity extends AppCompatActivity {
             }
         });
 
-        doDonate = (Button) findViewById(R.id.doDonate);
-
+        // 다이얼로그 객체 생성
         dialog = new BottomSheetDialog(this);
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-
         View view = getLayoutInflater().inflate(R.layout.bottom_dialog, null, false);
 
         Button wannaDonate = view.findViewById(R.id.wannaDonate);
         EditText wannaDonatepoint = view.findViewById(R.id.wannaDonatepoint);
 
+        // 포인트 idtoken 설정
         String pointID = databaseReference4.push().getKey();
 
         // EditText에 기부하고 싶은 씨드를 작성하고 기부 버튼을 누를 때 씨드에 관한 모든 데이터베이스 변경
         wannaDonate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 try{
                     // EditText에 적은 값이 200보다 크고 10의 배수여야 한다.
                     if( Integer.parseInt(wannaDonatepoint.getText().toString()) >= 200 && Integer.parseInt(wannaDonatepoint.getText().toString()) % 10 == 0 ){
@@ -182,9 +153,7 @@ public class DonationDetailActivity extends AppCompatActivity {
                         databaseReference.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-                                Point point = dataSnapshot.getValue(Point.class);//  만들어 뒀던 Point 객체에 데이터를 담는다.
+                                Point point = dataSnapshot.getValue(Point.class); //  만들어 뒀던 Point 객체에 데이터를 담는다.
                                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                                 spoint = point.getSpoint();
                                 spoint = spoint - Integer.parseInt(wannaDonatepoint.getText().toString());
@@ -206,7 +175,7 @@ public class DonationDetailActivity extends AppCompatActivity {
                                 databaseReference2.child(firebaseUser.getUid()).child("spoint").setValue(spoint).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-//                                    Toast.makeText(DonationDetailActivity.this, "spoint 변동 완료", Toast.LENGTH_SHORT).show();
+                                        Log.d("DonationDetailActivity", "spoint 변동 완료" + spoint);
                                     }
                                 });
 
@@ -214,7 +183,7 @@ public class DonationDetailActivity extends AppCompatActivity {
                                 databaseReference2.child(firebaseUser.getUid()).child("upoint").setValue(upoint).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-//                                    Toast.makeText(DonationDetailActivity.this, "upoint 변동 완료", Toast.LENGTH_LONG).show();
+                                        Log.d("DonationDetailActivity", "upoint 변동 완료" + upoint);
                                     }
                                 });
 
@@ -224,16 +193,15 @@ public class DonationDetailActivity extends AppCompatActivity {
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-//                                            Toast.makeText(DonationDetailActivity.this, "임시 Point 테이블 삭제 완료", Toast.LENGTH_SHORT).show();
+                                                Log.d("DonationDetailActivity", "임시 Point 테이블 삭제 완료");
                                             }
                                         });
 
                                 databaseReference2.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                                         // 기부한 정보를 저장하기 위해서 데이터베이스 값 가져오기
-                                        User user = dataSnapshot.getValue(User.class); //  만들어 뒀던 Product 객체에 데이터를 담는다.
+                                        User user = dataSnapshot.getValue(User.class); //  만들어 뒀던 user 객체에 데이터를 담는다.
                                         final HashMap<String, Object> pointMap = new HashMap<>();
                                         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                                         pointMap.put("userName", user.getUsername());
@@ -247,7 +215,7 @@ public class DonationDetailActivity extends AppCompatActivity {
                                         databaseReference4.child(firebaseUser.getUid()).child("MyPoint").child(pointID).setValue(pointMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-//                                            Toast.makeText(DonationDetailActivity.this, "point table create", Toast.LENGTH_SHORT).show();
+                                                Log.d("DonationDetailActivity",  "point table create");
                                                 dialog.show();
                                             }
                                         });
@@ -281,12 +249,9 @@ public class DonationDetailActivity extends AppCompatActivity {
                             }
                         });
 
-
                         // 완료 되면 다이어로그 화면 없애기
                         dialog.dismiss();
 
-                        // 기부 하고 싶은 씨드 정보 토스트
-//                    Toast.makeText(DonationDetailActivity.this, wannaDonatepoint.getText(), Toast.LENGTH_SHORT).show();
                         Log.d("DonationDetailActivity",databaseReference2.child(firebaseUser.getUid()).child("spoint").toString());
                     } else{
                         showCheckPoint();
@@ -307,28 +272,26 @@ public class DonationDetailActivity extends AppCompatActivity {
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-
                 databaseReference.child(firebaseUser.getUid())
                         .removeValue()
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-//                                Toast.makeText(DonationDetailActivity.this, "임시 Point 테이블 삭제 완료", Toast.LENGTH_SHORT).show();
+                                Log.d("DonationDetailActivity", "임시 Point 테이블 삭제 완료");
                             }
                         });
             }
         });
 
+        // 바텀 다이얼로그에 있는 기부하기 버튼 클릭 시
         doDonate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 databaseReference2.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                         // 기부하기 버튼을 누르면 유저 테이블에서 유저 정보를 가져와 테이블에 저장
-                        User user = dataSnapshot.getValue(User.class); //  만들어 뒀던 Product 객체에 데이터를 담는다.
+                        User user = dataSnapshot.getValue(User.class); //  만들어 뒀던 User 객체에 데이터를 담는다.
                         final HashMap<String, Object> donateMap = new HashMap<>();
                         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                         donateMap.put("spoint", user.getSpoint());
@@ -338,7 +301,7 @@ public class DonationDetailActivity extends AppCompatActivity {
                         databaseReference.child(firebaseUser.getUid()).setValue(donateMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-//                                Toast.makeText(DonationDetailActivity.this, "point table create", Toast.LENGTH_SHORT).show();
+                                Log.d("DonationDetailActivity",  "point table create");
                                 dialog.show();
                             }
                         });
@@ -354,8 +317,6 @@ public class DonationDetailActivity extends AppCompatActivity {
 
             }
         });
-
-
 
         dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
@@ -396,6 +357,7 @@ public class DonationDetailActivity extends AppCompatActivity {
 
     }
 
+    // 현재 시간 가져오기
     private String getTime(){
         mNow = System.currentTimeMillis();
         mDate = new Date(mNow);
@@ -412,6 +374,7 @@ public class DonationDetailActivity extends AppCompatActivity {
         }
     }
 
+    // 기부 씨드 조건에 만족하지 않으면 뜨는 다이얼로그 생성
     public void showCheckPoint() {
         dialog2.show();
 
@@ -421,13 +384,10 @@ public class DonationDetailActivity extends AppCompatActivity {
         Button btnOk = dialog2.findViewById(R.id.btn_ok);
         btnOk.setText("확인");
 
-
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog2.dismiss();
-//                Intent intent = new Intent(ProductDetailActivity.this, MainActivity.class);
-//                startActivity(intent);
             }
         });
     }

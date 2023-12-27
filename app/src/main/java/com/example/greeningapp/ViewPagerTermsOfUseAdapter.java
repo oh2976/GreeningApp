@@ -13,6 +13,7 @@ public class ViewPagerTermsOfUseAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
+        // 포지션에 따라 다른 프캐그먼트 반환
         if (position==0){
             return new TermsOfUseOneFragment();
         } else {
@@ -22,11 +23,13 @@ public class ViewPagerTermsOfUseAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
+        // 전체 페이지 수 반환
         return 2;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
+        // 각 페이지 타이틀 반환
         if (position==0) {
             return "서비스 이용약관";
         } else {

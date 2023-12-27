@@ -1,20 +1,12 @@
 package com.example.greeningapp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-
-import com.example.greeningapp.R;
-
 import java.util.ArrayList;
 
 public class OrderHistoryParentRcyAdapter extends RecyclerView.Adapter<OrderHistoryParentRcyAdapter.MyViewHolder> {
@@ -32,6 +24,7 @@ public class OrderHistoryParentRcyAdapter extends RecyclerView.Adapter<OrderHist
         return new MyViewHolder(view);
     }
 
+    //리사이클러뷰 아이템 개수 반환 설정
     @Override
     public int getItemCount() {
         if(parentModelArrayList != null){
@@ -42,16 +35,21 @@ public class OrderHistoryParentRcyAdapter extends RecyclerView.Adapter<OrderHist
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        // 부모 데이터에서 날짜와 주문 ID를 가져옴
         holder.orderDate.setText(parentModelArrayList.get(position).getOrderDate());
         holder.ordh_OrderId.setText(parentModelArrayList.get(position).getOrderId());
 
+        // 부모 데이터의 자식 데이터 리스트를 가져옴
         ArrayList<MyOrder> childModelArrayList = parentModelArrayList.get(position).getChildModelArrayList();
 
+        //자식데이터 표시하기 위한 어댑터 설정
         OrderHistoryChildRcyAdapter childRecyclerViewAdapter = new OrderHistoryChildRcyAdapter(childModelArrayList, holder.childRecyclerView.getContext());
         holder.childRecyclerView.setAdapter(childRecyclerViewAdapter);
 
+        // 자식 데이터를 표시할 레이아웃 매니저 설정
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(cxt, LinearLayoutManager.VERTICAL, false);
         holder.childRecyclerView.setLayoutManager(layoutManager);
+        // RecyclerView 크기 고정
         holder.childRecyclerView.setHasFixedSize(true);
     }
 
@@ -67,12 +65,7 @@ public class OrderHistoryParentRcyAdapter extends RecyclerView.Adapter<OrderHist
             orderDate = itemView.findViewById(R.id.orderDate);
             childRecyclerView = itemView.findViewById(R.id.Child_RV);
 
-
         }
-    }
-    private void onOhBtnClicked() {
-        Intent intent = new Intent(cxt, OrderCompleteActivity.class);
-        cxt.startActivity(intent);
     }
 
 }
