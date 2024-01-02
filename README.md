@@ -47,6 +47,8 @@
 
 ## 사이트 맵
 ![1e8e90df-0e89-42c3-ada3-8f19d64c6ad4 pdf-0010](https://github.com/oh2976/GreeningApp/assets/92541623/34afc2d6-6401-4cbd-b182-b7bc0852dd95)
+![관리자 맵](https://github.com/oh2976/GreeningApp/assets/92541623/51393394-aff5-4ed0-9cd4-1e2f8ab2a6ba)
+
 
 
 ## 주요 기능
